@@ -1,0 +1,127 @@
+#!/bin/bash
+
+# This script installs Node Exporter on Debian based systems.
+
+set -e
+set -u
+set -o pipefail
+
+### preflight checks
+
+# failure indicator
+PREFLIGHT_CHECKS_FAIL=false
+
+# user check
+if [ "${EUID}" -ne 0 ]; then
+    PREFLIGHT_CHECKS_FAIL=true
+    echo -e "\033[0;91mERROR:\033[0m not running as root"
+fi
+
+# dependency check
+PACKAGES=("curl" "tar" "jq")
+
+for i in "${PACKAGES[@]}"; do
+    if ! command -v "${i}" >/dev/null 2>&1; then
+        PREFLIGHT_CHECKS_FAIL=true
+        echo -e "\033[0;91mERROR:\033[0m ${i} is not installed"
+    fi
+done
+
+# failure indicator check
+if [ "${PREFLIGHT_CHECKS_FAIL}" = true ]; then
+    exit 1
+fi
+
+### variables
+
+# script variables
+TEMP_DIR="$(mktemp -d)"
+SYSTEM_ARCH="$(dpkg --print-architecture)"
+
+# node exporter variables
+NODE_EXPORTER_SA="node_exporter"
+NODE_EXPORTER_VERSION="$(curl -s https://api.github.com/repos/prometheus/node_exporter/releases/latest | jq -r .tag_name)"
+NODE_EXPORTER_VERSION_SHORT="${NODE_EXPORTER_VERSION#v}"
+
+# node exporter upgrade variables
+NODE_EXPORTER_UPGRADE=false
+if [ -f /usr/local/bin/node_exporter ]; then
+    NODE_EXPORTER_UPGRADE=true
+fi
+
+### download
+
+# status message
+echo -e "\033[0;92mINFO:\033[0m downloading node exporter ${NODE_EXPORTER_VERSION} for ${SYSTEM_ARCH} architecture"
+
+# download binaries
+curl -sLo ${TEMP_DIR}/node_exporter-${NODE_EXPORTER_VERSION_SHORT}.linux-${SYSTEM_ARCH}.tar.gz https://github.com/prometheus/node_exporter/releases/download/${NODE_EXPORTER_VERSION}/node_exporter-${NODE_EXPORTER_VERSION_SHORT}.linux-${SYSTEM_ARCH}.tar.gz
+tar -xzf ${TEMP_DIR}/node_exporter-${NODE_EXPORTER_VERSION_SHORT}.linux-${SYSTEM_ARCH}.tar.gz --directory ${TEMP_DIR}
+
+### upgrade
+
+if [ "${NODE_EXPORTER_UPGRADE}" = true ]; then
+    # status message
+    echo -e "\033[0;92mINFO:\033[0m upgrading the existing installation"
+
+    # stop service
+    systemctl --quiet stop node_exporter.service
+
+    # copy binaries
+    cp ${TEMP_DIR}/node_exporter-${NODE_EXPORTER_VERSION_SHORT}.linux-${SYSTEM_ARCH}/node_exporter /usr/local/bin/node_exporter
+
+    # update ownership
+    chown ${NODE_EXPORTER_SA}:${NODE_EXPORTER_SA} /usr/local/bin/node_exporter
+
+    # start service
+    systemctl --quiet start node_exporter.service
+
+    # status message
+    echo -e "\033[0;92mINFO:\033[0m upgrade succeeded"
+
+    exit 0
+fi
+
+### install
+
+# status message
+echo -e "\033[0;92mINFO:\033[0m starting the installation"
+
+# create service account
+useradd --system --no-create-home --shell /bin/false ${NODE_EXPORTER_SA}
+
+# copy binaries
+cp ${TEMP_DIR}/node_exporter-${NODE_EXPORTER_VERSION_SHORT}.linux-${SYSTEM_ARCH}/node_exporter /usr/local/bin/node_exporter
+
+# update ownership
+chown ${NODE_EXPORTER_SA}:${NODE_EXPORTER_SA} /usr/local/bin/node_exporter
+
+# create service
+cat << EOF > /etc/systemd/system/node_exporter.service
+[Unit]
+Description=Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+Restart=always
+User=${NODE_EXPORTER_SA}
+Group=${NODE_EXPORTER_SA}
+ExecStart=/usr/local/bin/node_exporter \
+--web.telemetry-path="/metrics" \
+--web.listen-address=":9100" \
+--log.level="info" \
+--log.format="logfmt"
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# start and enable service
+systemctl --quiet daemon-reload
+systemctl --quiet start node_exporter.service
+systemctl --quiet enable node_exporter.service
+
+# status message
+echo -e "\033[0;92mINFO:\033[0m installation succeeded"
