@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="light">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>debian | Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="
+base64
+curl
+dd
+du
+find
+git
+journalctl
+nfs
+nmap
+openssl
+scp
+ssh
+stat
+swap
+tar
+tmux
+ufw
+umask
+wakeonlan
+
+
+base64
+# encode string
+echo -n &#34;asdf&#34; | base64 -w 0
+
+# encode file
+base64 -w 0 /etc/prometheus/prometheus.yaml
+
+# encode string when -w 0 is not available
+echo -n &#34;asdf&#34; | base64 | tr -d \\n
+
+# encode file when -w 0 is not available
+base64 /etc/prometheus/prometheus.yaml | tr -d \\n
+# decode string
+echo -n &#34;YXNkZg==&#34; | base64 -d
+
+# decode file
+echo -n &#34;YXNkZg==&#34; | base64 -d &gt; asdf.txt
+# show contents of encoded string
+echo -n &#34;asdf&#34; | base64 -w 0 | base64 -d | od -c
+
+curl
+# resolve the domain to a specific address
+curl https://example.com --resolve &#39;example.com:443:10.0.0.2&#39;
+# resolve the domain to a specific address and skip tls verification
+curl -k https://example.com --resolve &#39;example.com:443:10.0.0.2&#39;
+curl --insecure https://example.com --resolve &#39;example.com:443:10.0.0.2&#39;
+
+dd
+# dd if=image of=device
+dd if=/var/lib/libvirt/images/debian-13.0.0-amd64-DVD-1.iso of=/dev/sdx status=progress
+# create a file with predefined size
+dd if=/dev/zero of=big.file bs=1MB count=1000
+du -h big.file
+# create a bootable usb
+ISO=&#34;debian-13.0.0-amd64-DVD-1.iso&#34; # https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/
+DEVICE=&#34;sdb&#34; # lsblk
+
+curl -LO https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/${ISO}
+curl -LO https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/SHA256SUMS
+sha256sum --ignore-missing --check SHA256SUMS
+
+fdisk -l /dev/${DEVICE}
+wipefs -a -f /dev/${DEVICE}
+fdisk /dev/${DEVICE} # g n ENTER ENTER ENTER y w
+lsblk # umount /dev/${DEVICE}1
+dd if=${ISO} of=/dev/${DEVICE} status=progress
+
+du
+# get the size of a file
+du -h /var/log/dpkg.log
+
+# get the size of a folder
+du -sh /var/log
+
+find
+# find a file with the name resolv.conf
+find / -name &#34;resolv.conf&#34;
+
+# find a file with the name resolv.conf - case-insensitive
+find / -iname &#34;rEsOlV.cOnF&#34;
+
+# find all files with a .yaml extension
+find / -name &#34;*.yaml&#34;
+
+git
+# initial setup
+git config --global user.email user@users.noreply.github.com
+git config --global init.defaultBranch master
+git config --global core.autocrlf input
+git config --list --show-origin
+
+journalctl
+# logs from current system boot
+journalctl -b
+
+# logs from previous system boot
+journalctl -b -1
+
+# list system boots
+journalctl --list-boots
+# logs from a specific service
+journalctl -u nginx.service
+
+# logs from multiple services
+journalctl -u nginx.service -u mysql.service
+# logs from a specific time range
+journalctl --since &#34;1 hour ago&#34;
+journalctl --since &#34;2 days ago&#34;
+journalctl --since &#34;2015-06-26 23:15:00&#34; --until &#34;2015-06-26 23:20:00&#34;
+# follow logs
+journalctl -f
+journalctl -u mysql.service -f
+journalctl -n 50 --since &#34;1 hour ago&#34;
+# logs from a specific user or service account
+journalctl _UID=108
+
+nfs
+# server
+apt install -y nfs-kernel-server
+systemctl start nfs-server.service
+systemctl enable nfs-server.service
+mkdir /var/nfs
+echo &#39;/var/nfs 10.0.0.0/24(rw,sync,no_subtree_check,all_squash)&#39; &gt;&gt; /etc/exports
+chown -R nobody:nogroup /var/nfs
+systemctl restart nfs-server.service
+
+# server firewall
+ufw allow from 10.0.0.0/24 to 10.0.0.3 port 2049 proto tcp
+ufw reload
+# client
+apt install -y nfs-common
+mkdir /nfs
+echo &#39;10.0.0.3:/var/nfs /nfs nfs defaults 0 0&#39; &gt;&gt; /etc/fstab
+
+# client fix mount on boot
+cat &lt;&lt; &#39;EOF&#39; &gt; /etc/network/if-up.d/fstab
+#!/bin/bash
+mount -a
+EOF
+chmod &#43;x /etc/network/if-up.d/fstab
+# troubleshooting
+nfsstat
+nfsstat --mounts
+nfsstat --client
+nfsstat --server
+nmap -p 2049 10.0.0.3
+nmap -p 111 --script=nfs-showmount 10.0.0.3
+
+nmap
+# scan all tcp ports
+nmap -p- -sS --reason example.com
+
+# retrieve the tls certificate from a server
+nmap -p 443 --script ssl-cert example.com
+
+openssl
+# encrypt
+openssl enc -aes-256-cbc -pbkdf2 -salt -in backup.zip -out backup.enc
+
+# decrypt
+openssl enc -aes-256-cbc -pbkdf2 -d -in backup.enc -out backup.zip
+# display the details of a tls certificate
+CERTIFICATE=&#34;/etc/kubernetes/pki/apiserver.crt&#34;
+openssl x509 -in ${CERTIFICATE} -text -noout
+# decode and display the details of a tls certificate
+echo -n &#34;LS0tL[...]tLS0K&#34; | base64 -d | openssl x509 -text -noout
+# retrieve and display the details of a tls certificate
+URL=&#34;google.com&#34;
+echo | openssl s_client -showcerts -servername ${URL} -connect ${URL}:443 2&gt;/dev/null | openssl x509 -inform pem -noout -text
+echo | openssl s_client -showcerts -servername ${URL} -connect ${URL}:443 2&gt;/dev/null | openssl x509 -inform pem -noout -enddate
+
+scp
+# copy from local to remote
+scp -r /path/from/local user@server:/path/to/remote
+
+# copy from remote to local
+scp -r user@server:/path/from/remote /path/to/local
+
+# copy from remote to local on the current directory
+scp -r user@server:/path/from/remote .
+
+ssh
+# generate an rsa key
+ssh-keygen -t rsa -b 4096
+# create a config file
+cat &lt;&lt; &#39;EOF&#39; &gt; ~/.ssh/config
+Host server01
+  HostName 10.20.30.41
+  User user
+Host server02
+  HostName 10.20.30.42
+  User user
+Host server03
+  HostName 10.20.30.43
+  User user
+  ProxyJump server02
+EOF
+chmod 600 ~/.ssh/config
+# use specific ssh config based on a condition - man ssh_config
+cat &lt;&lt; &#39;EOF&#39; &gt; $HOME/.ssh/config
+Match originalhost server localnetwork 10.0.0.0/24
+  HostName 10.0.0.3
+  User user
+Host server
+  HostName 172.16.32.3
+  User user
+EOF
+chmod 600 $HOME/.ssh/config
+# fetch your public key from github
+curl https://github.com/korliaftis.keys
+# fetch your public key from github and add it to the authorized_keys file
+curl https://github.com/korliaftis.keys &gt;&gt; /home/user/.ssh/authorized_keys
+chmod 600 /home/user/.ssh/authorized_keys
+# -f run in the background
+# -p specify ssh port if not the default
+# -N don&#39;t execute any remote command
+# -L local port forwarding
+# -R remote port forwarding
+# -D dynamic port forwarding
+
+# local port forwarding
+ssh -L [LOCAL_IP:]LOCAL_PORT:DESTINATION:DESTINATION_PORT [USER@]SSH_SERVER
+
+# remote port forwarding
+ssh -R [REMOTE:]REMOTE_PORT:DESTINATION:DESTINATION_PORT [USER@]SSH_SERVER
+
+# dynamic port forwarding
+ssh -D [LOCAL_IP:]LOCAL_PORT [USER@]SSH_SERVER
+
+stat
+# get the creation date of a file or folder
+stat /var/log
+stat /var/log/dpkg.log
+
+swap
+# disable swap for the current session
+swapoff -a
+
+# disable swap partition from getting auto mounted at boot
+sed &#39;/^#/! {/swap/ s/^/# /}&#39; -i /etc/fstab
+
+tar
+# extract archive
+tar -xvzf archive.tar.gz
+
+# list files in archive
+tar -tzvf archive.tar.gz
+
+# create archive
+tar -czvf archive.tar.gz /path/to/directory-or-file
+
+tmux
+# start | list | attach | detach | kill
+tmux
+tmux ls
+tmux attach
+CTRL B : detach-client
+CTRL B : kill-session
+# zoom pane
+CTRL B z
+# mouse scrolling
+CTRL B [
+# show pane numbers
+CTRL B q
+# move pane right
+CTRL B }
+# move pane left
+CTRL B {
+# split pane right
+CTRL B :split-pane -h
+CTRL B %
+# split pane down
+CTRL B :split-pane -v
+CTRL B &#34;
+# change pane layout
+CTRL B SPACE
+CTRL B : select-layout tiled
+CTRL B : select-layout even-horizontal
+CTRL B : select-layout even-vertical
+# change selected pane
+CTRL B o
+CTRL B ARROW KEYS
+# rotate all panes
+CTRL B : CTRL o
+CTRL B : rotate-window
+# resize pane
+CTRL B : resize-pane -UDLR 20
+# close pane
+CTRL B x
+
+ufw
+apt install -y ufw
+sed -i &#39;s/IPV6=yes/IPV6=no/g&#39; /etc/default/ufw
+ufw allow 22/tcp
+echo &#39;y&#39; | ufw enable
+ufw status
+# allow from a specific network to any ip but at a specific port and protocol
+ufw allow from 10.0.0.0/24 to any port 445 proto tcp
+
+# allow from a specific network to a specific ip, port and protocol
+ufw allow from 10.0.0.0/24 to 10.0.0.2 port 445 proto tcp
+
+umask
+# view the current mask value
+umask
+
+# view the current mask value in symbolic notation
+umask -S
+
+# change the umask value only for the current session
+umask 077
+
+wakeonlan
+# server
+INTERFACE=&#34;enp2s0&#34;
+apt install -y ethtool
+ethtool ${INTERFACE} # &#34;Wake-on: g&#34; means enabled
+cat &lt;&lt; EOF &gt; /etc/network/interfaces.d/${INTERFACE}
+auto ${INTERFACE}
+iface ${INTERFACE} inet dhcp
+  ethernet-wol g
+EOF
+systemctl restart networking.service
+ethtool ${INTERFACE}
+# client
+apt install -y wakeonlan
+echo &#34;alias wol=&#39;wakeonlan 58:8a:5a:0d:7c:8a&#39;&#34; &gt;&gt; /home/user/.bash_aliases
+">
+<meta name="author" content="user">
+<link rel="canonical" href="https://korliaftis.github.io/notes/debian.html">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.9a24e0a983acbd1d5709cdde8f60a89a08ff7fb64871fe6496c466c4d0350645.css" integrity="sha256-miTgqYOsvR1XCc3ej2Comgj/f7ZIcf5klsRmxNA1BkU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://korliaftis.github.io/assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://korliaftis.github.io/assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://korliaftis.github.io/assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://korliaftis.github.io/assets/favicon/apple-touch-icon.png">
+<link rel="mask-icon" href="https://korliaftis.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://korliaftis.github.io/notes/debian.html">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://korliaftis.github.io/">&gt; $ <span class="logoCursor">_</span>
+            </a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://korliaftis.github.io/search/" accesskey=/>
+                    <span>search</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://korliaftis.github.io/tags/">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      debian
+    </h1>
+    <div class="post-meta">
+
+</div>
+  </header> 
+  <div class="post-content"><ul>
+<li><a href="#base64">base64</a></li>
+<li><a href="#curl">curl</a></li>
+<li><a href="#dd">dd</a></li>
+<li><a href="#du">du</a></li>
+<li><a href="#find">find</a></li>
+<li><a href="#git">git</a></li>
+<li><a href="#journalctl">journalctl</a></li>
+<li><a href="#nfs">nfs</a></li>
+<li><a href="#nmap">nmap</a></li>
+<li><a href="#openssl">openssl</a></li>
+<li><a href="#scp">scp</a></li>
+<li><a href="#ssh">ssh</a></li>
+<li><a href="#stat">stat</a></li>
+<li><a href="#swap">swap</a></li>
+<li><a href="#tar">tar</a></li>
+<li><a href="#tmux">tmux</a></li>
+<li><a href="#ufw">ufw</a></li>
+<li><a href="#umask">umask</a></li>
+<li><a href="#wakeonlan">wakeonlan</a></li>
+</ul>
+<hr>
+<h3 id="base64">base64</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># encode string</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> -n <span style="color:#a3be8c">&#34;asdf&#34;</span> <span style="color:#eceff4">|</span> base64 -w <span style="color:#b48ead">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># encode file</span>
+</span></span><span style="display:flex;"><span>base64 -w <span style="color:#b48ead">0</span> /etc/prometheus/prometheus.yaml
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># encode string when -w 0 is not available</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> -n <span style="color:#a3be8c">&#34;asdf&#34;</span> <span style="color:#eceff4">|</span> base64 <span style="color:#eceff4">|</span> tr -d <span style="color:#ebcb8b">\\</span>n
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># encode file when -w 0 is not available</span>
+</span></span><span style="display:flex;"><span>base64 /etc/prometheus/prometheus.yaml <span style="color:#eceff4">|</span> tr -d <span style="color:#ebcb8b">\\</span>n
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># decode string</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> -n <span style="color:#a3be8c">&#34;YXNkZg==&#34;</span> <span style="color:#eceff4">|</span> base64 -d
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># decode file</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> -n <span style="color:#a3be8c">&#34;YXNkZg==&#34;</span> <span style="color:#eceff4">|</span> base64 -d &gt; asdf.txt
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># show contents of encoded string</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> -n <span style="color:#a3be8c">&#34;asdf&#34;</span> <span style="color:#eceff4">|</span> base64 -w <span style="color:#b48ead">0</span> <span style="color:#eceff4">|</span> base64 -d <span style="color:#eceff4">|</span> od -c
+</span></span></code></pre></div><hr>
+<h3 id="curl">curl</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># resolve the domain to a specific address</span>
+</span></span><span style="display:flex;"><span>curl https://example.com --resolve <span style="color:#a3be8c">&#39;example.com:443:10.0.0.2&#39;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># resolve the domain to a specific address and skip tls verification</span>
+</span></span><span style="display:flex;"><span>curl -k https://example.com --resolve <span style="color:#a3be8c">&#39;example.com:443:10.0.0.2&#39;</span>
+</span></span><span style="display:flex;"><span>curl --insecure https://example.com --resolve <span style="color:#a3be8c">&#39;example.com:443:10.0.0.2&#39;</span>
+</span></span></code></pre></div><hr>
+<h3 id="dd">dd</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># dd if=image of=device</span>
+</span></span><span style="display:flex;"><span>dd <span style="color:#81a1c1;font-weight:bold">if</span><span style="color:#81a1c1">=</span>/var/lib/libvirt/images/debian-13.0.0-amd64-DVD-1.iso of<span style="color:#81a1c1">=</span>/dev/sdx status<span style="color:#81a1c1">=</span>progress
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># create a file with predefined size</span>
+</span></span><span style="display:flex;"><span>dd <span style="color:#81a1c1;font-weight:bold">if</span><span style="color:#81a1c1">=</span>/dev/zero of<span style="color:#81a1c1">=</span>big.file bs<span style="color:#81a1c1">=</span>1MB count<span style="color:#81a1c1">=</span><span style="color:#b48ead">1000</span>
+</span></span><span style="display:flex;"><span>du -h big.file
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># create a bootable usb</span>
+</span></span><span style="display:flex;"><span>ISO<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;debian-13.0.0-amd64-DVD-1.iso&#34;</span> <span style="color:#616e87;font-style:italic"># https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/</span>
+</span></span><span style="display:flex;"><span>DEVICE<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;sdb&#34;</span> <span style="color:#616e87;font-style:italic"># lsblk</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -LO https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/<span style="color:#a3be8c">${</span>ISO<span style="color:#a3be8c">}</span>
+</span></span><span style="display:flex;"><span>curl -LO https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/SHA256SUMS
+</span></span><span style="display:flex;"><span>sha256sum --ignore-missing --check SHA256SUMS
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>fdisk -l /dev/<span style="color:#a3be8c">${</span>DEVICE<span style="color:#a3be8c">}</span>
+</span></span><span style="display:flex;"><span>wipefs -a -f /dev/<span style="color:#a3be8c">${</span>DEVICE<span style="color:#a3be8c">}</span>
+</span></span><span style="display:flex;"><span>fdisk /dev/<span style="color:#a3be8c">${</span>DEVICE<span style="color:#a3be8c">}</span> <span style="color:#616e87;font-style:italic"># g n ENTER ENTER ENTER y w</span>
+</span></span><span style="display:flex;"><span>lsblk <span style="color:#616e87;font-style:italic"># umount /dev/${DEVICE}1</span>
+</span></span><span style="display:flex;"><span>dd <span style="color:#81a1c1;font-weight:bold">if</span><span style="color:#81a1c1">=</span><span style="color:#a3be8c">${</span>ISO<span style="color:#a3be8c">}</span> of<span style="color:#81a1c1">=</span>/dev/<span style="color:#a3be8c">${</span>DEVICE<span style="color:#a3be8c">}</span> status<span style="color:#81a1c1">=</span>progress
+</span></span></code></pre></div><hr>
+<h3 id="du">du</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># get the size of a file</span>
+</span></span><span style="display:flex;"><span>du -h /var/log/dpkg.log
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># get the size of a folder</span>
+</span></span><span style="display:flex;"><span>du -sh /var/log
+</span></span></code></pre></div><hr>
+<h3 id="find">find</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># find a file with the name resolv.conf</span>
+</span></span><span style="display:flex;"><span>find / -name <span style="color:#a3be8c">&#34;resolv.conf&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># find a file with the name resolv.conf - case-insensitive</span>
+</span></span><span style="display:flex;"><span>find / -iname <span style="color:#a3be8c">&#34;rEsOlV.cOnF&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># find all files with a .yaml extension</span>
+</span></span><span style="display:flex;"><span>find / -name <span style="color:#a3be8c">&#34;*.yaml&#34;</span>
+</span></span></code></pre></div><hr>
+<h3 id="git">git</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># initial setup</span>
+</span></span><span style="display:flex;"><span>git config --global user.email user@users.noreply.github.com
+</span></span><span style="display:flex;"><span>git config --global init.defaultBranch master
+</span></span><span style="display:flex;"><span>git config --global core.autocrlf input
+</span></span><span style="display:flex;"><span>git config --list --show-origin
+</span></span></code></pre></div><hr>
+<h3 id="journalctl">journalctl</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># logs from current system boot</span>
+</span></span><span style="display:flex;"><span>journalctl -b
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># logs from previous system boot</span>
+</span></span><span style="display:flex;"><span>journalctl -b -1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># list system boots</span>
+</span></span><span style="display:flex;"><span>journalctl --list-boots
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># logs from a specific service</span>
+</span></span><span style="display:flex;"><span>journalctl -u nginx.service
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># logs from multiple services</span>
+</span></span><span style="display:flex;"><span>journalctl -u nginx.service -u mysql.service
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># logs from a specific time range</span>
+</span></span><span style="display:flex;"><span>journalctl --since <span style="color:#a3be8c">&#34;1 hour ago&#34;</span>
+</span></span><span style="display:flex;"><span>journalctl --since <span style="color:#a3be8c">&#34;2 days ago&#34;</span>
+</span></span><span style="display:flex;"><span>journalctl --since <span style="color:#a3be8c">&#34;2015-06-26 23:15:00&#34;</span> --until <span style="color:#a3be8c">&#34;2015-06-26 23:20:00&#34;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># follow logs</span>
+</span></span><span style="display:flex;"><span>journalctl -f
+</span></span><span style="display:flex;"><span>journalctl -u mysql.service -f
+</span></span><span style="display:flex;"><span>journalctl -n <span style="color:#b48ead">50</span> --since <span style="color:#a3be8c">&#34;1 hour ago&#34;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># logs from a specific user or service account</span>
+</span></span><span style="display:flex;"><span>journalctl _UID<span style="color:#81a1c1">=</span><span style="color:#b48ead">108</span>
+</span></span></code></pre></div><hr>
+<h3 id="nfs">nfs</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># server</span>
+</span></span><span style="display:flex;"><span>apt install -y nfs-kernel-server
+</span></span><span style="display:flex;"><span>systemctl start nfs-server.service
+</span></span><span style="display:flex;"><span>systemctl <span style="color:#81a1c1">enable</span> nfs-server.service
+</span></span><span style="display:flex;"><span>mkdir /var/nfs
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#39;/var/nfs 10.0.0.0/24(rw,sync,no_subtree_check,all_squash)&#39;</span> &gt;&gt; /etc/exports
+</span></span><span style="display:flex;"><span>chown -R nobody:nogroup /var/nfs
+</span></span><span style="display:flex;"><span>systemctl restart nfs-server.service
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># server firewall</span>
+</span></span><span style="display:flex;"><span>ufw allow from 10.0.0.0/24 to 10.0.0.3 port <span style="color:#b48ead">2049</span> proto tcp
+</span></span><span style="display:flex;"><span>ufw reload
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># client</span>
+</span></span><span style="display:flex;"><span>apt install -y nfs-common
+</span></span><span style="display:flex;"><span>mkdir /nfs
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#39;10.0.0.3:/var/nfs /nfs nfs defaults 0 0&#39;</span> &gt;&gt; /etc/fstab
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># client fix mount on boot</span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#a3be8c">&lt;&lt; &#39;EOF&#39; &gt; /etc/network/if-up.d/fstab
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">mount -a
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">EOF</span>
+</span></span><span style="display:flex;"><span>chmod +x /etc/network/if-up.d/fstab
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># troubleshooting</span>
+</span></span><span style="display:flex;"><span>nfsstat
+</span></span><span style="display:flex;"><span>nfsstat --mounts
+</span></span><span style="display:flex;"><span>nfsstat --client
+</span></span><span style="display:flex;"><span>nfsstat --server
+</span></span><span style="display:flex;"><span>nmap -p <span style="color:#b48ead">2049</span> 10.0.0.3
+</span></span><span style="display:flex;"><span>nmap -p <span style="color:#b48ead">111</span> --script<span style="color:#81a1c1">=</span>nfs-showmount 10.0.0.3
+</span></span></code></pre></div><hr>
+<h3 id="nmap">nmap</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># scan all tcp ports</span>
+</span></span><span style="display:flex;"><span>nmap -p- -sS --reason example.com
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># retrieve the tls certificate from a server</span>
+</span></span><span style="display:flex;"><span>nmap -p <span style="color:#b48ead">443</span> --script ssl-cert example.com
+</span></span></code></pre></div><hr>
+<h3 id="openssl">openssl</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># encrypt</span>
+</span></span><span style="display:flex;"><span>openssl enc -aes-256-cbc -pbkdf2 -salt -in backup.zip -out backup.enc
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># decrypt</span>
+</span></span><span style="display:flex;"><span>openssl enc -aes-256-cbc -pbkdf2 -d -in backup.enc -out backup.zip
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># display the details of a tls certificate</span>
+</span></span><span style="display:flex;"><span>CERTIFICATE<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;/etc/kubernetes/pki/apiserver.crt&#34;</span>
+</span></span><span style="display:flex;"><span>openssl x509 -in <span style="color:#a3be8c">${</span>CERTIFICATE<span style="color:#a3be8c">}</span> -text -noout
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># decode and display the details of a tls certificate</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> -n <span style="color:#a3be8c">&#34;LS0tL[...]tLS0K&#34;</span> <span style="color:#eceff4">|</span> base64 -d <span style="color:#eceff4">|</span> openssl x509 -text -noout
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># retrieve and display the details of a tls certificate</span>
+</span></span><span style="display:flex;"><span>URL<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;google.com&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#eceff4">|</span> openssl s_client -showcerts -servername <span style="color:#a3be8c">${</span>URL<span style="color:#a3be8c">}</span> -connect <span style="color:#a3be8c">${</span>URL<span style="color:#a3be8c">}</span>:443 2&gt;/dev/null <span style="color:#eceff4">|</span> openssl x509 -inform pem -noout -text
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#eceff4">|</span> openssl s_client -showcerts -servername <span style="color:#a3be8c">${</span>URL<span style="color:#a3be8c">}</span> -connect <span style="color:#a3be8c">${</span>URL<span style="color:#a3be8c">}</span>:443 2&gt;/dev/null <span style="color:#eceff4">|</span> openssl x509 -inform pem -noout -enddate
+</span></span></code></pre></div><hr>
+<h3 id="scp">scp</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># copy from local to remote</span>
+</span></span><span style="display:flex;"><span>scp -r /path/from/local user@server:/path/to/remote
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># copy from remote to local</span>
+</span></span><span style="display:flex;"><span>scp -r user@server:/path/from/remote /path/to/local
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># copy from remote to local on the current directory</span>
+</span></span><span style="display:flex;"><span>scp -r user@server:/path/from/remote .
+</span></span></code></pre></div><hr>
+<h3 id="ssh">ssh</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># generate an rsa key</span>
+</span></span><span style="display:flex;"><span>ssh-keygen -t rsa -b <span style="color:#b48ead">4096</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># create a config file</span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#a3be8c">&lt;&lt; &#39;EOF&#39; &gt; ~/.ssh/config
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">Host server01
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  HostName 10.20.30.41
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  User user
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">Host server02
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  HostName 10.20.30.42
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  User user
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">Host server03
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  HostName 10.20.30.43
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  User user
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  ProxyJump server02
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">EOF</span>
+</span></span><span style="display:flex;"><span>chmod <span style="color:#b48ead">600</span> ~/.ssh/config
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># use specific ssh config based on a condition - man ssh_config</span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#a3be8c">&lt;&lt; &#39;EOF&#39; &gt; $HOME/.ssh/config
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">Match originalhost server localnetwork 10.0.0.0/24
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  HostName 10.0.0.3
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  User user
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">Host server
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  HostName 172.16.32.3
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  User user
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">EOF</span>
+</span></span><span style="display:flex;"><span>chmod <span style="color:#b48ead">600</span> $HOME/.ssh/config
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># fetch your public key from github</span>
+</span></span><span style="display:flex;"><span>curl https://github.com/korliaftis.keys
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># fetch your public key from github and add it to the authorized_keys file</span>
+</span></span><span style="display:flex;"><span>curl https://github.com/korliaftis.keys &gt;&gt; /home/user/.ssh/authorized_keys
+</span></span><span style="display:flex;"><span>chmod <span style="color:#b48ead">600</span> /home/user/.ssh/authorized_keys
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># -f run in the background</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># -p specify ssh port if not the default</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># -N don&#39;t execute any remote command</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># -L local port forwarding</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># -R remote port forwarding</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># -D dynamic port forwarding</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># local port forwarding</span>
+</span></span><span style="display:flex;"><span>ssh -L <span style="color:#81a1c1">[</span>LOCAL_IP:<span style="color:#81a1c1">]</span>LOCAL_PORT:DESTINATION:DESTINATION_PORT <span style="color:#81a1c1">[</span>USER@<span style="color:#81a1c1">]</span>SSH_SERVER
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># remote port forwarding</span>
+</span></span><span style="display:flex;"><span>ssh -R <span style="color:#81a1c1">[</span>REMOTE:<span style="color:#81a1c1">]</span>REMOTE_PORT:DESTINATION:DESTINATION_PORT <span style="color:#81a1c1">[</span>USER@<span style="color:#81a1c1">]</span>SSH_SERVER
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># dynamic port forwarding</span>
+</span></span><span style="display:flex;"><span>ssh -D <span style="color:#81a1c1">[</span>LOCAL_IP:<span style="color:#81a1c1">]</span>LOCAL_PORT <span style="color:#81a1c1">[</span>USER@<span style="color:#81a1c1">]</span>SSH_SERVER
+</span></span></code></pre></div><hr>
+<h3 id="stat">stat</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># get the creation date of a file or folder</span>
+</span></span><span style="display:flex;"><span>stat /var/log
+</span></span><span style="display:flex;"><span>stat /var/log/dpkg.log
+</span></span></code></pre></div><hr>
+<h3 id="swap">swap</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># disable swap for the current session</span>
+</span></span><span style="display:flex;"><span>swapoff -a
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># disable swap partition from getting auto mounted at boot</span>
+</span></span><span style="display:flex;"><span>sed <span style="color:#a3be8c">&#39;/^#/! {/swap/ s/^/# /}&#39;</span> -i /etc/fstab
+</span></span></code></pre></div><hr>
+<h3 id="tar">tar</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># extract archive</span>
+</span></span><span style="display:flex;"><span>tar -xvzf archive.tar.gz
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># list files in archive</span>
+</span></span><span style="display:flex;"><span>tar -tzvf archive.tar.gz
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># create archive</span>
+</span></span><span style="display:flex;"><span>tar -czvf archive.tar.gz /path/to/directory-or-file
+</span></span></code></pre></div><hr>
+<h3 id="tmux">tmux</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># start | list | attach | detach | kill</span>
+</span></span><span style="display:flex;"><span>tmux
+</span></span><span style="display:flex;"><span>tmux ls
+</span></span><span style="display:flex;"><span>tmux attach
+</span></span><span style="display:flex;"><span>CTRL B : detach-client
+</span></span><span style="display:flex;"><span>CTRL B : kill-session
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># zoom pane</span>
+</span></span><span style="display:flex;"><span>CTRL B z
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># mouse scrolling</span>
+</span></span><span style="display:flex;"><span>CTRL B <span style="color:#81a1c1">[</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># show pane numbers</span>
+</span></span><span style="display:flex;"><span>CTRL B q
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># move pane right</span>
+</span></span><span style="display:flex;"><span>CTRL B <span style="color:#81a1c1">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># move pane left</span>
+</span></span><span style="display:flex;"><span>CTRL B <span style="color:#81a1c1">{</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># split pane right</span>
+</span></span><span style="display:flex;"><span>CTRL B :split-pane -h
+</span></span><span style="display:flex;"><span>CTRL B %
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># split pane down</span>
+</span></span><span style="display:flex;"><span>CTRL B :split-pane -v
+</span></span><span style="display:flex;"><span>CTRL B <span style="color:#a3be8c">&#34;
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># change pane layout</span>
+</span></span><span style="display:flex;"><span>CTRL B SPACE
+</span></span><span style="display:flex;"><span>CTRL B : <span style="color:#81a1c1;font-weight:bold">select</span>-layout tiled
+</span></span><span style="display:flex;"><span>CTRL B : <span style="color:#81a1c1;font-weight:bold">select</span>-layout even-horizontal
+</span></span><span style="display:flex;"><span>CTRL B : <span style="color:#81a1c1;font-weight:bold">select</span>-layout even-vertical
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># change selected pane</span>
+</span></span><span style="display:flex;"><span>CTRL B o
+</span></span><span style="display:flex;"><span>CTRL B ARROW KEYS
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># rotate all panes</span>
+</span></span><span style="display:flex;"><span>CTRL B : CTRL o
+</span></span><span style="display:flex;"><span>CTRL B : rotate-window
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># resize pane</span>
+</span></span><span style="display:flex;"><span>CTRL B : resize-pane -UDLR <span style="color:#b48ead">20</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># close pane</span>
+</span></span><span style="display:flex;"><span>CTRL B x
+</span></span></code></pre></div><hr>
+<h3 id="ufw">ufw</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>apt install -y ufw
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#a3be8c">&#39;s/IPV6=yes/IPV6=no/g&#39;</span> /etc/default/ufw
+</span></span><span style="display:flex;"><span>ufw allow 22/tcp
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#39;y&#39;</span> <span style="color:#eceff4">|</span> ufw <span style="color:#81a1c1">enable</span>
+</span></span><span style="display:flex;"><span>ufw status
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># allow from a specific network to any ip but at a specific port and protocol</span>
+</span></span><span style="display:flex;"><span>ufw allow from 10.0.0.0/24 to any port <span style="color:#b48ead">445</span> proto tcp
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># allow from a specific network to a specific ip, port and protocol</span>
+</span></span><span style="display:flex;"><span>ufw allow from 10.0.0.0/24 to 10.0.0.2 port <span style="color:#b48ead">445</span> proto tcp
+</span></span></code></pre></div><hr>
+<h3 id="umask">umask</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># view the current mask value</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">umask</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># view the current mask value in symbolic notation</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">umask</span> -S
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># change the umask value only for the current session</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">umask</span> <span style="color:#b48ead">077</span>
+</span></span></code></pre></div><hr>
+<h3 id="wakeonlan">wakeonlan</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># server</span>
+</span></span><span style="display:flex;"><span>INTERFACE<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;enp2s0&#34;</span>
+</span></span><span style="display:flex;"><span>apt install -y ethtool
+</span></span><span style="display:flex;"><span>ethtool <span style="color:#a3be8c">${</span>INTERFACE<span style="color:#a3be8c">}</span> <span style="color:#616e87;font-style:italic"># &#34;Wake-on: g&#34; means enabled</span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#a3be8c">&lt;&lt; EOF &gt; /etc/network/interfaces.d/${INTERFACE}
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">auto ${INTERFACE}
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">iface ${INTERFACE} inet dhcp
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  ethernet-wol g
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">EOF</span>
+</span></span><span style="display:flex;"><span>systemctl restart networking.service
+</span></span><span style="display:flex;"><span>ethtool <span style="color:#a3be8c">${</span>INTERFACE<span style="color:#a3be8c">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># client</span>
+</span></span><span style="display:flex;"><span>apt install -y wakeonlan
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#34;alias wol=&#39;wakeonlan 58:8a:5a:0d:7c:8a&#39;&#34;</span> &gt;&gt; /home/user/.bash_aliases
+</span></span></code></pre></div><hr>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+
+    <span>
+        Powered by Hugo & PaperMod
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="light">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>actions | Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="
+manual trigger
+
+
+manual trigger
+name: Target
+
+run-name: ${{ inputs.uuid }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      uuid:
+        description: &#34;uuid&#34;
+        required: false
+        type: string
+      outcome:
+        description: &#34;outcome&#34;
+        required: true
+        type: choice
+        default: &#34;success&#34;
+        options:
+        - success
+        - failure
+
+jobs:
+
+  main:
+    runs-on: ubuntu-latest
+    steps:
+
+    - run: sleep 30
+
+    - shell: bash
+      run: |
+        if [[ &#34;${{ inputs.outcome }}&#34; == &#34;failure&#34; ]]; then
+          exit 1
+        fi
+#!/bin/bash
+
+set -e
+set -u
+set -o pipefail
+
+VERY_SECRET_TOKEN=&#34;&#34; # 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
+REPOSITORY_NAME=&#34;&#34;   # stuff
+REPOSITORY_OWNER=&#34;&#34;  # korliaftis
+WORKFLOW_BRANCH=&#34;&#34;   # master
+WORKFLOW_FILENAME=&#34;&#34; # target.yaml
+WORKFLOW_OUTCOME=&#34;&#34;  # success | failure
+
+WORKFLOW_UUID=$(uuidgen)
+
+curl -L -s --fail-with-body \
+  -X POST \
+  -H &#34;Accept: application/vnd.github&#43;json&#34; \
+  -H &#34;Authorization: Bearer ${VERY_SECRET_TOKEN}&#34; \
+  -H &#34;X-GitHub-Api-Version: 2022-11-28&#34; \
+  &#34;https://api.github.com/repos/${REPOSITORY_OWNER}/${REPOSITORY_NAME}/actions/workflows/${WORKFLOW_FILENAME}/dispatches&#34; \
+  -d &#34;{
+      \&#34;ref\&#34;: \&#34;${WORKFLOW_BRANCH}\&#34;,
+      \&#34;inputs\&#34;: {
+        \&#34;uuid\&#34;: \&#34;${WORKFLOW_UUID}\&#34;,
+        \&#34;outcome\&#34;: \&#34;${WORKFLOW_OUTCOME}\&#34;
+      }
+  }&#34;
+
+sleep 10
+
+WORKFLOW_RUN_ID=$(curl -L -s --fail-with-body \
+  -H &#34;Accept: application/vnd.github&#43;json&#34; \
+  -H &#34;Authorization: Bearer ${VERY_SECRET_TOKEN}&#34; \
+  -H &#34;X-GitHub-Api-Version: 2022-11-28&#34; \
+  &#34;https://api.github.com/repos/${REPOSITORY_OWNER}/${REPOSITORY_NAME}/actions/workflows/${WORKFLOW_FILENAME}/runs&#34; \
+  | jq -r --arg rn &#34;${WORKFLOW_UUID}&#34; &#39;.workflow_runs[] | select(.display_title==$rn) | .id&#39; | head -n 1)
+
+echo &#34;id: ${WORKFLOW_RUN_ID}&#34;
+
+echo &#34;url: https://github.com/${REPOSITORY_OWNER}/${REPOSITORY_NAME}/actions/runs/${WORKFLOW_RUN_ID}&#34;
+
+for i in {1..300}; do
+
+  WORKFLOW_RUN_STATUS=$(curl -L -s --fail-with-body \
+    -H &#34;Accept: application/vnd.github&#43;json&#34; \
+    -H &#34;Authorization: Bearer ${VERY_SECRET_TOKEN}&#34; \
+    -H &#34;X-GitHub-Api-Version: 2022-11-28&#34; \
+    &#34;https://api.github.com/repos/${REPOSITORY_OWNER}/${REPOSITORY_NAME}/actions/runs/${WORKFLOW_RUN_ID}&#34; \
+    | jq -r &#39;.status&#39;)
+
+  echo &#34;status: ${WORKFLOW_RUN_STATUS}&#34;
+
+  if [[ &#34;${WORKFLOW_RUN_STATUS}&#34; == &#34;completed&#34; ]]; then
+
+    WORKFLOW_RUN_CONCLUSION=$(curl -L -s --fail-with-body \
+      -H &#34;Accept: application/vnd.github&#43;json&#34; \
+      -H &#34;Authorization: Bearer ${VERY_SECRET_TOKEN}&#34; \
+      -H &#34;X-GitHub-Api-Version: 2022-11-28&#34; \
+      &#34;https://api.github.com/repos/${REPOSITORY_OWNER}/${REPOSITORY_NAME}/actions/runs/${WORKFLOW_RUN_ID}&#34; \
+      | jq -r &#39;.conclusion&#39;)
+
+    echo &#34;conclusion: ${WORKFLOW_RUN_CONCLUSION}&#34;
+
+    if [[ &#34;${WORKFLOW_RUN_CONCLUSION}&#34; == &#34;success&#34; ]]; then
+      exit 0
+    else
+      exit 1
+    fi
+
+  fi
+
+  sleep 5
+
+done
+">
+<meta name="author" content="user">
+<link rel="canonical" href="https://korliaftis.github.io/notes/actions.html">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.9a24e0a983acbd1d5709cdde8f60a89a08ff7fb64871fe6496c466c4d0350645.css" integrity="sha256-miTgqYOsvR1XCc3ej2Comgj/f7ZIcf5klsRmxNA1BkU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://korliaftis.github.io/assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://korliaftis.github.io/assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://korliaftis.github.io/assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://korliaftis.github.io/assets/favicon/apple-touch-icon.png">
+<link rel="mask-icon" href="https://korliaftis.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://korliaftis.github.io/notes/actions.html">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://korliaftis.github.io/">&gt; $ <span class="logoCursor">_</span>
+            </a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://korliaftis.github.io/search/" accesskey=/>
+                    <span>search</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://korliaftis.github.io/tags/">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      actions
+    </h1>
+    <div class="post-meta">
+
+</div>
+  </header> 
+  <div class="post-content"><ul>
+<li><a href="#manual-trigger">manual trigger</a></li>
+</ul>
+<hr>
+<h3 id="manual-trigger">manual trigger</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#81a1c1">name</span><span style="color:#eceff4">:</span> Target
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">run-name</span><span style="color:#eceff4">:</span> ${{ inputs.uuid }}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">on</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#81a1c1">workflow_dispatch</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">inputs</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#81a1c1">uuid</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">description</span><span style="color:#eceff4">:</span> <span style="color:#a3be8c">&#34;uuid&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">required</span><span style="color:#eceff4">:</span> <span style="color:#81a1c1;font-weight:bold">false</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">type</span><span style="color:#eceff4">:</span> string
+</span></span><span style="display:flex;"><span>      <span style="color:#81a1c1">outcome</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">description</span><span style="color:#eceff4">:</span> <span style="color:#a3be8c">&#34;outcome&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">required</span><span style="color:#eceff4">:</span> <span style="color:#81a1c1;font-weight:bold">true</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">type</span><span style="color:#eceff4">:</span> choice
+</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">default</span><span style="color:#eceff4">:</span> <span style="color:#a3be8c">&#34;success&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">options</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>        - success
+</span></span><span style="display:flex;"><span>        - failure
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">jobs</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#81a1c1">main</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">runs-on</span><span style="color:#eceff4">:</span> ubuntu-latest
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">steps</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#81a1c1">run</span><span style="color:#eceff4">:</span> sleep 30
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    - <span style="color:#81a1c1">shell</span><span style="color:#eceff4">:</span> bash
+</span></span><span style="display:flex;"><span>      <span style="color:#81a1c1">run</span><span style="color:#eceff4">:</span> <span style="color:#eceff4">|</span><span style="color:#616e87">
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87">        if [[ &#34;${{ inputs.outcome }}&#34; == &#34;failure&#34; ]]; then
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87">          exit 1
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87">        fi</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#5e81ac;font-style:italic">#!/bin/bash
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">set</span> -e
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">set</span> -u
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">set</span> -o pipefail
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>VERY_SECRET_TOKEN<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span> <span style="color:#616e87;font-style:italic"># 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</span>
+</span></span><span style="display:flex;"><span>REPOSITORY_NAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>   <span style="color:#616e87;font-style:italic"># stuff</span>
+</span></span><span style="display:flex;"><span>REPOSITORY_OWNER<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>  <span style="color:#616e87;font-style:italic"># korliaftis</span>
+</span></span><span style="display:flex;"><span>WORKFLOW_BRANCH<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>   <span style="color:#616e87;font-style:italic"># master</span>
+</span></span><span style="display:flex;"><span>WORKFLOW_FILENAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span> <span style="color:#616e87;font-style:italic"># target.yaml</span>
+</span></span><span style="display:flex;"><span>WORKFLOW_OUTCOME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>  <span style="color:#616e87;font-style:italic"># success | failure</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>WORKFLOW_UUID<span style="color:#81a1c1">=</span><span style="color:#81a1c1;font-weight:bold">$(</span>uuidgen<span style="color:#81a1c1;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -L -s --fail-with-body <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>  -X POST <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>  -H <span style="color:#a3be8c">&#34;Accept: application/vnd.github+json&#34;</span> <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>  -H <span style="color:#a3be8c">&#34;Authorization: Bearer </span><span style="color:#a3be8c">${</span>VERY_SECRET_TOKEN<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span> <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>  -H <span style="color:#a3be8c">&#34;X-GitHub-Api-Version: 2022-11-28&#34;</span> <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a3be8c">&#34;https://api.github.com/repos/</span><span style="color:#a3be8c">${</span>REPOSITORY_OWNER<span style="color:#a3be8c">}</span><span style="color:#a3be8c">/</span><span style="color:#a3be8c">${</span>REPOSITORY_NAME<span style="color:#a3be8c">}</span><span style="color:#a3be8c">/actions/workflows/</span><span style="color:#a3be8c">${</span>WORKFLOW_FILENAME<span style="color:#a3be8c">}</span><span style="color:#a3be8c">/dispatches&#34;</span> <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>  -d <span style="color:#a3be8c">&#34;{
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">      \&#34;ref\&#34;: \&#34;</span><span style="color:#a3be8c">${</span>WORKFLOW_BRANCH<span style="color:#a3be8c">}</span><span style="color:#a3be8c">\&#34;,
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">      \&#34;inputs\&#34;: {
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">        \&#34;uuid\&#34;: \&#34;</span><span style="color:#a3be8c">${</span>WORKFLOW_UUID<span style="color:#a3be8c">}</span><span style="color:#a3be8c">\&#34;,
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">        \&#34;outcome\&#34;: \&#34;</span><span style="color:#a3be8c">${</span>WORKFLOW_OUTCOME<span style="color:#a3be8c">}</span><span style="color:#a3be8c">\&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">      }
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  }&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sleep <span style="color:#b48ead">10</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>WORKFLOW_RUN_ID<span style="color:#81a1c1">=</span><span style="color:#81a1c1;font-weight:bold">$(</span>curl -L -s --fail-with-body <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>  -H <span style="color:#a3be8c">&#34;Accept: application/vnd.github+json&#34;</span> <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>  -H <span style="color:#a3be8c">&#34;Authorization: Bearer </span><span style="color:#a3be8c">${</span>VERY_SECRET_TOKEN<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span> <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>  -H <span style="color:#a3be8c">&#34;X-GitHub-Api-Version: 2022-11-28&#34;</span> <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a3be8c">&#34;https://api.github.com/repos/</span><span style="color:#a3be8c">${</span>REPOSITORY_OWNER<span style="color:#a3be8c">}</span><span style="color:#a3be8c">/</span><span style="color:#a3be8c">${</span>REPOSITORY_NAME<span style="color:#a3be8c">}</span><span style="color:#a3be8c">/actions/workflows/</span><span style="color:#a3be8c">${</span>WORKFLOW_FILENAME<span style="color:#a3be8c">}</span><span style="color:#a3be8c">/runs&#34;</span> <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>  <span style="color:#eceff4">|</span> jq -r --arg rn <span style="color:#a3be8c">&#34;</span><span style="color:#a3be8c">${</span>WORKFLOW_UUID<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span> <span style="color:#a3be8c">&#39;.workflow_runs[] | select(.display_title==$rn) | .id&#39;</span> <span style="color:#eceff4">|</span> head -n 1<span style="color:#81a1c1;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#34;id: </span><span style="color:#a3be8c">${</span>WORKFLOW_RUN_ID<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#34;url: https://github.com/</span><span style="color:#a3be8c">${</span>REPOSITORY_OWNER<span style="color:#a3be8c">}</span><span style="color:#a3be8c">/</span><span style="color:#a3be8c">${</span>REPOSITORY_NAME<span style="color:#a3be8c">}</span><span style="color:#a3be8c">/actions/runs/</span><span style="color:#a3be8c">${</span>WORKFLOW_RUN_ID<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">for</span> i in <span style="color:#81a1c1">{</span>1..300<span style="color:#81a1c1">}</span><span style="color:#eceff4">;</span> <span style="color:#81a1c1;font-weight:bold">do</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  WORKFLOW_RUN_STATUS<span style="color:#81a1c1">=</span><span style="color:#81a1c1;font-weight:bold">$(</span>curl -L -s --fail-with-body <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>    -H <span style="color:#a3be8c">&#34;Accept: application/vnd.github+json&#34;</span> <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>    -H <span style="color:#a3be8c">&#34;Authorization: Bearer </span><span style="color:#a3be8c">${</span>VERY_SECRET_TOKEN<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span> <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>    -H <span style="color:#a3be8c">&#34;X-GitHub-Api-Version: 2022-11-28&#34;</span> <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>    <span style="color:#a3be8c">&#34;https://api.github.com/repos/</span><span style="color:#a3be8c">${</span>REPOSITORY_OWNER<span style="color:#a3be8c">}</span><span style="color:#a3be8c">/</span><span style="color:#a3be8c">${</span>REPOSITORY_NAME<span style="color:#a3be8c">}</span><span style="color:#a3be8c">/actions/runs/</span><span style="color:#a3be8c">${</span>WORKFLOW_RUN_ID<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span> <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>    <span style="color:#eceff4">|</span> jq -r <span style="color:#a3be8c">&#39;.status&#39;</span><span style="color:#81a1c1;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#34;status: </span><span style="color:#a3be8c">${</span>WORKFLOW_RUN_STATUS<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#81a1c1;font-weight:bold">if</span> <span style="color:#81a1c1">[[</span> <span style="color:#a3be8c">&#34;</span><span style="color:#a3be8c">${</span>WORKFLOW_RUN_STATUS<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span> <span style="color:#81a1c1">==</span> <span style="color:#a3be8c">&#34;completed&#34;</span> <span style="color:#81a1c1">]]</span><span style="color:#eceff4">;</span> <span style="color:#81a1c1;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    WORKFLOW_RUN_CONCLUSION<span style="color:#81a1c1">=</span><span style="color:#81a1c1;font-weight:bold">$(</span>curl -L -s --fail-with-body <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>      -H <span style="color:#a3be8c">&#34;Accept: application/vnd.github+json&#34;</span> <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>      -H <span style="color:#a3be8c">&#34;Authorization: Bearer </span><span style="color:#a3be8c">${</span>VERY_SECRET_TOKEN<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span> <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>      -H <span style="color:#a3be8c">&#34;X-GitHub-Api-Version: 2022-11-28&#34;</span> <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>      <span style="color:#a3be8c">&#34;https://api.github.com/repos/</span><span style="color:#a3be8c">${</span>REPOSITORY_OWNER<span style="color:#a3be8c">}</span><span style="color:#a3be8c">/</span><span style="color:#a3be8c">${</span>REPOSITORY_NAME<span style="color:#a3be8c">}</span><span style="color:#a3be8c">/actions/runs/</span><span style="color:#a3be8c">${</span>WORKFLOW_RUN_ID<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span> <span style="color:#ebcb8b">\
+</span></span></span><span style="display:flex;"><span>      <span style="color:#eceff4">|</span> jq -r <span style="color:#a3be8c">&#39;.conclusion&#39;</span><span style="color:#81a1c1;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#34;conclusion: </span><span style="color:#a3be8c">${</span>WORKFLOW_RUN_CONCLUSION<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">if</span> <span style="color:#81a1c1">[[</span> <span style="color:#a3be8c">&#34;</span><span style="color:#a3be8c">${</span>WORKFLOW_RUN_CONCLUSION<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span> <span style="color:#81a1c1">==</span> <span style="color:#a3be8c">&#34;success&#34;</span> <span style="color:#81a1c1">]]</span><span style="color:#eceff4">;</span> <span style="color:#81a1c1;font-weight:bold">then</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#81a1c1">exit</span> <span style="color:#b48ead">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">else</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#81a1c1">exit</span> <span style="color:#b48ead">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#81a1c1;font-weight:bold">fi</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  sleep <span style="color:#b48ead">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1;font-weight:bold">done</span>
+</span></span></code></pre></div><hr>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+
+    <span>
+        Powered by Hugo & PaperMod
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

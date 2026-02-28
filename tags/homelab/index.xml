@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Homelab on Blog</title>
+    <link>https://korliaftis.github.io/tags/homelab/</link>
+    <description>Recent content in Homelab on Blog</description>
+    <generator>Hugo -- 0.156.0</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 26 Oct 2025 00:00:00 +0200</lastBuildDate>
+    <atom:link href="https://korliaftis.github.io/tags/homelab/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Monitoring with Prometheus</title>
+      <link>https://korliaftis.github.io/posts/monitoring-with-prometheus.html</link>
+      <pubDate>Sun, 26 Oct 2025 00:00:00 +0200</pubDate>
+      <guid>https://korliaftis.github.io/posts/monitoring-with-prometheus.html</guid>
+      <description>&lt;p&gt;Sometimes everything looks fine on the surface but appearances can be deceiving. Here we will see how to set up the Prometheus monitoring stack to monitor our stuff and send alerts when needed.&lt;/p&gt;
+&lt;p&gt;The core component of the Prometheus monitoring stack is the Prometheus server. We configure targets for the server (meaning endpoints that expose metrics) and the server connects to them at regular intervals to scrape their metrics and store them locally in a time series database (TSDB).&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Connecting the Dots</title>
+      <link>https://korliaftis.github.io/posts/connecting-the-dots.html</link>
+      <pubDate>Sun, 23 Feb 2025 00:00:00 +0200</pubDate>
+      <guid>https://korliaftis.github.io/posts/connecting-the-dots.html</guid>
+      <description>&lt;p&gt;We now have a working system with several tools installed but in most cases we want these tools to work together and reach a specific state before we can start using them. Once we define what that state should look like we also need a simple way to create and tear down environments as needed.&lt;/p&gt;
+&lt;p&gt;For my use case, that state includes a Kubernetes cluster running Traefik, Prometheus and Argo CD. I automate the environment creation process with a Bash script and Terraform.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Laying the Foundation</title>
+      <link>https://korliaftis.github.io/posts/laying-the-foundation.html</link>
+      <pubDate>Sun, 19 Jan 2025 00:00:00 +0200</pubDate>
+      <guid>https://korliaftis.github.io/posts/laying-the-foundation.html</guid>
+      <description>&lt;p&gt;Since I started working with computers I always loved the idea of a homelab, a safe space to mess with stuff, break stuff and sometimes learn a few things along the way.&lt;/p&gt;
+&lt;p&gt;Back when I was trying to land my first tech job my homelab was a bunch of noisy Cisco switches and routers. Along the way I discovered GNS3 and eventually those physical switches and routers were virtualized on my Sony Vaio VGN-N31Z with it&amp;rsquo;s Core 2 Duo, 2GB of RAM and 120GB of spinning rust.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

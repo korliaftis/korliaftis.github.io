@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="light">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>helm | Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="
+operations
+service accounts
+mount directories
+extra objects
+
+
+operations
+show all releases in all namespaces without any filter applied..
+helm list -Aa
+get the values for a helm release..
+helm get values ${NAME}
+helm get values ${NAME} --all
+render templates..
+helm template ${NAME} . -f values.yaml -s templates/deployment.yaml
+get the helm release secret in plain text..
+kubectl get secrets sh.helm.release.v1.traefik.v1 -n traefik -o jsonpath=&#39;{.data.release}&#39; | base64 --decode | base64 --decode | gzip -d | jq
+
+service accounts
+https://github.com/kubernetes/kubernetes/issues/76367#issuecomment-481689160">
+<meta name="author" content="user">
+<link rel="canonical" href="https://korliaftis.github.io/notes/helm.html">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.9a24e0a983acbd1d5709cdde8f60a89a08ff7fb64871fe6496c466c4d0350645.css" integrity="sha256-miTgqYOsvR1XCc3ej2Comgj/f7ZIcf5klsRmxNA1BkU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://korliaftis.github.io/assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://korliaftis.github.io/assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://korliaftis.github.io/assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://korliaftis.github.io/assets/favicon/apple-touch-icon.png">
+<link rel="mask-icon" href="https://korliaftis.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://korliaftis.github.io/notes/helm.html">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://korliaftis.github.io/">&gt; $ <span class="logoCursor">_</span>
+            </a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://korliaftis.github.io/search/" accesskey=/>
+                    <span>search</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://korliaftis.github.io/tags/">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      helm
+    </h1>
+    <div class="post-meta">
+
+</div>
+  </header> 
+  <div class="post-content"><ul>
+<li><a href="#operations">operations</a></li>
+<li><a href="#service-accounts">service accounts</a></li>
+<li><a href="#mount-directories">mount directories</a></li>
+<li><a href="#extra-objects">extra objects</a></li>
+</ul>
+<hr>
+<h3 id="operations">operations</h3>
+<p>show all releases in all namespaces without any filter applied..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>helm list -Aa
+</span></span></code></pre></div><p>get the values for a helm release..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>helm get values <span style="color:#a3be8c">${</span>NAME<span style="color:#a3be8c">}</span>
+</span></span><span style="display:flex;"><span>helm get values <span style="color:#a3be8c">${</span>NAME<span style="color:#a3be8c">}</span> --all
+</span></span></code></pre></div><p>render templates..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>helm template <span style="color:#a3be8c">${</span>NAME<span style="color:#a3be8c">}</span> . -f values.yaml -s templates/deployment.yaml
+</span></span></code></pre></div><p>get the helm release secret in plain text..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>kubectl get secrets sh.helm.release.v1.traefik.v1 -n traefik -o jsonpath<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#39;{.data.release}&#39;</span> <span style="color:#eceff4">|</span> base64 --decode <span style="color:#eceff4">|</span> base64 --decode <span style="color:#eceff4">|</span> gzip -d <span style="color:#eceff4">|</span> jq
+</span></span></code></pre></div><hr>
+<h3 id="service-accounts">service accounts</h3>
+<p><a href="https://github.com/kubernetes/kubernetes/issues/76367#issuecomment-481689160">https://github.com/kubernetes/kubernetes/issues/76367#issuecomment-481689160</a></p>
+<hr>
+<h3 id="mount-directories">mount directories</h3>
+<p>Mounting multiple directories to a pod while preserving the original directory structure.</p>
+<p>Let&rsquo;s say we have a directory with three files and a subdirectory with three more files inside it and we want to mount all of these into a pod..</p>
+<pre tabindex="0"><code>.
+├── animals
+│   ├── cat
+│   ├── dog
+│   └── mouse
+├── blue
+├── green
+└── magenta
+</code></pre><p>We do the following..</p>
+<ol>
+<li>inside the Helm chart we create a directory called <code>data</code> and copy all the files</li>
+<li>under the <code>templates</code> directory we create a <code>configmap.yaml</code> file.. 
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#81a1c1">apiVersion</span><span style="color:#eceff4">:</span> v1
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">kind</span><span style="color:#eceff4">:</span> ConfigMap
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">metadata</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#81a1c1">name</span><span style="color:#eceff4">:</span> data
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">data</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>{{ $files                  := .Files }}
+</span></span><span style="display:flex;"><span>{{ $filesLocalPath         := &#34;data/**&#34; }}
+</span></span><span style="display:flex;"><span>{{ $trimPrefixUnderscores  := &#34;data_&#34; }}
+</span></span><span style="display:flex;"><span>{{ range $path, $content   := .Files.Glob $filesLocalPath }}
+</span></span><span style="display:flex;"><span>{{ regexReplaceAll &#34;\\/+&#34; $path &#34;_&#34; | trimPrefix $trimPrefixUnderscores | indent 2 }}: |-
+</span></span><span style="display:flex;"><span>{{ $files.Get $path | indent 4  }}
+</span></span><span style="display:flex;"><span>{{ end }}
+</span></span></code></pre></div></li>
+<li>again under the <code>templates</code> directory we create a <code>deployment.yaml</code> file..
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#81a1c1">apiVersion</span><span style="color:#eceff4">:</span> apps/v1
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">kind</span><span style="color:#eceff4">:</span> Deployment
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">metadata</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#81a1c1">name</span><span style="color:#eceff4">:</span> demo
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">spec</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#81a1c1">replicas</span><span style="color:#eceff4">:</span> <span style="color:#b48ead">1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#81a1c1">selector</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">matchLabels</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#81a1c1">app</span><span style="color:#eceff4">:</span> demo
+</span></span><span style="display:flex;"><span>  <span style="color:#81a1c1">template</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">metadata</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#81a1c1">labels</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">app</span><span style="color:#eceff4">:</span> demo
+</span></span><span style="display:flex;"><span>      <span style="color:#81a1c1">annotations</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">checksum/configmap</span><span style="color:#eceff4">:</span> {{ include (print $.Template.BasePath &#34;/configmap.yaml&#34;) . | sha256sum }} <span style="color:#616e87;font-style:italic"># we add this</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">spec</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#81a1c1">containers</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>        - <span style="color:#81a1c1">name</span><span style="color:#eceff4">:</span> app
+</span></span><span style="display:flex;"><span>          <span style="color:#81a1c1">image</span><span style="color:#eceff4">:</span> nginx
+</span></span><span style="display:flex;"><span>          <span style="color:#81a1c1">volumeMounts</span><span style="color:#eceff4">:</span>                                                                               <span style="color:#616e87;font-style:italic"># we add these</span>
+</span></span><span style="display:flex;"><span>          {{ $filesLocalPath         := &#34;data/**&#34; }}                                                  <span style="color:#616e87;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>          {{ $trimPrefixSlashes      := &#34;data/&#34; }}                                                    <span style="color:#616e87;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>          {{ $trimPrefixUnderscores  := &#34;data_&#34; }}                                                    <span style="color:#616e87;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>          {{ range $path, $content   := .Files.Glob $filesLocalPath }}                                <span style="color:#616e87;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>          - <span style="color:#81a1c1">name</span><span style="color:#eceff4">:</span> data                                                                                <span style="color:#616e87;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#81a1c1">mountPath</span><span style="color:#eceff4">:</span> /etc/data/{{ $path | trimPrefix $trimPrefixSlashes }}                          <span style="color:#616e87;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#81a1c1">subPath</span><span style="color:#eceff4">:</span> {{ regexReplaceAll &#34;\\/+&#34; $path &#34;_&#34; | trimPrefix $trimPrefixUnderscores }}       <span style="color:#616e87;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#81a1c1">readOnly</span><span style="color:#eceff4">:</span> <span style="color:#81a1c1;font-weight:bold">true</span>                                                                            <span style="color:#616e87;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>          {{ end }}                                                                                   <span style="color:#616e87;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#81a1c1">volumes</span><span style="color:#eceff4">:</span>                                                                                        <span style="color:#616e87;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#81a1c1">name</span><span style="color:#eceff4">:</span> data                                                                                    <span style="color:#616e87;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#81a1c1">configMap</span><span style="color:#eceff4">:</span>                                                                                    <span style="color:#616e87;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#81a1c1">name</span><span style="color:#eceff4">:</span> data                                                                                  <span style="color:#616e87;font-style:italic">#</span>
+</span></span></code></pre></div></li>
+</ol>
+<p>How it works..</p>
+<ul>
+<li>we use a ConfigMap to store the path and the content of the files in a key-value format</li>
+<li>since the ConfigMap can not store file paths because a ConfigMap key can only contain alphanumeric characters and the <code>.</code>, <code>-</code> and <code>_</code> symbols, we replace the <code>/</code> from the paths with <code>_</code> so the file <code>animals/cat</code> is stored as <code>animals_cat</code></li>
+<li>when we mount the file to the pod we do the opposite and replace the <code>_</code> with <code>/</code></li>
+</ul>
+<p>Considerations..</p>
+<ul>
+<li>a disadvantage of this approach is that we can&rsquo;t have files with names that contain underscores</li>
+<li>the files from the ConfigMap are mounted when the pod starts and to update them the pod must be restarted or redeployed, to automate this we add an annotation to the pod with the SHA256 checksum of the rendered ConfigMap so when it changes the pod is automatically recreated</li>
+<li>the files from the ConfigMap are mounted on the pod individually and not as a single directory, meaning that the contents of the <code>animals</code> directory are mounted as <code>data/animals/cat</code>, <code>data/animals/dog</code> and <code>data/animals/mouse</code> rather than replacing the entire <code>data/animals</code> directory of the pod, so if the <code>data/animals</code> directory already exists in the pod and contains files not defined in the ConfigMap (for example <code>data/animals/tiger</code>) those files will remain present after the ConfigMap is mounted</li>
+</ul>
+<hr>
+<h3 id="extra-objects">extra objects</h3>
+<p>When we need to apply additional YAML manifests alongside a Helm chart..</p>
+<ol>
+<li>under <code>templates</code> we create a file called <code>extra-manifests.yaml</code> with the following content..
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>{{ range .Values.extraObjects }}
+</span></span><span style="display:flex;"><span><span style="color:#8fbcbb">---</span>
+</span></span><span style="display:flex;"><span>{{ if typeIs &#34;string&#34; . }}
+</span></span><span style="display:flex;"><span>    {{- tpl . $ }}
+</span></span><span style="display:flex;"><span>{{- else }}
+</span></span><span style="display:flex;"><span>    {{- tpl (toYaml .) $ }}
+</span></span><span style="display:flex;"><span>{{- end }}
+</span></span><span style="display:flex;"><span>{{ end }}
+</span></span></code></pre></div></li>
+<li>in the values.yaml file we add the following block
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#81a1c1">extraObjects</span><span style="color:#eceff4">:</span> <span style="color:#eceff4">[]</span>
+</span></span></code></pre></div></li>
+</ol>
+<p>Example usage..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#81a1c1">extraObjects</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>- <span style="color:#81a1c1">apiVersion</span><span style="color:#eceff4">:</span> v1
+</span></span><span style="display:flex;"><span>  <span style="color:#81a1c1">kind</span><span style="color:#eceff4">:</span> ConfigMap
+</span></span><span style="display:flex;"><span>  <span style="color:#81a1c1">metadata</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">labels</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">name</span><span style="color:#eceff4">:</span> blue
+</span></span><span style="display:flex;"><span>  <span style="color:#81a1c1">data</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">color</span><span style="color:#eceff4">:</span> <span style="color:#a3be8c">&#34;blue&#34;</span>
+</span></span><span style="display:flex;"><span>- <span style="color:#81a1c1">apiVersion</span><span style="color:#eceff4">:</span> v1
+</span></span><span style="display:flex;"><span>  <span style="color:#81a1c1">kind</span><span style="color:#eceff4">:</span> ConfigMap
+</span></span><span style="display:flex;"><span>  <span style="color:#81a1c1">metadata</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">labels</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">name</span><span style="color:#eceff4">:</span> green
+</span></span><span style="display:flex;"><span>  <span style="color:#81a1c1">data</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">color</span><span style="color:#eceff4">:</span> <span style="color:#a3be8c">&#34;green&#34;</span>
+</span></span></code></pre></div><hr>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+
+    <span>
+        Powered by Hugo & PaperMod
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

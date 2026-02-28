@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="light">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Connecting the Dots | Blog</title>
+<meta name="keywords" content="Homelab, Kubernetes">
+<meta name="description" content="We now have a working system with several tools installed but in most cases we want these tools to work together and reach a specific state before we can start using them. Once we define what that state should look like we also need a simple way to create and tear down environments as needed.
+For my use case, that state includes a Kubernetes cluster running Traefik, Prometheus and Argo CD. I automate the environment creation process with a Bash script and Terraform.">
+<meta name="author" content="user">
+<link rel="canonical" href="https://korliaftis.github.io/posts/connecting-the-dots.html">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.9a24e0a983acbd1d5709cdde8f60a89a08ff7fb64871fe6496c466c4d0350645.css" integrity="sha256-miTgqYOsvR1XCc3ej2Comgj/f7ZIcf5klsRmxNA1BkU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://korliaftis.github.io/assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://korliaftis.github.io/assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://korliaftis.github.io/assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://korliaftis.github.io/assets/favicon/apple-touch-icon.png">
+<link rel="mask-icon" href="https://korliaftis.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://korliaftis.github.io/posts/connecting-the-dots.html">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://korliaftis.github.io/">&gt; $ <span class="logoCursor">_</span>
+            </a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://korliaftis.github.io/search/" accesskey=/>
+                    <span>search</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://korliaftis.github.io/tags/">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Connecting the Dots
+    </h1>
+    <div class="post-meta"><span>February 23, 2025</span>
+
+</div>
+  </header> 
+  <div class="post-content"><p>We now have a working system with several tools installed but in most cases we want these tools to work together and reach a specific state before we can start using them. Once we define what that state should look like we also need a simple way to create and tear down environments as needed.</p>
+<p>For my use case, that state includes a Kubernetes cluster running Traefik, Prometheus and Argo CD. I automate the environment creation process with a Bash script and Terraform.</p>
+<p>To run the script, you need:</p>
+<ul>
+<li>a domain with <code>A</code> records pointing to your system’s local IP address</li>
+<li>a wildcard TLS certificate</li>
+<li>a GitHub account with at least one repository</li>
+<li>your SSH key added to the GitHub account</li>
+</ul>
+<p>To download the script run the following..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -Lo /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts/minikube.sh https://blog.korliaftis.com/scripts/minikube.sh
+</span></span><span style="display:flex;"><span>chmod +x /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts/minikube.sh
+</span></span></code></pre></div><p>Before running the script, make sure to edit it and update the following variables..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>DOMAIN_NAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>          <span style="color:#616e87;font-style:italic"># your domain name - &#34;domain.xyz&#34;</span>
+</span></span><span style="display:flex;"><span>GITHUB_USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>      <span style="color:#616e87;font-style:italic"># your github username - &#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>GITHUB_REPOSITORY<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>    <span style="color:#616e87;font-style:italic"># your github repository name - &#34;argocd&#34;</span>
+</span></span><span style="display:flex;"><span>MINIKUBE_NODES<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>       <span style="color:#616e87;font-style:italic"># the number of minikube nodes - &#34;3&#34;</span>
+</span></span><span style="display:flex;"><span>TLS_PUBLIC_KEY_PATH<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>  <span style="color:#616e87;font-style:italic"># the full path to the tls public key - &#34;/home/user/.tls/fullchain.cer&#34;</span>
+</span></span><span style="display:flex;"><span>TLS_PRIVATE_KEY_PATH<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span> <span style="color:#616e87;font-style:italic"># the full path to the tls private key - &#34;/home/user/.tls/domain.xyz.key&#34;</span>
+</span></span><span style="display:flex;"><span>SSH_PRIVATE_KEY_PATH<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span> <span style="color:#616e87;font-style:italic"># the full path to the ssh private key - &#34;/home/user/.ssh/id_ed25519&#34;</span>
+</span></span></code></pre></div><p>In summary, the script first performs a few preflight checks to ensure everything is in order, it then generates Terraform manifests in the <code>${HOME}/minikube</code> directory and finally applies them in two stages to avoid dependency errors.</p>
+<p><strong>When you run the script it will delete all existing Minikube clusters and contents from the <code>${HOME}/minikube</code> directory.</strong></p>
+<p>In the following sections we will see more details about some key components.</p>
+<hr>
+<h3 id="minikube">minikube</h3>
+<p>We use Minikube with the Docker driver. During installation we created a custom Docker network named <code>minikube</code> allowing the nodes to receive predictable IP addresses.</p>
+<p>The number of nodes to be created is defined by the <code>MINIKUBE_NODES</code> variable in the script.</p>
+<p>Some of the workloads we deploy require at least 2 nodes otherwise some pods will not be scheduled and remain in a <code>Pending</code> state.</p>
+<hr>
+<h3 id="haproxy">haproxy</h3>
+<p>To access HTTP workloads running on Minikube we use the HAProxy we installed on our system.</p>
+<p>It listens on ports 80 and 443 of the host system and forwards all incoming traffic to the <code>minikube</code> Docker network on ports 31080 and 31443 respectively. For this setup to work, the Kubernetes Ingress Controller (Istio, Traefik, etc) must be configured to create NodePort services on those ports.</p>
+<p><img loading="lazy" src="/assets/content/6d307a631a4789e7b6d4b5a0100d9b82/001.svg#center"></p>
+<p>We have configured HAProxy with <a href="https://www.haproxy.com/documentation/haproxy-configuration-tutorials/reliability/health-checks/#tcp-health-checks">active TCP healthchecks</a> so it routes traffic only to backends that have a server running. I have tried some alternatives to HAProxy but none of them could do this simple thing out of the box.. for example NGINX only offers <a href="https://docs.nginx.com/nginx/admin-guide/load-balancer/tcp-health-check/#passive-tcp-health-checks">passive TCP healthchecks</a> in it&rsquo;s free version and for <a href="https://docs.nginx.com/nginx/admin-guide/load-balancer/tcp-health-check/#active-tcp-health-checks">active TCP healthchecks</a> we need to use their paid version. I also tried Traefik but as of today it <a href="https://github.com/traefik/traefik/issues/5598">doesn&rsquo;t support any TCP healthchecks</a> for it&rsquo;s backends.</p>
+<p>In general HAProxy just works, we can access it&rsquo;s dashboard in port 8404 and view it&rsquo;s logs by doing..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo journalctl -u haproxy -f
+</span></span></code></pre></div><p>One alternative approach to the whole &ldquo;reverse proxy in front of Minikube&rdquo; thing would be to use <a href="https://metallb.io">MetalLB</a> but I could not make it work consistently with Minikube. That said, it&rsquo;s been some time since I last tested it and it may work great now.</p>
+<p>One disadvantage of this setup is that ports 80 and 443 of the host system are always bound to HAProxy even when Minikube is not running. If this is something that bothers you, disable the autostart of the HAProxy systemd service and start it only when you need it or even better use a different network interface for HAproxy.</p>
+<hr>
+<h3 id="traefik">traefik</h3>
+<p>As discussed in the HAProxy section, our Ingress Controller needs to use NodePort services on ports 31080 and 3144 so we configure this using the <a href="https://artifacthub.io/packages/helm/traefik/traefik">Traefik</a> Helm chart values file.</p>
+<p>Another thing we configure is a Kubernetes secret on the <code>traefik</code> namespace with the certificate for our domain. Traefik will use this secret to create a <a href="https://doc.traefik.io/traefik/reference/routing-configuration/kubernetes/crd/tcp/tlsstore/">TLSStore</a> which will handle TLS for our domain automatically.</p>
+<p>After the installation an <code>IngressClass</code> with the name &ldquo;traefik&rdquo; will be created and it will be configured to be the default <code>IngressClass</code> of the cluster. This means that we don&rsquo;t have to set the <code>ingressClassName:</code> field in every <code>Ingress</code> resource we create.</p>
+<p>If in the future we decide to use multiple Ingress Controllers we can use this field to select which one will handle each <code>Ingress</code> in a case by case basis..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#81a1c1">apiVersion</span><span style="color:#eceff4">:</span> networking.k8s.io/v1
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">kind</span><span style="color:#eceff4">:</span> Ingress
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">metadata</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># [...]</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">spec</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#81a1c1">ingressClassName</span><span style="color:#eceff4">:</span> <span style="color:#a3be8c">&#34;traefik&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># [...]</span>
+</span></span></code></pre></div><p>One final note, Traefik evaluates routing rules based on their length and not based on their &ldquo;specificity&rdquo; meaning that if we create an <code>Ingress</code> for the host <code>blue.domain.xyz</code> and another one for the host <code>*.domain.xyz</code> the rules that will be created will be..</p>
+<ul>
+<li><code>Host('blue.domain.xyz'</code></li>
+<li><code>HostRegexp('{subdomain:[a-zA-Z0-9-]+}.domain.xyz')</code></li>
+</ul>
+<p>The second rule is longer so it will be evaluated first and since it will match the request to <code>blue.domain.xyz</code> it will always take precedence over the more specific route.</p>
+<p>To solve this we can manually set the <a href="https://doc.traefik.io/traefik/routing/routers/#priority">priority</a> on the <code>Ingress</code> using an annotation..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#81a1c1">apiVersion</span><span style="color:#eceff4">:</span> networking.k8s.io/v1
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">kind</span><span style="color:#eceff4">:</span> Ingress
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">metadata</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># [...]</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#81a1c1">annotations</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#81a1c1">traefik.ingress.kubernetes.io/router.priority</span><span style="color:#eceff4">:</span> <span style="color:#a3be8c">&#34;1&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># [...]</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">spec</span><span style="color:#eceff4">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># [...]</span>
+</span></span></code></pre></div><p>The priority can be any value between 1 and 1000 (higher is better). We could either annotate the &ldquo;wildcard&rdquo; <code>Ingress</code> with a low priority or annotate the &ldquo;non-wildcard&rdquo; <code>Ingress</code> with a high priority, either way our problem will be solved.</p>
+<hr>
+<h3 id="prometheus">prometheus</h3>
+<p>We install 2 Helm charts related to Prometheus, the <a href="https://artifacthub.io/packages/helm/prometheus-community/prometheus-operator-crds">prometheus-operator-crds</a> and the <a href="https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack">kube-prometheus-stack</a>.</p>
+<p>We mostly use default values for both except from the way the Prometheus operator detects <code>ServiceMonitor</code> resources. The default behavior is for Prometheus to scrape a <code>ServiceMonitor</code> only when it has matching labels. This is useful if we have multiple Prometheus operators on the same cluster.</p>
+<p>In summary the way it works is the following..</p>
+<ul>
+<li>if <code>serviceMonitorSelectorNilUsesHelmValues: false</code> is configured in the values file we need to run <code>kubectl get prometheuses.monitoring.coreos.com -n monitoring -o yaml | grep -A8 serviceMonitorSelector</code> and add the output as labels to our <code>ServiceMonitor</code></li>
+<li>if <code>serviceMonitorSelectorNilUsesHelmValues: true</code> is configured in the values file the <code>ServiceMonitor</code> will be scraped automatically</li>
+</ul>
+<p>In either case the service monitors can be in any namespace.</p>
+<p>After the installation we can access Prometheus at <code>https://prometheus.${DOMAIN_NAME}</code> and Alertmanager at <code>https://alertmanager.${DOMAIN_NAME}</code>.</p>
+<hr>
+<h3 id="argo-cd">argo cd</h3>
+<p>We install the <a href="https://artifacthub.io/packages/helm/argo/argo-cd">argo-cd</a> Helm chart and we just configure ingress related settings through the values file. Additionally we create a Kubernetes secret to store the GitHub account credentials and repository information.</p>
+<p>The web interface is available at <code>https://argocd.${DOMAIN_NAME}</code>, to login use <code>admin</code> as the username and the output of the following command as the password..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;{.data.password}&#34;</span> <span style="color:#eceff4">|</span> base64 --decode <span style="color:#81a1c1">&amp;&amp;</span> <span style="color:#81a1c1">echo</span>
+</span></span></code></pre></div><hr>
+<h3 id="troubleshooting">troubleshooting</h3>
+<p>Usually everything works fine but if there is any issue, start troubleshooting the path of the requests..</p>
+<ol>
+<li><strong>Is DNS pointing to the IP of our system?</strong>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>dig <span style="color:#a3be8c">${</span>DOMAIN_NAME<span style="color:#a3be8c">}</span>
+</span></span><span style="display:flex;"><span>dig *.<span style="color:#a3be8c">${</span>DOMAIN_NAME<span style="color:#a3be8c">}</span>
+</span></span></code></pre></div></li>
+<li><strong>Does HAProxy see the backends as online?</strong>
+<ul>
+<li>go with your browser to the IP of your system in port 8404 - <code>http://192.168.1.2:8404</code></li>
+</ul>
+</li>
+<li><strong>Do the HAProxy logs show our connection attempts?</strong>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo journalctl -u haproxy -f
+</span></span></code></pre></div></li>
+<li><strong>Have all the Helm charts installed correctly?</strong>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>helm list -Aa
+</span></span></code></pre></div></li>
+<li><strong>Are all the pods running?</strong>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>kubectl get pods -A
+</span></span></code></pre></div></li>
+</ol>
+<p>This is not an exhaustive list of everything that could have gone wrong but most likely it&rsquo;s one of these things.</p>
+<hr>
+<h3 id="ongoing-maintenance">ongoing maintenance</h3>
+<p>To keep everything happy we need to edit the script and keep the following up to date..</p>
+<ul>
+<li>
+<p>Terraform providers</p>
+<ul>
+<li><a href="https://registry.terraform.io/providers/hashicorp/kubernetes/latest">kubernetes</a></li>
+<li><a href="https://registry.terraform.io/providers/hashicorp/helm/latest">helm</a></li>
+</ul>
+</li>
+<li>
+<p>Helm charts</p>
+<ul>
+<li><a href="https://artifacthub.io/packages/helm/traefik/traefik">traefik</a></li>
+<li><a href="https://artifacthub.io/packages/helm/traefik/traefik-crds">traefik-crds</a></li>
+<li><a href="https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack">kube-prometheus-stack</a></li>
+<li><a href="https://artifacthub.io/packages/helm/prometheus-community/prometheus-operator-crds">prometheus-operator-crds</a></li>
+<li><a href="https://artifacthub.io/packages/helm/argo/argo-cd">argo-cd</a></li>
+</ul>
+</li>
+</ul>
+<p>Finally, if you have not automated the process, don&rsquo;t forget to generate a new TLS certificate for your domain every 90 days.</p>
+<hr>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://korliaftis.github.io/tags/homelab/">Homelab</a></li>
+      <li><a href="https://korliaftis.github.io/tags/kubernetes/">Kubernetes</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+
+    <span>
+        Powered by Hugo & PaperMod
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

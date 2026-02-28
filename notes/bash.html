@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="light">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>bash | Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="
+shebang
+set
+unset
+chaining
+timestamp
+mktemp
+heredoc
+curl
+colors
+
+
+shebang
+#!/bin/bash
+#!/bin/bash -x
+#!/usr/bin/env bash
+
+set
+# -e fail on non zero exit codes
+# -u fail on unbound variables
+# -x enable tracing
+# -o pipefail fail on non zero exit codes inside a pipe
+set -euxo pipefail
+
+unset
+COLOR=&#34;blue&#34;
+echo ${COLOR} # output blue
+unset COLOR
+echo ${COLOR} # empty output
+
+chaining
+# output is ok
+true &amp;&amp; echo ok || echo ko
+
+# output is ko
+false &amp;&amp; echo ok || echo ko
+
+timestamp
+echo ${EPOCHSECONDS}
+echo ${EPOCHREALTIME}
+
+mktemp
+# create a temp directory
+mktemp -d
+
+# create a temp directory and store it as a variable
+TEMP_DIR=&#34;$(mktemp -d)&#34;
+
+heredoc
+# output is /bin/bash
+cat &lt;&lt; EOF &gt; file.txt
+$SHELL
+EOF
+
+# output is $SHELL
+cat &lt;&lt; &#39;EOF&#39; &gt; file.txt
+$SHELL
+EOF
+
+# output is /bin/bash - ignore the leading tab characters
+cat &lt;&lt;- EOF &gt; file.txt
+	$SHELL
+EOF
+
+# output is $SHELL - ignore the leading tab characters
+cat &lt;&lt;- &#39;EOF&#39; &gt; file.txt
+	$SHELL
+EOF
+
+# the path has spaces - fix by quoting the path
+cat &lt;&lt; &#39;EOF&#39; &gt; &#34;$HOME/Library/Application Support/Code/User/settings.json&#34;
+{
+    &#34;diffEditor.ignoreTrimWhitespace&#34;: false,
+    &#34;explorer.compactFolders&#34;: false,
+    &#34;extensions.ignoreRecommendations&#34;: true,
+}
+EOF
+
+# the path has spaces - fix by escaping the spaces
+cat &lt;&lt; &#39;EOF&#39; &gt; $HOME/Library/Application\ Support/Code/User/settings.json
+{
+    &#34;diffEditor.ignoreTrimWhitespace&#34;: false,
+    &#34;explorer.compactFolders&#34;: false,
+    &#34;extensions.ignoreRecommendations&#34;: true,
+}
+EOF
+
+sed
+# replace &#34;deb cdrom&#34; with &#34;# deb cdrom&#34;
+sed -i &#39;s/^deb cdrom/# deb cdrom/&#39; /etc/apt/sources.list
+
+# if a line doesn&#39;t start with a &#34;#&#34; and contains the word &#34;cdrom&#34; change it to start with a &#34;# &#34;
+sed -i &#39;/^#/! {/cdrom/ s/^/# /}&#39; /etc/apt/sources.list
+
+# replace &#34;IPV6=yes&#34; with &#34;IPV6=no&#34;
+sed -i &#39;s/IPV6=yes/IPV6=no/g&#39; /etc/default/ufw
+
+curl
+# on HTTP return code != 200 exit with code 22
+curl --fail
+
+# on HTTP return code != 200 exit with code 22 and print body
+curl --fail-with-body
+
+# maximum time for the whole operation in seconds
+curl -m 5
+curl --max-time 5
+
+# if an HTTP request fails retry up to this many times with an increasing delay between each retry 1s, 2s, 4s, 8s
+curl --retry 4
+
+# sleep this amount of time before each retry when a transfer has failed with a transient error
+curl --retry-delay 5
+
+# hides the progress meter and error messages
+curl -s
+curl --silent
+
+# enables error messages when -s is used
+curl -S
+curl --show-error
+
+colors
+
+  
+      
+          color
+          foreground
+          background
+          bold
+          faint
+          italic
+          underline
+      
+  
+  
+      
+          black
+          \e[30m
+          \e[40m
+          \e[1;30m
+          \e[2;30m
+          \e[3;30m
+          \e[4;30m
+      
+      
+          red
+          \e[31m
+          \e[41m
+          \e[1;31m
+          \e[2;31m
+          \e[3;31m
+          \e[4;31m
+      
+      
+          green
+          \e[32m
+          \e[42m
+          \e[1;32m
+          \e[2;32m
+          \e[3;32m
+          \e[4;32m
+      
+      
+          yellow
+          \e[33m
+          \e[43m
+          \e[1;33m
+          \e[2;33m
+          \e[3;33m
+          \e[4;33m
+      
+      
+          blue
+          \e[34m
+          \e[44m
+          \e[1;34m
+          \e[2;34m
+          \e[3;34m
+          \e[4;34m
+      
+      
+          magenta
+          \e[35m
+          \e[45m
+          \e[1;35m
+          \e[2;35m
+          \e[3;35m
+          \e[4;35m
+      
+      
+          cyan
+          \e[36m
+          \e[46m
+          \e[1;36m
+          \e[2;36m
+          \e[3;36m
+          \e[4;36m
+      
+      
+          light gray
+          \e[37m
+          \e[47m
+          \e[1;37m
+          \e[2;37m
+          \e[3;37m
+          \e[4;37m
+      
+      
+          gray
+          \e[90m
+          \e[100m
+          \e[1;90m
+          \e[2;90m
+          \e[3;90m
+          \e[4;90m
+      
+      
+          light red
+          \e[91m
+          \e[101m
+          \e[1;91m
+          \e[2;91m
+          \e[3;91m
+          \e[4;91m
+      
+      
+          light green
+          \e[92m
+          \e[102m
+          \e[1;92m
+          \e[2;92m
+          \e[3;92m
+          \e[4;92m
+      
+      
+          light yellow
+          \e[93m
+          \e[103m
+          \e[1;93m
+          \e[2;93m
+          \e[3;93m
+          \e[4;93m
+      
+      
+          light blue
+          \e[94m
+          \e[104m
+          \e[1;94m
+          \e[2;94m
+          \e[3;94m
+          \e[4;94m
+      
+      
+          light magenta
+          \e[95m
+          \e[105m
+          \e[1;95m
+          \e[2;95m
+          \e[3;95m
+          \e[4;95m
+      
+      
+          light cyan
+          \e[96m
+          \e[106m
+          \e[1;96m
+          \e[2;96m
+          \e[3;96m
+          \e[4;96m
+      
+      
+          white
+          \e[97m
+          \e[107m
+          \e[1;97m
+          \e[2;97m
+          \e[3;97m
+          \e[4;97m
+      
+      
+          color reset
+          \e[0m
+          \e[0m
+          \e[0m
+          \e[0m
+          \e[0m
+          \e[0m
+      
+  
+
+COLOR=&#34;\e[96m&#34;
+ENDCOLOR=&#34;\e[0m&#34;
+
+echo -e &#34;${COLOR}Hello world!${ENDCOLOR}&#34;
+">
+<meta name="author" content="user">
+<link rel="canonical" href="https://korliaftis.github.io/notes/bash.html">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.9a24e0a983acbd1d5709cdde8f60a89a08ff7fb64871fe6496c466c4d0350645.css" integrity="sha256-miTgqYOsvR1XCc3ej2Comgj/f7ZIcf5klsRmxNA1BkU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://korliaftis.github.io/assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://korliaftis.github.io/assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://korliaftis.github.io/assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://korliaftis.github.io/assets/favicon/apple-touch-icon.png">
+<link rel="mask-icon" href="https://korliaftis.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://korliaftis.github.io/notes/bash.html">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://korliaftis.github.io/">&gt; $ <span class="logoCursor">_</span>
+            </a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://korliaftis.github.io/search/" accesskey=/>
+                    <span>search</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://korliaftis.github.io/tags/">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      bash
+    </h1>
+    <div class="post-meta">
+
+</div>
+  </header> 
+  <div class="post-content"><ul>
+<li><a href="#shebang">shebang</a></li>
+<li><a href="#set">set</a></li>
+<li><a href="#unset">unset</a></li>
+<li><a href="#chaining">chaining</a></li>
+<li><a href="#timestamp">timestamp</a></li>
+<li><a href="#mktemp">mktemp</a></li>
+<li><a href="#heredoc">heredoc</a></li>
+<li><a href="#curl">curl</a></li>
+<li><a href="#colors">colors</a></li>
+</ul>
+<hr>
+<h3 id="shebang">shebang</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#5e81ac;font-style:italic">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">#!/bin/bash -x</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">#!/usr/bin/env bash</span>
+</span></span></code></pre></div><hr>
+<h3 id="set">set</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># -e fail on non zero exit codes</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># -u fail on unbound variables</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># -x enable tracing</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># -o pipefail fail on non zero exit codes inside a pipe</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">set</span> -euxo pipefail
+</span></span></code></pre></div><hr>
+<h3 id="unset">unset</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>COLOR<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;blue&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">${</span>COLOR<span style="color:#a3be8c">}</span> <span style="color:#616e87;font-style:italic"># output blue</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">unset</span> COLOR
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">${</span>COLOR<span style="color:#a3be8c">}</span> <span style="color:#616e87;font-style:italic"># empty output</span>
+</span></span></code></pre></div><hr>
+<h3 id="chaining">chaining</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># output is ok</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">true</span> <span style="color:#81a1c1">&amp;&amp;</span> <span style="color:#81a1c1">echo</span> ok <span style="color:#81a1c1">||</span> <span style="color:#81a1c1">echo</span> ko
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># output is ko</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">false</span> <span style="color:#81a1c1">&amp;&amp;</span> <span style="color:#81a1c1">echo</span> ok <span style="color:#81a1c1">||</span> <span style="color:#81a1c1">echo</span> ko
+</span></span></code></pre></div><hr>
+<h3 id="timestamp">timestamp</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">${</span>EPOCHSECONDS<span style="color:#a3be8c">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">${</span>EPOCHREALTIME<span style="color:#a3be8c">}</span>
+</span></span></code></pre></div><hr>
+<h3 id="mktemp">mktemp</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># create a temp directory</span>
+</span></span><span style="display:flex;"><span>mktemp -d
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># create a temp directory and store it as a variable</span>
+</span></span><span style="display:flex;"><span>TEMP_DIR<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;</span><span style="color:#81a1c1;font-weight:bold">$(</span>mktemp -d<span style="color:#81a1c1;font-weight:bold">)</span><span style="color:#a3be8c">&#34;</span>
+</span></span></code></pre></div><hr>
+<h3 id="heredoc">heredoc</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># output is /bin/bash</span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#a3be8c">&lt;&lt; EOF &gt; file.txt
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">$SHELL
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">EOF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># output is $SHELL</span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#a3be8c">&lt;&lt; &#39;EOF&#39; &gt; file.txt
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">$SHELL
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">EOF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># output is /bin/bash - ignore the leading tab characters</span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#a3be8c">&lt;&lt;- EOF &gt; file.txt
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">	$SHELL
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">EOF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># output is $SHELL - ignore the leading tab characters</span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#a3be8c">&lt;&lt;- &#39;EOF&#39; &gt; file.txt
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">	$SHELL
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">EOF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># the path has spaces - fix by quoting the path</span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#a3be8c">&lt;&lt; &#39;EOF&#39; &gt; &#34;$HOME/Library/Application Support/Code/User/settings.json&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">{
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">    &#34;diffEditor.ignoreTrimWhitespace&#34;: false,
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">    &#34;explorer.compactFolders&#34;: false,
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">    &#34;extensions.ignoreRecommendations&#34;: true,
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">}
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">EOF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># the path has spaces - fix by escaping the spaces</span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#a3be8c">&lt;&lt; &#39;EOF&#39; &gt; $HOME/Library/Application\ Support/Code/User/settings.json
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">{
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">    &#34;diffEditor.ignoreTrimWhitespace&#34;: false,
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">    &#34;explorer.compactFolders&#34;: false,
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">    &#34;extensions.ignoreRecommendations&#34;: true,
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">}
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">EOF</span>
+</span></span></code></pre></div><hr>
+<h3 id="sed">sed</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># replace &#34;deb cdrom&#34; with &#34;# deb cdrom&#34;</span>
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#a3be8c">&#39;s/^deb cdrom/# deb cdrom/&#39;</span> /etc/apt/sources.list
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># if a line doesn&#39;t start with a &#34;#&#34; and contains the word &#34;cdrom&#34; change it to start with a &#34;# &#34;</span>
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#a3be8c">&#39;/^#/! {/cdrom/ s/^/# /}&#39;</span> /etc/apt/sources.list
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># replace &#34;IPV6=yes&#34; with &#34;IPV6=no&#34;</span>
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#a3be8c">&#39;s/IPV6=yes/IPV6=no/g&#39;</span> /etc/default/ufw
+</span></span></code></pre></div><hr>
+<h3 id="curl">curl</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># on HTTP return code != 200 exit with code 22</span>
+</span></span><span style="display:flex;"><span>curl --fail
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># on HTTP return code != 200 exit with code 22 and print body</span>
+</span></span><span style="display:flex;"><span>curl --fail-with-body
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># maximum time for the whole operation in seconds</span>
+</span></span><span style="display:flex;"><span>curl -m <span style="color:#b48ead">5</span>
+</span></span><span style="display:flex;"><span>curl --max-time <span style="color:#b48ead">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># if an HTTP request fails retry up to this many times with an increasing delay between each retry 1s, 2s, 4s, 8s</span>
+</span></span><span style="display:flex;"><span>curl --retry <span style="color:#b48ead">4</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># sleep this amount of time before each retry when a transfer has failed with a transient error</span>
+</span></span><span style="display:flex;"><span>curl --retry-delay <span style="color:#b48ead">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># hides the progress meter and error messages</span>
+</span></span><span style="display:flex;"><span>curl -s
+</span></span><span style="display:flex;"><span>curl --silent
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># enables error messages when -s is used</span>
+</span></span><span style="display:flex;"><span>curl -S
+</span></span><span style="display:flex;"><span>curl --show-error
+</span></span></code></pre></div><hr>
+<h3 id="colors">colors</h3>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: center">color</th>
+          <th style="text-align: center">foreground</th>
+          <th style="text-align: center">background</th>
+          <th style="text-align: center">bold</th>
+          <th style="text-align: center">faint</th>
+          <th style="text-align: center">italic</th>
+          <th style="text-align: center">underline</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">black</td>
+          <td style="text-align: center"><code>\e[30m</code></td>
+          <td style="text-align: center"><code>\e[40m</code></td>
+          <td style="text-align: center"><code>\e[1;30m</code></td>
+          <td style="text-align: center"><code>\e[2;30m</code></td>
+          <td style="text-align: center"><code>\e[3;30m</code></td>
+          <td style="text-align: center"><code>\e[4;30m</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">red</td>
+          <td style="text-align: center"><code>\e[31m</code></td>
+          <td style="text-align: center"><code>\e[41m</code></td>
+          <td style="text-align: center"><code>\e[1;31m</code></td>
+          <td style="text-align: center"><code>\e[2;31m</code></td>
+          <td style="text-align: center"><code>\e[3;31m</code></td>
+          <td style="text-align: center"><code>\e[4;31m</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">green</td>
+          <td style="text-align: center"><code>\e[32m</code></td>
+          <td style="text-align: center"><code>\e[42m</code></td>
+          <td style="text-align: center"><code>\e[1;32m</code></td>
+          <td style="text-align: center"><code>\e[2;32m</code></td>
+          <td style="text-align: center"><code>\e[3;32m</code></td>
+          <td style="text-align: center"><code>\e[4;32m</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">yellow</td>
+          <td style="text-align: center"><code>\e[33m</code></td>
+          <td style="text-align: center"><code>\e[43m</code></td>
+          <td style="text-align: center"><code>\e[1;33m</code></td>
+          <td style="text-align: center"><code>\e[2;33m</code></td>
+          <td style="text-align: center"><code>\e[3;33m</code></td>
+          <td style="text-align: center"><code>\e[4;33m</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">blue</td>
+          <td style="text-align: center"><code>\e[34m</code></td>
+          <td style="text-align: center"><code>\e[44m</code></td>
+          <td style="text-align: center"><code>\e[1;34m</code></td>
+          <td style="text-align: center"><code>\e[2;34m</code></td>
+          <td style="text-align: center"><code>\e[3;34m</code></td>
+          <td style="text-align: center"><code>\e[4;34m</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">magenta</td>
+          <td style="text-align: center"><code>\e[35m</code></td>
+          <td style="text-align: center"><code>\e[45m</code></td>
+          <td style="text-align: center"><code>\e[1;35m</code></td>
+          <td style="text-align: center"><code>\e[2;35m</code></td>
+          <td style="text-align: center"><code>\e[3;35m</code></td>
+          <td style="text-align: center"><code>\e[4;35m</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">cyan</td>
+          <td style="text-align: center"><code>\e[36m</code></td>
+          <td style="text-align: center"><code>\e[46m</code></td>
+          <td style="text-align: center"><code>\e[1;36m</code></td>
+          <td style="text-align: center"><code>\e[2;36m</code></td>
+          <td style="text-align: center"><code>\e[3;36m</code></td>
+          <td style="text-align: center"><code>\e[4;36m</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">light gray</td>
+          <td style="text-align: center"><code>\e[37m</code></td>
+          <td style="text-align: center"><code>\e[47m</code></td>
+          <td style="text-align: center"><code>\e[1;37m</code></td>
+          <td style="text-align: center"><code>\e[2;37m</code></td>
+          <td style="text-align: center"><code>\e[3;37m</code></td>
+          <td style="text-align: center"><code>\e[4;37m</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">gray</td>
+          <td style="text-align: center"><code>\e[90m</code></td>
+          <td style="text-align: center"><code>\e[100m</code></td>
+          <td style="text-align: center"><code>\e[1;90m</code></td>
+          <td style="text-align: center"><code>\e[2;90m</code></td>
+          <td style="text-align: center"><code>\e[3;90m</code></td>
+          <td style="text-align: center"><code>\e[4;90m</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">light red</td>
+          <td style="text-align: center"><code>\e[91m</code></td>
+          <td style="text-align: center"><code>\e[101m</code></td>
+          <td style="text-align: center"><code>\e[1;91m</code></td>
+          <td style="text-align: center"><code>\e[2;91m</code></td>
+          <td style="text-align: center"><code>\e[3;91m</code></td>
+          <td style="text-align: center"><code>\e[4;91m</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">light green</td>
+          <td style="text-align: center"><code>\e[92m</code></td>
+          <td style="text-align: center"><code>\e[102m</code></td>
+          <td style="text-align: center"><code>\e[1;92m</code></td>
+          <td style="text-align: center"><code>\e[2;92m</code></td>
+          <td style="text-align: center"><code>\e[3;92m</code></td>
+          <td style="text-align: center"><code>\e[4;92m</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">light yellow</td>
+          <td style="text-align: center"><code>\e[93m</code></td>
+          <td style="text-align: center"><code>\e[103m</code></td>
+          <td style="text-align: center"><code>\e[1;93m</code></td>
+          <td style="text-align: center"><code>\e[2;93m</code></td>
+          <td style="text-align: center"><code>\e[3;93m</code></td>
+          <td style="text-align: center"><code>\e[4;93m</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">light blue</td>
+          <td style="text-align: center"><code>\e[94m</code></td>
+          <td style="text-align: center"><code>\e[104m</code></td>
+          <td style="text-align: center"><code>\e[1;94m</code></td>
+          <td style="text-align: center"><code>\e[2;94m</code></td>
+          <td style="text-align: center"><code>\e[3;94m</code></td>
+          <td style="text-align: center"><code>\e[4;94m</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">light magenta</td>
+          <td style="text-align: center"><code>\e[95m</code></td>
+          <td style="text-align: center"><code>\e[105m</code></td>
+          <td style="text-align: center"><code>\e[1;95m</code></td>
+          <td style="text-align: center"><code>\e[2;95m</code></td>
+          <td style="text-align: center"><code>\e[3;95m</code></td>
+          <td style="text-align: center"><code>\e[4;95m</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">light cyan</td>
+          <td style="text-align: center"><code>\e[96m</code></td>
+          <td style="text-align: center"><code>\e[106m</code></td>
+          <td style="text-align: center"><code>\e[1;96m</code></td>
+          <td style="text-align: center"><code>\e[2;96m</code></td>
+          <td style="text-align: center"><code>\e[3;96m</code></td>
+          <td style="text-align: center"><code>\e[4;96m</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">white</td>
+          <td style="text-align: center"><code>\e[97m</code></td>
+          <td style="text-align: center"><code>\e[107m</code></td>
+          <td style="text-align: center"><code>\e[1;97m</code></td>
+          <td style="text-align: center"><code>\e[2;97m</code></td>
+          <td style="text-align: center"><code>\e[3;97m</code></td>
+          <td style="text-align: center"><code>\e[4;97m</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">color reset</td>
+          <td style="text-align: center"><code>\e[0m</code></td>
+          <td style="text-align: center"><code>\e[0m</code></td>
+          <td style="text-align: center"><code>\e[0m</code></td>
+          <td style="text-align: center"><code>\e[0m</code></td>
+          <td style="text-align: center"><code>\e[0m</code></td>
+          <td style="text-align: center"><code>\e[0m</code></td>
+      </tr>
+  </tbody>
+</table>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>COLOR<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;\e[96m&#34;</span>
+</span></span><span style="display:flex;"><span>ENDCOLOR<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;\e[0m&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> -e <span style="color:#a3be8c">&#34;</span><span style="color:#a3be8c">${</span>COLOR<span style="color:#a3be8c">}</span><span style="color:#a3be8c">Hello world!</span><span style="color:#a3be8c">${</span>ENDCOLOR<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span>
+</span></span></code></pre></div><hr>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+
+    <span>
+        Powered by Hugo & PaperMod
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

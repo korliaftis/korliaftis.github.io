@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="light">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>wireguard | Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="
+operations
+vps
+raspberry
+client
+server
+
+
+operations
+# restart service
+systemctl restart wg-quick@wg0.service
+
+# troubleshooting
+wg show
+wg showconf wg0
+journalctl -u wg-quick@wg0.service
+tcpdump -i any &#39;udp port 65001&#39;
+tcpdump -n -i any &#39;udp port 65001&#39;
+
+# firewall validation
+ufw status numbered
+ufw delete 1
+ufw reload
+
+vps
+apt install -y locales-all
+echo &#39;LC_ALL=&#34;en_US.UTF-8&#34;&#39; &gt;&gt; /etc/default/locale
+reboot
+apt update &amp;&amp; apt upgrade -y
+passwd root
+useradd --create-home --shell /bin/bash --uid 1100 user2
+usermod --append --groups sudo user2
+passwd user2
+exit
+
+userdel --remove debian
+useradd --create-home --shell /bin/bash --uid 1000 user
+usermod --append --groups sudo user
+passwd user
+exit
+
+userdel --remove user2
+echo &#34;user ALL=(ALL) NOPASSWD:ALL&#34; | EDITOR=&#39;tee -a&#39; visudo
+visudo --check
+install -d -m 0700 -o user -g user /home/user/.ssh
+install -m 0600 -o user -g user /dev/null /home/user/.ssh/authorized_keys
+sed -i &#39;/^#/! {/AcceptEnv/ s/^/#/}&#39; /etc/ssh/sshd_config
+apt install -y ufw
+sed -i &#39;s/IPV6=yes/IPV6=no/g&#39; /etc/default/ufw
+ufw default deny
+ufw logging low
+ufw allow 22/tcp
+echo &#39;y&#39; | ufw enable
+ufw status verbose
+
+raspberry
+### imager
+#
+# - Operating System: Raspberry Pi OS Lite (64-bit)
+# - Set hostname: raspberry
+# - Set username and password: enabled
+#     - Username: pi
+#     - Password: 123
+# - Set locale settings: enabled
+#     - Time zone: Europe/Athens
+#     - Keyboard layout: us
+# - Enable SSH: enabled
+#     - Use password authentication: enabled
+#
+### raspi-config
+#
+# - Localisation Options:
+#     - Locale:
+#         - Locales to be generated: en_US.UTF-8 UTF-8
+#         - Default locale for the system environment: en_US.UTF-8
+#     - WLAN Country: GR Greece
+apt install -y locales-all
+echo &#39;LC_ALL=&#34;en_US.UTF-8&#34;&#39; &gt;&gt; /etc/default/locale
+reboot
+apt update &amp;&amp; apt upgrade -y
+passwd root
+useradd --create-home --shell /bin/bash --uid 1100 user2
+usermod --append --groups sudo user2
+passwd user2
+exit
+
+userdel --remove pi
+useradd --create-home --shell /bin/bash --uid 1000 user
+usermod --append --groups sudo user
+passwd user
+exit
+
+userdel --remove user2
+echo &#34;user ALL=(ALL) NOPASSWD:ALL&#34; | EDITOR=&#39;tee -a&#39; visudo
+visudo --check
+install -d -m 0700 -o user -g user /home/user/.ssh
+install -m 0600 -o user -g user /dev/null /home/user/.ssh/authorized_keys
+sed -i &#39;/^#/! {/AcceptEnv/ s/^/#/}&#39; /etc/ssh/sshd_config
+apt install -y wakeonlan
+su - user -c &#39;touch /home/user/.bash_aliases&#39;
+echo &#34;alias wol=&#39;wakeonlan 58:8a:5a:0d:7c:8a&#39;&#34; &gt;&gt; /home/user/.bash_aliases
+
+client
+apt install -y wireguard
+cd /etc/wireguard
+wg genkey | tee privatekey | wg pubkey &gt; publickey
+touch wg0.conf
+chmod -R 600 /etc/wireguard/*
+WG_SUBNET=&#34;172.16.32.0/24&#34;
+SERVER_PORT=&#34;65001&#34;
+CLIENT_PRIVATE_KEY=$(cat /etc/wireguard/privatekey)
+CLIENT_WG_IP=&#34;&#34;      # 172.16.32.2
+SERVER_PUBLIC_IP=&#34;&#34;  # 73.173.101.129
+SERVER_PUBLIC_KEY=&#34;&#34; # YRrQ69zJk8jpez9X9DqFzq0i&#43;4KGKCds3zdC5kJv4HM=
+cat &lt;&lt; EOF &gt; /etc/wireguard/wg0.conf
+[Interface]
+Address = ${CLIENT_WG_IP}
+PrivateKey = ${CLIENT_PRIVATE_KEY}
+
+[Peer]
+PublicKey = ${SERVER_PUBLIC_KEY}
+AllowedIPs = ${WG_SUBNET}
+PersistentKeepalive = 10
+Endpoint = ${SERVER_PUBLIC_IP}:${SERVER_PORT}
+EOF
+ufw allow from ${WG_SUBNET} to ${CLIENT_WG_IP} port 22 proto tcp
+ufw reload
+ufw status verbose
+systemctl enable wg-quick@wg0.service
+history -c &amp;&amp; history -w
+
+server
+apt install -y wireguard
+cd /etc/wireguard
+wg genkey | tee privatekey | wg pubkey &gt; publickey
+touch wg0.conf
+chmod -R 600 /etc/wireguard/*
+WG_SUBNET=&#34;172.16.32.0/24&#34;
+SERVER_PORT=&#34;65001&#34;
+SERVER_WG_IP=&#34;172.16.32.1&#34;
+SERVER_PRIVATE_KEY=$(cat /etc/wireguard/privatekey)
+SERVER_INTERFACE=&#34;&#34;  # ens3
+SERVER_PUBLIC_IP=&#34;&#34;  # 73.173.101.129
+CLIENT_WG_IP=&#34;&#34;      # 172.16.32.2
+CLIENT_PUBLIC_KEY=&#34;&#34; # YRrQ69zJk8jpez9X9DqFzq0i&#43;4KGKCds3zdC5kJv4HM=
+cat &lt;&lt; EOF &gt; /etc/wireguard/wg0.conf
+[Interface]
+Address = ${SERVER_WG_IP}
+ListenPort = ${SERVER_PORT}
+PrivateKey = ${SERVER_PRIVATE_KEY}
+PostUp = echo 1 &gt; /proc/sys/net/ipv4/ip_forward; iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o ${SERVER_INTERFACE} -j MASQUERADE
+PostDown = echo 0 &gt; /proc/sys/net/ipv4/ip_forward; iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o ${SERVER_INTERFACE} -j MASQUERADE
+
+[Peer]
+PublicKey = ${CLIENT_PUBLIC_KEY}
+AllowedIPs = ${CLIENT_WG_IP}
+PersistentKeepalive = 10
+EOF
+ufw allow from any to ${SERVER_PUBLIC_IP} port ${SERVER_PORT} proto udp
+ufw allow from ${WG_SUBNET} to ${SERVER_WG_IP} port 22 proto tcp
+ufw reload
+ufw status verbose
+ufw status numbered
+ufw delete 1
+ufw reload
+ufw status verbose
+systemctl enable wg-quick@wg0.service
+history -c &amp;&amp; history -w
+">
+<meta name="author" content="user">
+<link rel="canonical" href="https://korliaftis.github.io/notes/wireguard.html">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.9a24e0a983acbd1d5709cdde8f60a89a08ff7fb64871fe6496c466c4d0350645.css" integrity="sha256-miTgqYOsvR1XCc3ej2Comgj/f7ZIcf5klsRmxNA1BkU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://korliaftis.github.io/assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://korliaftis.github.io/assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://korliaftis.github.io/assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://korliaftis.github.io/assets/favicon/apple-touch-icon.png">
+<link rel="mask-icon" href="https://korliaftis.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://korliaftis.github.io/notes/wireguard.html">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://korliaftis.github.io/">&gt; $ <span class="logoCursor">_</span>
+            </a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://korliaftis.github.io/search/" accesskey=/>
+                    <span>search</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://korliaftis.github.io/tags/">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      wireguard
+    </h1>
+    <div class="post-meta">
+
+</div>
+  </header> 
+  <div class="post-content"><ul>
+<li><a href="#operations">operations</a></li>
+<li><a href="#vps">vps</a></li>
+<li><a href="#raspberry">raspberry</a></li>
+<li><a href="#client">client</a></li>
+<li><a href="#server">server</a></li>
+</ul>
+<hr>
+<h3 id="operations">operations</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># restart service</span>
+</span></span><span style="display:flex;"><span>systemctl restart wg-quick@wg0.service
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># troubleshooting</span>
+</span></span><span style="display:flex;"><span>wg show
+</span></span><span style="display:flex;"><span>wg showconf wg0
+</span></span><span style="display:flex;"><span>journalctl -u wg-quick@wg0.service
+</span></span><span style="display:flex;"><span>tcpdump -i any <span style="color:#a3be8c">&#39;udp port 65001&#39;</span>
+</span></span><span style="display:flex;"><span>tcpdump -n -i any <span style="color:#a3be8c">&#39;udp port 65001&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># firewall validation</span>
+</span></span><span style="display:flex;"><span>ufw status numbered
+</span></span><span style="display:flex;"><span>ufw delete <span style="color:#b48ead">1</span>
+</span></span><span style="display:flex;"><span>ufw reload
+</span></span></code></pre></div><hr>
+<h3 id="vps">vps</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>apt install -y locales-all
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#39;LC_ALL=&#34;en_US.UTF-8&#34;&#39;</span> &gt;&gt; /etc/default/locale
+</span></span><span style="display:flex;"><span>reboot
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>apt update <span style="color:#81a1c1">&amp;&amp;</span> apt upgrade -y
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>passwd root
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>useradd --create-home --shell /bin/bash --uid <span style="color:#b48ead">1100</span> user2
+</span></span><span style="display:flex;"><span>usermod --append --groups sudo user2
+</span></span><span style="display:flex;"><span>passwd user2
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">exit</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>userdel --remove debian
+</span></span><span style="display:flex;"><span>useradd --create-home --shell /bin/bash --uid <span style="color:#b48ead">1000</span> user
+</span></span><span style="display:flex;"><span>usermod --append --groups sudo user
+</span></span><span style="display:flex;"><span>passwd user
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">exit</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>userdel --remove user2
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#34;user ALL=(ALL) NOPASSWD:ALL&#34;</span> <span style="color:#eceff4">|</span> EDITOR<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#39;tee -a&#39;</span> visudo
+</span></span><span style="display:flex;"><span>visudo --check
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>install -d -m <span style="color:#b48ead">0700</span> -o user -g user /home/user/.ssh
+</span></span><span style="display:flex;"><span>install -m <span style="color:#b48ead">0600</span> -o user -g user /dev/null /home/user/.ssh/authorized_keys
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#a3be8c">&#39;/^#/! {/AcceptEnv/ s/^/#/}&#39;</span> /etc/ssh/sshd_config
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>apt install -y ufw
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#a3be8c">&#39;s/IPV6=yes/IPV6=no/g&#39;</span> /etc/default/ufw
+</span></span><span style="display:flex;"><span>ufw default deny
+</span></span><span style="display:flex;"><span>ufw logging low
+</span></span><span style="display:flex;"><span>ufw allow 22/tcp
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#39;y&#39;</span> <span style="color:#eceff4">|</span> ufw <span style="color:#81a1c1">enable</span>
+</span></span><span style="display:flex;"><span>ufw status verbose
+</span></span></code></pre></div><hr>
+<h3 id="raspberry">raspberry</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">### imager</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># - Operating System: Raspberry Pi OS Lite (64-bit)</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># - Set hostname: raspberry</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># - Set username and password: enabled</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">#     - Username: pi</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">#     - Password: 123</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># - Set locale settings: enabled</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">#     - Time zone: Europe/Athens</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">#     - Keyboard layout: us</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># - Enable SSH: enabled</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">#     - Use password authentication: enabled</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">### raspi-config</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">#</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic"># - Localisation Options:</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">#     - Locale:</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">#         - Locales to be generated: en_US.UTF-8 UTF-8</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">#         - Default locale for the system environment: en_US.UTF-8</span>
+</span></span><span style="display:flex;"><span><span style="color:#616e87;font-style:italic">#     - WLAN Country: GR Greece</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>apt install -y locales-all
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#39;LC_ALL=&#34;en_US.UTF-8&#34;&#39;</span> &gt;&gt; /etc/default/locale
+</span></span><span style="display:flex;"><span>reboot
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>apt update <span style="color:#81a1c1">&amp;&amp;</span> apt upgrade -y
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>passwd root
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>useradd --create-home --shell /bin/bash --uid <span style="color:#b48ead">1100</span> user2
+</span></span><span style="display:flex;"><span>usermod --append --groups sudo user2
+</span></span><span style="display:flex;"><span>passwd user2
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">exit</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>userdel --remove pi
+</span></span><span style="display:flex;"><span>useradd --create-home --shell /bin/bash --uid <span style="color:#b48ead">1000</span> user
+</span></span><span style="display:flex;"><span>usermod --append --groups sudo user
+</span></span><span style="display:flex;"><span>passwd user
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">exit</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>userdel --remove user2
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#34;user ALL=(ALL) NOPASSWD:ALL&#34;</span> <span style="color:#eceff4">|</span> EDITOR<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#39;tee -a&#39;</span> visudo
+</span></span><span style="display:flex;"><span>visudo --check
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>install -d -m <span style="color:#b48ead">0700</span> -o user -g user /home/user/.ssh
+</span></span><span style="display:flex;"><span>install -m <span style="color:#b48ead">0600</span> -o user -g user /dev/null /home/user/.ssh/authorized_keys
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#a3be8c">&#39;/^#/! {/AcceptEnv/ s/^/#/}&#39;</span> /etc/ssh/sshd_config
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>apt install -y wakeonlan
+</span></span><span style="display:flex;"><span>su - user -c <span style="color:#a3be8c">&#39;touch /home/user/.bash_aliases&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#34;alias wol=&#39;wakeonlan 58:8a:5a:0d:7c:8a&#39;&#34;</span> &gt;&gt; /home/user/.bash_aliases
+</span></span></code></pre></div><hr>
+<h3 id="client">client</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>apt install -y wireguard
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">cd</span> /etc/wireguard
+</span></span><span style="display:flex;"><span>wg genkey <span style="color:#eceff4">|</span> tee privatekey <span style="color:#eceff4">|</span> wg pubkey &gt; publickey
+</span></span><span style="display:flex;"><span>touch wg0.conf
+</span></span><span style="display:flex;"><span>chmod -R <span style="color:#b48ead">600</span> /etc/wireguard/*
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>WG_SUBNET<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;172.16.32.0/24&#34;</span>
+</span></span><span style="display:flex;"><span>SERVER_PORT<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;65001&#34;</span>
+</span></span><span style="display:flex;"><span>CLIENT_PRIVATE_KEY<span style="color:#81a1c1">=</span><span style="color:#81a1c1;font-weight:bold">$(</span>cat /etc/wireguard/privatekey<span style="color:#81a1c1;font-weight:bold">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>CLIENT_WG_IP<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>      <span style="color:#616e87;font-style:italic"># 172.16.32.2</span>
+</span></span><span style="display:flex;"><span>SERVER_PUBLIC_IP<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>  <span style="color:#616e87;font-style:italic"># 73.173.101.129</span>
+</span></span><span style="display:flex;"><span>SERVER_PUBLIC_KEY<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span> <span style="color:#616e87;font-style:italic"># YRrQ69zJk8jpez9X9DqFzq0i+4KGKCds3zdC5kJv4HM=</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cat <span style="color:#a3be8c">&lt;&lt; EOF &gt; /etc/wireguard/wg0.conf
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">[Interface]
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">Address = ${CLIENT_WG_IP}
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">PrivateKey = ${CLIENT_PRIVATE_KEY}
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">[Peer]
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">PublicKey = ${SERVER_PUBLIC_KEY}
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">AllowedIPs = ${WG_SUBNET}
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">PersistentKeepalive = 10
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">Endpoint = ${SERVER_PUBLIC_IP}:${SERVER_PORT}
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">EOF</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ufw allow from <span style="color:#a3be8c">${</span>WG_SUBNET<span style="color:#a3be8c">}</span> to <span style="color:#a3be8c">${</span>CLIENT_WG_IP<span style="color:#a3be8c">}</span> port <span style="color:#b48ead">22</span> proto tcp
+</span></span><span style="display:flex;"><span>ufw reload
+</span></span><span style="display:flex;"><span>ufw status verbose
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>systemctl <span style="color:#81a1c1">enable</span> wg-quick@wg0.service
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">history</span> -c <span style="color:#81a1c1">&amp;&amp;</span> <span style="color:#81a1c1">history</span> -w
+</span></span></code></pre></div><hr>
+<h3 id="server">server</h3>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>apt install -y wireguard
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">cd</span> /etc/wireguard
+</span></span><span style="display:flex;"><span>wg genkey <span style="color:#eceff4">|</span> tee privatekey <span style="color:#eceff4">|</span> wg pubkey &gt; publickey
+</span></span><span style="display:flex;"><span>touch wg0.conf
+</span></span><span style="display:flex;"><span>chmod -R <span style="color:#b48ead">600</span> /etc/wireguard/*
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>WG_SUBNET<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;172.16.32.0/24&#34;</span>
+</span></span><span style="display:flex;"><span>SERVER_PORT<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;65001&#34;</span>
+</span></span><span style="display:flex;"><span>SERVER_WG_IP<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;172.16.32.1&#34;</span>
+</span></span><span style="display:flex;"><span>SERVER_PRIVATE_KEY<span style="color:#81a1c1">=</span><span style="color:#81a1c1;font-weight:bold">$(</span>cat /etc/wireguard/privatekey<span style="color:#81a1c1;font-weight:bold">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>SERVER_INTERFACE<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>  <span style="color:#616e87;font-style:italic"># ens3</span>
+</span></span><span style="display:flex;"><span>SERVER_PUBLIC_IP<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>  <span style="color:#616e87;font-style:italic"># 73.173.101.129</span>
+</span></span><span style="display:flex;"><span>CLIENT_WG_IP<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>      <span style="color:#616e87;font-style:italic"># 172.16.32.2</span>
+</span></span><span style="display:flex;"><span>CLIENT_PUBLIC_KEY<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span> <span style="color:#616e87;font-style:italic"># YRrQ69zJk8jpez9X9DqFzq0i+4KGKCds3zdC5kJv4HM=</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cat <span style="color:#a3be8c">&lt;&lt; EOF &gt; /etc/wireguard/wg0.conf
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">[Interface]
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">Address = ${SERVER_WG_IP}
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">ListenPort = ${SERVER_PORT}
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">PrivateKey = ${SERVER_PRIVATE_KEY}
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">PostUp = echo 1 &gt; /proc/sys/net/ipv4/ip_forward; iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o ${SERVER_INTERFACE} -j MASQUERADE
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">PostDown = echo 0 &gt; /proc/sys/net/ipv4/ip_forward; iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o ${SERVER_INTERFACE} -j MASQUERADE
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">[Peer]
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">PublicKey = ${CLIENT_PUBLIC_KEY}
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">AllowedIPs = ${CLIENT_WG_IP}
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">PersistentKeepalive = 10
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">EOF</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ufw allow from any to <span style="color:#a3be8c">${</span>SERVER_PUBLIC_IP<span style="color:#a3be8c">}</span> port <span style="color:#a3be8c">${</span>SERVER_PORT<span style="color:#a3be8c">}</span> proto udp
+</span></span><span style="display:flex;"><span>ufw allow from <span style="color:#a3be8c">${</span>WG_SUBNET<span style="color:#a3be8c">}</span> to <span style="color:#a3be8c">${</span>SERVER_WG_IP<span style="color:#a3be8c">}</span> port <span style="color:#b48ead">22</span> proto tcp
+</span></span><span style="display:flex;"><span>ufw reload
+</span></span><span style="display:flex;"><span>ufw status verbose
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ufw status numbered
+</span></span><span style="display:flex;"><span>ufw delete <span style="color:#b48ead">1</span>
+</span></span><span style="display:flex;"><span>ufw reload
+</span></span><span style="display:flex;"><span>ufw status verbose
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>systemctl <span style="color:#81a1c1">enable</span> wg-quick@wg0.service
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">history</span> -c <span style="color:#81a1c1">&amp;&amp;</span> <span style="color:#81a1c1">history</span> -w
+</span></span></code></pre></div><hr>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+
+    <span>
+        Powered by Hugo & PaperMod
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

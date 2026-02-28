@@ -1,0 +1,1002 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Notes on Blog</title>
+    <link>https://korliaftis.github.io/notes/</link>
+    <description>Recent content in Notes on Blog</description>
+    <generator>Hugo -- 0.156.0</generator>
+    <language>en-us</language>
+    <atom:link href="https://korliaftis.github.io/notes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>actions</title>
+      <link>https://korliaftis.github.io/notes/actions.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://korliaftis.github.io/notes/actions.html</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#manual-trigger&#34;&gt;manual trigger&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;manual-trigger&#34;&gt;manual trigger&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt; Target
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;run-name&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt; ${{ inputs.uuid }}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;on&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#81a1c1&#34;&gt;workflow_dispatch&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#81a1c1&#34;&gt;inputs&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#81a1c1&#34;&gt;uuid&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#81a1c1&#34;&gt;description&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;uuid&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#81a1c1&#34;&gt;required&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#81a1c1&#34;&gt;type&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt; string
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#81a1c1&#34;&gt;outcome&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#81a1c1&#34;&gt;description&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;outcome&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#81a1c1&#34;&gt;required&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;true&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#81a1c1&#34;&gt;type&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt; choice
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#81a1c1&#34;&gt;default&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;success&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#81a1c1&#34;&gt;options&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        - success
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        - failure
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;jobs&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#81a1c1&#34;&gt;main&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#81a1c1&#34;&gt;runs-on&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt; ubuntu-latest
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#81a1c1&#34;&gt;steps&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    - &lt;span style=&#34;color:#81a1c1&#34;&gt;run&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt; sleep 30
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    - &lt;span style=&#34;color:#81a1c1&#34;&gt;shell&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt; bash
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#81a1c1&#34;&gt;run&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;:&lt;/span&gt; &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt;&lt;span style=&#34;color:#616e87&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87&#34;&gt;        if [[ &amp;#34;${{ inputs.outcome }}&amp;#34; == &amp;#34;failure&amp;#34; ]]; then
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87&#34;&gt;          exit 1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87&#34;&gt;        fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#5e81ac;font-style:italic&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;set&lt;/span&gt; -e
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;set&lt;/span&gt; -u
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;set&lt;/span&gt; -o pipefail
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;VERY_SECRET_TOKEN&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# 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&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;REPOSITORY_NAME&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;   &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# stuff&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;REPOSITORY_OWNER&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# korliaftis&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;WORKFLOW_BRANCH&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;   &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# master&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;WORKFLOW_FILENAME&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# target.yaml&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;WORKFLOW_OUTCOME&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# success | failure&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;WORKFLOW_UUID&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;$(&lt;/span&gt;uuidgen&lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -L -s --fail-with-body &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  -X POST &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  -H &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;Accept: application/vnd.github+json&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  -H &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;Authorization: Bearer &lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;VERY_SECRET_TOKEN&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  -H &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;X-GitHub-Api-Version: 2022-11-28&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;https://api.github.com/repos/&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;REPOSITORY_OWNER&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;REPOSITORY_NAME&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;/actions/workflows/&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;WORKFLOW_FILENAME&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;/dispatches&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  -d &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;{
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;      \&amp;#34;ref\&amp;#34;: \&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;WORKFLOW_BRANCH&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;\&amp;#34;,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;      \&amp;#34;inputs\&amp;#34;: {
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;        \&amp;#34;uuid\&amp;#34;: \&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;WORKFLOW_UUID&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;\&amp;#34;,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;        \&amp;#34;outcome\&amp;#34;: \&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;WORKFLOW_OUTCOME&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;\&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;      }
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;  }&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sleep &lt;span style=&#34;color:#b48ead&#34;&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;WORKFLOW_RUN_ID&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;$(&lt;/span&gt;curl -L -s --fail-with-body &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  -H &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;Accept: application/vnd.github+json&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  -H &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;Authorization: Bearer &lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;VERY_SECRET_TOKEN&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  -H &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;X-GitHub-Api-Version: 2022-11-28&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;https://api.github.com/repos/&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;REPOSITORY_OWNER&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;REPOSITORY_NAME&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;/actions/workflows/&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;WORKFLOW_FILENAME&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;/runs&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; jq -r --arg rn &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;WORKFLOW_UUID&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;.workflow_runs[] | select(.display_title==$rn) | .id&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; head -n 1&lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;id: &lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;WORKFLOW_RUN_ID&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;url: https://github.com/&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;REPOSITORY_OWNER&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;REPOSITORY_NAME&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;/actions/runs/&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;WORKFLOW_RUN_ID&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;for&lt;/span&gt; i in &lt;span style=&#34;color:#81a1c1&#34;&gt;{&lt;/span&gt;1..300&lt;span style=&#34;color:#81a1c1&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  WORKFLOW_RUN_STATUS&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;$(&lt;/span&gt;curl -L -s --fail-with-body &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    -H &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;Accept: application/vnd.github+json&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    -H &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;Authorization: Bearer &lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;VERY_SECRET_TOKEN&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    -H &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;X-GitHub-Api-Version: 2022-11-28&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;https://api.github.com/repos/&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;REPOSITORY_OWNER&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;REPOSITORY_NAME&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;/actions/runs/&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;WORKFLOW_RUN_ID&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; jq -r &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;.status&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;status: &lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;WORKFLOW_RUN_STATUS&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#81a1c1&#34;&gt;[[&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;WORKFLOW_RUN_STATUS&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#81a1c1&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;completed&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#81a1c1&#34;&gt;]]&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    WORKFLOW_RUN_CONCLUSION&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;$(&lt;/span&gt;curl -L -s --fail-with-body &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      -H &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;Accept: application/vnd.github+json&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      -H &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;Authorization: Bearer &lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;VERY_SECRET_TOKEN&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      -H &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;X-GitHub-Api-Version: 2022-11-28&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;https://api.github.com/repos/&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;REPOSITORY_OWNER&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;REPOSITORY_NAME&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;/actions/runs/&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;WORKFLOW_RUN_ID&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#ebcb8b&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; jq -r &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;.conclusion&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;conclusion: &lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;WORKFLOW_RUN_CONCLUSION&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#81a1c1&#34;&gt;[[&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;WORKFLOW_RUN_CONCLUSION&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#81a1c1&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;success&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#81a1c1&#34;&gt;]]&lt;/span&gt;&lt;span style=&#34;color:#eceff4&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#81a1c1&#34;&gt;exit&lt;/span&gt; &lt;span style=&#34;color:#b48ead&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;      &lt;span style=&#34;color:#81a1c1&#34;&gt;exit&lt;/span&gt; &lt;span style=&#34;color:#b48ead&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  sleep &lt;span style=&#34;color:#b48ead&#34;&gt;5&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;done&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>bash</title>
+      <link>https://korliaftis.github.io/notes/bash.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://korliaftis.github.io/notes/bash.html</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#shebang&#34;&gt;shebang&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#set&#34;&gt;set&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#unset&#34;&gt;unset&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#chaining&#34;&gt;chaining&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#timestamp&#34;&gt;timestamp&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#mktemp&#34;&gt;mktemp&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#heredoc&#34;&gt;heredoc&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#curl&#34;&gt;curl&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#colors&#34;&gt;colors&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;shebang&#34;&gt;shebang&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#5e81ac;font-style:italic&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;#!/bin/bash -x&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;#!/usr/bin/env bash&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;set&#34;&gt;set&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# -e fail on non zero exit codes&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# -u fail on unbound variables&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# -x enable tracing&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# -o pipefail fail on non zero exit codes inside a pipe&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;set&lt;/span&gt; -euxo pipefail
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;unset&#34;&gt;unset&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;COLOR&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;blue&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;COLOR&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# output blue&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;unset&lt;/span&gt; COLOR
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;COLOR&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# empty output&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;chaining&#34;&gt;chaining&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# output is ok&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;true&lt;/span&gt; &lt;span style=&#34;color:#81a1c1&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; ok &lt;span style=&#34;color:#81a1c1&#34;&gt;||&lt;/span&gt; &lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; ko
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# output is ko&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;false&lt;/span&gt; &lt;span style=&#34;color:#81a1c1&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; ok &lt;span style=&#34;color:#81a1c1&#34;&gt;||&lt;/span&gt; &lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; ko
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;timestamp&#34;&gt;timestamp&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;EPOCHSECONDS&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;EPOCHREALTIME&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;mktemp&#34;&gt;mktemp&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# create a temp directory&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mktemp -d
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# create a temp directory and store it as a variable&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;TEMP_DIR&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;$(&lt;/span&gt;mktemp -d&lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;)&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;heredoc&#34;&gt;heredoc&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# output is /bin/bash&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;lt;&amp;lt; EOF &amp;gt; file.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;$SHELL
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# output is $SHELL&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;lt;&amp;lt; &amp;#39;EOF&amp;#39; &amp;gt; file.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;$SHELL
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# output is /bin/bash - ignore the leading tab characters&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;lt;&amp;lt;- EOF &amp;gt; file.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;	$SHELL
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# output is $SHELL - ignore the leading tab characters&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;lt;&amp;lt;- &amp;#39;EOF&amp;#39; &amp;gt; file.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;	$SHELL
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# the path has spaces - fix by quoting the path&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;lt;&amp;lt; &amp;#39;EOF&amp;#39; &amp;gt; &amp;#34;$HOME/Library/Application Support/Code/User/settings.json&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;    &amp;#34;diffEditor.ignoreTrimWhitespace&amp;#34;: false,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;    &amp;#34;explorer.compactFolders&amp;#34;: false,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;    &amp;#34;extensions.ignoreRecommendations&amp;#34;: true,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# the path has spaces - fix by escaping the spaces&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;lt;&amp;lt; &amp;#39;EOF&amp;#39; &amp;gt; $HOME/Library/Application\ Support/Code/User/settings.json
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;    &amp;#34;diffEditor.ignoreTrimWhitespace&amp;#34;: false,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;    &amp;#34;explorer.compactFolders&amp;#34;: false,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;    &amp;#34;extensions.ignoreRecommendations&amp;#34;: true,
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;sed&#34;&gt;sed&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# replace &amp;#34;deb cdrom&amp;#34; with &amp;#34;# deb cdrom&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed -i &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;s/^deb cdrom/# deb cdrom/&amp;#39;&lt;/span&gt; /etc/apt/sources.list
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# if a line doesn&amp;#39;t start with a &amp;#34;#&amp;#34; and contains the word &amp;#34;cdrom&amp;#34; change it to start with a &amp;#34;# &amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed -i &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;/^#/! {/cdrom/ s/^/# /}&amp;#39;&lt;/span&gt; /etc/apt/sources.list
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# replace &amp;#34;IPV6=yes&amp;#34; with &amp;#34;IPV6=no&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed -i &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;s/IPV6=yes/IPV6=no/g&amp;#39;&lt;/span&gt; /etc/default/ufw
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;curl&#34;&gt;curl&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# on HTTP return code != 200 exit with code 22&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl --fail
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# on HTTP return code != 200 exit with code 22 and print body&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl --fail-with-body
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# maximum time for the whole operation in seconds&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -m &lt;span style=&#34;color:#b48ead&#34;&gt;5&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl --max-time &lt;span style=&#34;color:#b48ead&#34;&gt;5&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# if an HTTP request fails retry up to this many times with an increasing delay between each retry 1s, 2s, 4s, 8s&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl --retry &lt;span style=&#34;color:#b48ead&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# sleep this amount of time before each retry when a transfer has failed with a transient error&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl --retry-delay &lt;span style=&#34;color:#b48ead&#34;&gt;5&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# hides the progress meter and error messages&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -s
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl --silent
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# enables error messages when -s is used&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -S
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl --show-error
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;colors&#34;&gt;colors&lt;/h3&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;color&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;foreground&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;background&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;bold&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;faint&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;italic&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;underline&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;black&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[30m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[40m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[1;30m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[2;30m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[3;30m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[4;30m&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;red&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[31m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[41m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[1;31m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[2;31m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[3;31m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[4;31m&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;green&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[32m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[42m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[1;32m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[2;32m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[3;32m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[4;32m&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;yellow&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[33m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[43m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[1;33m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[2;33m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[3;33m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[4;33m&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;blue&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[34m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[44m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[1;34m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[2;34m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[3;34m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[4;34m&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;magenta&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[35m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[45m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[1;35m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[2;35m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[3;35m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[4;35m&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;cyan&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[36m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[46m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[1;36m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[2;36m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[3;36m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[4;36m&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;light gray&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[37m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[47m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[1;37m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[2;37m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[3;37m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[4;37m&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;gray&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[90m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[100m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[1;90m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[2;90m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[3;90m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[4;90m&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;light red&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[91m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[101m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[1;91m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[2;91m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[3;91m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[4;91m&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;light green&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[92m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[102m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[1;92m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[2;92m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[3;92m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[4;92m&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;light yellow&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[93m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[103m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[1;93m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[2;93m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[3;93m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[4;93m&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;light blue&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[94m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[104m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[1;94m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[2;94m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[3;94m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[4;94m&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;light magenta&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[95m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[105m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[1;95m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[2;95m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[3;95m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[4;95m&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;light cyan&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[96m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[106m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[1;96m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[2;96m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[3;96m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[4;96m&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;white&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[97m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[107m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[1;97m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[2;97m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[3;97m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[4;97m&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;color reset&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[0m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[0m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[0m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[0m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[0m&lt;/code&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;&lt;code&gt;\e[0m&lt;/code&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;COLOR&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;\e[96m&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ENDCOLOR&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;\e[0m&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; -e &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;COLOR&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;Hello world!&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;ENDCOLOR&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>debian</title>
+      <link>https://korliaftis.github.io/notes/debian.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://korliaftis.github.io/notes/debian.html</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#base64&#34;&gt;base64&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#curl&#34;&gt;curl&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#dd&#34;&gt;dd&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#du&#34;&gt;du&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#find&#34;&gt;find&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#git&#34;&gt;git&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#journalctl&#34;&gt;journalctl&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#nfs&#34;&gt;nfs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#nmap&#34;&gt;nmap&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#openssl&#34;&gt;openssl&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#scp&#34;&gt;scp&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ssh&#34;&gt;ssh&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#stat&#34;&gt;stat&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#swap&#34;&gt;swap&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#tar&#34;&gt;tar&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#tmux&#34;&gt;tmux&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ufw&#34;&gt;ufw&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#umask&#34;&gt;umask&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#wakeonlan&#34;&gt;wakeonlan&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;base64&#34;&gt;base64&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# encode string&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; -n &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;asdf&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; base64 -w &lt;span style=&#34;color:#b48ead&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# encode file&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;base64 -w &lt;span style=&#34;color:#b48ead&#34;&gt;0&lt;/span&gt; /etc/prometheus/prometheus.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# encode string when -w 0 is not available&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; -n &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;asdf&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; base64 &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; tr -d &lt;span style=&#34;color:#ebcb8b&#34;&gt;\\&lt;/span&gt;n
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# encode file when -w 0 is not available&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;base64 /etc/prometheus/prometheus.yaml &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; tr -d &lt;span style=&#34;color:#ebcb8b&#34;&gt;\\&lt;/span&gt;n
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# decode string&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; -n &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;YXNkZg==&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; base64 -d
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# decode file&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; -n &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;YXNkZg==&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; base64 -d &amp;gt; asdf.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# show contents of encoded string&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; -n &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;asdf&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; base64 -w &lt;span style=&#34;color:#b48ead&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; base64 -d &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; od -c
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;curl&#34;&gt;curl&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# resolve the domain to a specific address&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl https://example.com --resolve &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;example.com:443:10.0.0.2&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# resolve the domain to a specific address and skip tls verification&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -k https://example.com --resolve &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;example.com:443:10.0.0.2&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl --insecure https://example.com --resolve &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;example.com:443:10.0.0.2&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;dd&#34;&gt;dd&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# dd if=image of=device&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dd &lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;if&lt;/span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;/var/lib/libvirt/images/debian-13.0.0-amd64-DVD-1.iso of&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;/dev/sdx status&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;progress
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# create a file with predefined size&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dd &lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;if&lt;/span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;/dev/zero of&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;big.file bs&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;1MB count&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b48ead&#34;&gt;1000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;du -h big.file
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# create a bootable usb&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ISO&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;debian-13.0.0-amd64-DVD-1.iso&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;DEVICE&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;sdb&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# lsblk&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -LO https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;ISO&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -LO https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/SHA256SUMS
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sha256sum --ignore-missing --check SHA256SUMS
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;fdisk -l /dev/&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;DEVICE&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wipefs -a -f /dev/&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;DEVICE&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;fdisk /dev/&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;DEVICE&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# g n ENTER ENTER ENTER y w&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lsblk &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# umount /dev/${DEVICE}1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;dd &lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;if&lt;/span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;ISO&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt; of&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;/dev/&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;DEVICE&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt; status&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;progress
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;du&#34;&gt;du&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# get the size of a file&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;du -h /var/log/dpkg.log
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# get the size of a folder&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;du -sh /var/log
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;find&#34;&gt;find&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# find a file with the name resolv.conf&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;find / -name &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;resolv.conf&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# find a file with the name resolv.conf - case-insensitive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;find / -iname &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;rEsOlV.cOnF&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# find all files with a .yaml extension&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;find / -name &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;*.yaml&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;git&#34;&gt;git&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# initial setup&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git config --global user.email user@users.noreply.github.com
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git config --global init.defaultBranch master
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git config --global core.autocrlf input
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;git config --list --show-origin
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;journalctl&#34;&gt;journalctl&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# logs from current system boot&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;journalctl -b
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# logs from previous system boot&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;journalctl -b -1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# list system boots&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;journalctl --list-boots
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# logs from a specific service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;journalctl -u nginx.service
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# logs from multiple services&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;journalctl -u nginx.service -u mysql.service
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# logs from a specific time range&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;journalctl --since &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;1 hour ago&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;journalctl --since &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;2 days ago&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;journalctl --since &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;2015-06-26 23:15:00&amp;#34;&lt;/span&gt; --until &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;2015-06-26 23:20:00&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# follow logs&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;journalctl -f
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;journalctl -u mysql.service -f
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;journalctl -n &lt;span style=&#34;color:#b48ead&#34;&gt;50&lt;/span&gt; --since &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;1 hour ago&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# logs from a specific user or service account&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;journalctl _UID&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#b48ead&#34;&gt;108&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;nfs&#34;&gt;nfs&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# server&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt install -y nfs-kernel-server
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl start nfs-server.service
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl &lt;span style=&#34;color:#81a1c1&#34;&gt;enable&lt;/span&gt; nfs-server.service
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir /var/nfs
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;/var/nfs 10.0.0.0/24(rw,sync,no_subtree_check,all_squash)&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; /etc/exports
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chown -R nobody:nogroup /var/nfs
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl restart nfs-server.service
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# server firewall&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw allow from 10.0.0.0/24 to 10.0.0.3 port &lt;span style=&#34;color:#b48ead&#34;&gt;2049&lt;/span&gt; proto tcp
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw reload
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# client&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt install -y nfs-common
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir /nfs
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;10.0.0.3:/var/nfs /nfs nfs defaults 0 0&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; /etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# client fix mount on boot&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;lt;&amp;lt; &amp;#39;EOF&amp;#39; &amp;gt; /etc/network/if-up.d/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;mount -a
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod +x /etc/network/if-up.d/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# troubleshooting&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nfsstat
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nfsstat --mounts
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nfsstat --client
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nfsstat --server
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmap -p &lt;span style=&#34;color:#b48ead&#34;&gt;2049&lt;/span&gt; 10.0.0.3
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmap -p &lt;span style=&#34;color:#b48ead&#34;&gt;111&lt;/span&gt; --script&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;nfs-showmount 10.0.0.3
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;nmap&#34;&gt;nmap&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# scan all tcp ports&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmap -p- -sS --reason example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# retrieve the tls certificate from a server&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;nmap -p &lt;span style=&#34;color:#b48ead&#34;&gt;443&lt;/span&gt; --script ssl-cert example.com
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;openssl&#34;&gt;openssl&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# encrypt&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;openssl enc -aes-256-cbc -pbkdf2 -salt -in backup.zip -out backup.enc
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# decrypt&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;openssl enc -aes-256-cbc -pbkdf2 -d -in backup.enc -out backup.zip
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# display the details of a tls certificate&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CERTIFICATE&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;/etc/kubernetes/pki/apiserver.crt&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;openssl x509 -in &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;CERTIFICATE&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt; -text -noout
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# decode and display the details of a tls certificate&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; -n &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;LS0tL[...]tLS0K&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; base64 -d &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; openssl x509 -text -noout
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# retrieve and display the details of a tls certificate&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;URL&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;google.com&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; openssl s_client -showcerts -servername &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;URL&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt; -connect &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;URL&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;:443 2&amp;gt;/dev/null &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; openssl x509 -inform pem -noout -text
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; openssl s_client -showcerts -servername &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;URL&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt; -connect &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;URL&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;:443 2&amp;gt;/dev/null &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; openssl x509 -inform pem -noout -enddate
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;scp&#34;&gt;scp&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# copy from local to remote&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;scp -r /path/from/local user@server:/path/to/remote
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# copy from remote to local&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;scp -r user@server:/path/from/remote /path/to/local
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# copy from remote to local on the current directory&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;scp -r user@server:/path/from/remote .
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;ssh&#34;&gt;ssh&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# generate an rsa key&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssh-keygen -t rsa -b &lt;span style=&#34;color:#b48ead&#34;&gt;4096&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# create a config file&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;lt;&amp;lt; &amp;#39;EOF&amp;#39; &amp;gt; ~/.ssh/config
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;Host server01
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;  HostName 10.20.30.41
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;  User user
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;Host server02
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;  HostName 10.20.30.42
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;  User user
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;Host server03
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;  HostName 10.20.30.43
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;  User user
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;  ProxyJump server02
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod &lt;span style=&#34;color:#b48ead&#34;&gt;600&lt;/span&gt; ~/.ssh/config
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# use specific ssh config based on a condition - man ssh_config&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;lt;&amp;lt; &amp;#39;EOF&amp;#39; &amp;gt; $HOME/.ssh/config
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;Match originalhost server localnetwork 10.0.0.0/24
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;  HostName 10.0.0.3
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;  User user
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;Host server
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;  HostName 172.16.32.3
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;  User user
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod &lt;span style=&#34;color:#b48ead&#34;&gt;600&lt;/span&gt; $HOME/.ssh/config
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# fetch your public key from github&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl https://github.com/korliaftis.keys
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# fetch your public key from github and add it to the authorized_keys file&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl https://github.com/korliaftis.keys &amp;gt;&amp;gt; /home/user/.ssh/authorized_keys
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod &lt;span style=&#34;color:#b48ead&#34;&gt;600&lt;/span&gt; /home/user/.ssh/authorized_keys
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# -f run in the background&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# -p specify ssh port if not the default&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# -N don&amp;#39;t execute any remote command&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# -L local port forwarding&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# -R remote port forwarding&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# -D dynamic port forwarding&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# local port forwarding&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssh -L &lt;span style=&#34;color:#81a1c1&#34;&gt;[&lt;/span&gt;LOCAL_IP:&lt;span style=&#34;color:#81a1c1&#34;&gt;]&lt;/span&gt;LOCAL_PORT:DESTINATION:DESTINATION_PORT &lt;span style=&#34;color:#81a1c1&#34;&gt;[&lt;/span&gt;USER@&lt;span style=&#34;color:#81a1c1&#34;&gt;]&lt;/span&gt;SSH_SERVER
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# remote port forwarding&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssh -R &lt;span style=&#34;color:#81a1c1&#34;&gt;[&lt;/span&gt;REMOTE:&lt;span style=&#34;color:#81a1c1&#34;&gt;]&lt;/span&gt;REMOTE_PORT:DESTINATION:DESTINATION_PORT &lt;span style=&#34;color:#81a1c1&#34;&gt;[&lt;/span&gt;USER@&lt;span style=&#34;color:#81a1c1&#34;&gt;]&lt;/span&gt;SSH_SERVER
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# dynamic port forwarding&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ssh -D &lt;span style=&#34;color:#81a1c1&#34;&gt;[&lt;/span&gt;LOCAL_IP:&lt;span style=&#34;color:#81a1c1&#34;&gt;]&lt;/span&gt;LOCAL_PORT &lt;span style=&#34;color:#81a1c1&#34;&gt;[&lt;/span&gt;USER@&lt;span style=&#34;color:#81a1c1&#34;&gt;]&lt;/span&gt;SSH_SERVER
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;stat&#34;&gt;stat&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# get the creation date of a file or folder&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;stat /var/log
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;stat /var/log/dpkg.log
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;swap&#34;&gt;swap&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# disable swap for the current session&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;swapoff -a
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# disable swap partition from getting auto mounted at boot&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;/^#/! {/swap/ s/^/# /}&amp;#39;&lt;/span&gt; -i /etc/fstab
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;tar&#34;&gt;tar&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# extract archive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tar -xvzf archive.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# list files in archive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tar -tzvf archive.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# create archive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tar -czvf archive.tar.gz /path/to/directory-or-file
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;tmux&#34;&gt;tmux&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# start | list | attach | detach | kill&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tmux
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tmux ls
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tmux attach
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B : detach-client
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B : kill-session
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# zoom pane&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B z
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# mouse scrolling&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B &lt;span style=&#34;color:#81a1c1&#34;&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# show pane numbers&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B q
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# move pane right&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B &lt;span style=&#34;color:#81a1c1&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# move pane left&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B &lt;span style=&#34;color:#81a1c1&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# split pane right&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B :split-pane -h
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B %
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# split pane down&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B :split-pane -v
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# change pane layout&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B SPACE
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B : &lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;select&lt;/span&gt;-layout tiled
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B : &lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;select&lt;/span&gt;-layout even-horizontal
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B : &lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;select&lt;/span&gt;-layout even-vertical
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# change selected pane&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B o
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B ARROW KEYS
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# rotate all panes&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B : CTRL o
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B : rotate-window
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# resize pane&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B : resize-pane -UDLR &lt;span style=&#34;color:#b48ead&#34;&gt;20&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# close pane&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CTRL B x
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;ufw&#34;&gt;ufw&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt install -y ufw
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed -i &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;s/IPV6=yes/IPV6=no/g&amp;#39;&lt;/span&gt; /etc/default/ufw
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw allow 22/tcp
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;y&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; ufw &lt;span style=&#34;color:#81a1c1&#34;&gt;enable&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw status
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# allow from a specific network to any ip but at a specific port and protocol&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw allow from 10.0.0.0/24 to any port &lt;span style=&#34;color:#b48ead&#34;&gt;445&lt;/span&gt; proto tcp
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# allow from a specific network to a specific ip, port and protocol&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw allow from 10.0.0.0/24 to 10.0.0.2 port &lt;span style=&#34;color:#b48ead&#34;&gt;445&lt;/span&gt; proto tcp
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;umask&#34;&gt;umask&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# view the current mask value&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;umask&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# view the current mask value in symbolic notation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;umask&lt;/span&gt; -S
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# change the umask value only for the current session&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;umask&lt;/span&gt; &lt;span style=&#34;color:#b48ead&#34;&gt;077&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;wakeonlan&#34;&gt;wakeonlan&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# server&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;INTERFACE&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;enp2s0&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt install -y ethtool
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ethtool &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;INTERFACE&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# &amp;#34;Wake-on: g&amp;#34; means enabled&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;lt;&amp;lt; EOF &amp;gt; /etc/network/interfaces.d/${INTERFACE}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;auto ${INTERFACE}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;iface ${INTERFACE} inet dhcp
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;  ethernet-wol g
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl restart networking.service
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ethtool &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;INTERFACE&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# client&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt install -y wakeonlan
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;alias wol=&amp;#39;wakeonlan 58:8a:5a:0d:7c:8a&amp;#39;&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; /home/user/.bash_aliases
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;</description>
+    </item>
+    <item>
+      <title>docker</title>
+      <link>https://korliaftis.github.io/notes/docker.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://korliaftis.github.io/notes/docker.html</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#operations&#34;&gt;operations&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#docker-socker-proxy&#34;&gt;docker-socker-proxy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ssltestsh&#34;&gt;ssltest.sh&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#trippy&#34;&gt;trippy&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;operations&#34;&gt;operations&lt;/h3&gt;
+&lt;p&gt;reset docker..&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker rm -f &lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;$(&lt;/span&gt;docker ps -aq&lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker network prune --force
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker volume prune --all --force
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker image prune --all --force
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker system prune --all --force
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;copy single file to a running container..&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run -d --name web nginx
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;hello!&amp;#34;&lt;/span&gt; &amp;gt; index.html
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker cp index.html web:/usr/share/nginx/html/index.html
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker &lt;span style=&#34;color:#81a1c1&#34;&gt;exec&lt;/span&gt; web curl localhost
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;copy multiple files to a running container..&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker run -d --name web nginx
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;for&lt;/span&gt; file in ./*&lt;span style=&#34;color:#eceff4&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  docker cp &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;file&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&lt;/span&gt; web:/usr/share/nginx/html/
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;done&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;docker &lt;span style=&#34;color:#81a1c1&#34;&gt;exec&lt;/span&gt; web ls /usr/share/nginx/html/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;change the default behavior to publish containers on all interfaces..&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>helm</title>
+      <link>https://korliaftis.github.io/notes/helm.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://korliaftis.github.io/notes/helm.html</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#operations&#34;&gt;operations&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#service-accounts&#34;&gt;service accounts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#mount-directories&#34;&gt;mount directories&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#extra-objects&#34;&gt;extra objects&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;operations&#34;&gt;operations&lt;/h3&gt;
+&lt;p&gt;show all releases in all namespaces without any filter applied..&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm list -Aa
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;get the values for a helm release..&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm get values &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;NAME&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm get values &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;NAME&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt; --all
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;render templates..&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;helm template &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;NAME&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt; . -f values.yaml -s templates/deployment.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;get the helm release secret in plain text..&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;kubectl get secrets sh.helm.release.v1.traefik.v1 -n traefik -o jsonpath&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;{.data.release}&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; base64 --decode &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; base64 --decode &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; gzip -d &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; jq
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;service-accounts&#34;&gt;service accounts&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/kubernetes/kubernetes/issues/76367#issuecomment-481689160&#34;&gt;https://github.com/kubernetes/kubernetes/issues/76367#issuecomment-481689160&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>wireguard</title>
+      <link>https://korliaftis.github.io/notes/wireguard.html</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://korliaftis.github.io/notes/wireguard.html</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#operations&#34;&gt;operations&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#vps&#34;&gt;vps&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#raspberry&#34;&gt;raspberry&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#client&#34;&gt;client&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#server&#34;&gt;server&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;operations&#34;&gt;operations&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# restart service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl restart wg-quick@wg0.service
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# troubleshooting&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wg show
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wg showconf wg0
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;journalctl -u wg-quick@wg0.service
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tcpdump -i any &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;udp port 65001&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;tcpdump -n -i any &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;udp port 65001&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# firewall validation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw status numbered
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw delete &lt;span style=&#34;color:#b48ead&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw reload
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;vps&#34;&gt;vps&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt install -y locales-all
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;LC_ALL=&amp;#34;en_US.UTF-8&amp;#34;&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; /etc/default/locale
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;reboot
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt update &lt;span style=&#34;color:#81a1c1&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt upgrade -y
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;passwd root
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;useradd --create-home --shell /bin/bash --uid &lt;span style=&#34;color:#b48ead&#34;&gt;1100&lt;/span&gt; user2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;usermod --append --groups sudo user2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;passwd user2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;exit&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;userdel --remove debian
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;useradd --create-home --shell /bin/bash --uid &lt;span style=&#34;color:#b48ead&#34;&gt;1000&lt;/span&gt; user
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;usermod --append --groups sudo user
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;passwd user
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;exit&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;userdel --remove user2
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;user ALL=(ALL) NOPASSWD:ALL&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; EDITOR&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;tee -a&amp;#39;&lt;/span&gt; visudo
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;visudo --check
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;install -d -m &lt;span style=&#34;color:#b48ead&#34;&gt;0700&lt;/span&gt; -o user -g user /home/user/.ssh
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;install -m &lt;span style=&#34;color:#b48ead&#34;&gt;0600&lt;/span&gt; -o user -g user /dev/null /home/user/.ssh/authorized_keys
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed -i &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;/^#/! {/AcceptEnv/ s/^/#/}&amp;#39;&lt;/span&gt; /etc/ssh/sshd_config
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt install -y ufw
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed -i &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;s/IPV6=yes/IPV6=no/g&amp;#39;&lt;/span&gt; /etc/default/ufw
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw default deny
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw logging low
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw allow 22/tcp
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;y&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; ufw &lt;span style=&#34;color:#81a1c1&#34;&gt;enable&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw status verbose
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;raspberry&#34;&gt;raspberry&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;### imager&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# - Operating System: Raspberry Pi OS Lite (64-bit)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# - Set hostname: raspberry&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# - Set username and password: enabled&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;#     - Username: pi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;#     - Password: 123&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# - Set locale settings: enabled&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;#     - Time zone: Europe/Athens&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;#     - Keyboard layout: us&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# - Enable SSH: enabled&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;#     - Use password authentication: enabled&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;### raspi-config&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# - Localisation Options:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;#     - Locale:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;#         - Locales to be generated: en_US.UTF-8 UTF-8&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;#         - Default locale for the system environment: en_US.UTF-8&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;#     - WLAN Country: GR Greece&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt install -y locales-all
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;LC_ALL=&amp;#34;en_US.UTF-8&amp;#34;&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; /etc/default/locale
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;reboot
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt update &lt;span style=&#34;color:#81a1c1&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt upgrade -y
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;passwd root
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;useradd --create-home --shell /bin/bash --uid &lt;span style=&#34;color:#b48ead&#34;&gt;1100&lt;/span&gt; user2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;usermod --append --groups sudo user2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;passwd user2
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;exit&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;userdel --remove pi
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;useradd --create-home --shell /bin/bash --uid &lt;span style=&#34;color:#b48ead&#34;&gt;1000&lt;/span&gt; user
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;usermod --append --groups sudo user
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;passwd user
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;exit&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;userdel --remove user2
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;user ALL=(ALL) NOPASSWD:ALL&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; EDITOR&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;tee -a&amp;#39;&lt;/span&gt; visudo
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;visudo --check
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;install -d -m &lt;span style=&#34;color:#b48ead&#34;&gt;0700&lt;/span&gt; -o user -g user /home/user/.ssh
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;install -m &lt;span style=&#34;color:#b48ead&#34;&gt;0600&lt;/span&gt; -o user -g user /dev/null /home/user/.ssh/authorized_keys
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sed -i &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;/^#/! {/AcceptEnv/ s/^/#/}&amp;#39;&lt;/span&gt; /etc/ssh/sshd_config
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt install -y wakeonlan
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;su - user -c &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#39;touch /home/user/.bash_aliases&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;echo&lt;/span&gt; &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;alias wol=&amp;#39;wakeonlan 58:8a:5a:0d:7c:8a&amp;#39;&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; /home/user/.bash_aliases
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;client&#34;&gt;client&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt install -y wireguard
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;cd&lt;/span&gt; /etc/wireguard
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wg genkey &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; tee privatekey &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; wg pubkey &amp;gt; publickey
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;touch wg0.conf
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod -R &lt;span style=&#34;color:#b48ead&#34;&gt;600&lt;/span&gt; /etc/wireguard/*
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;WG_SUBNET&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;172.16.32.0/24&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SERVER_PORT&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;65001&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CLIENT_PRIVATE_KEY&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;$(&lt;/span&gt;cat /etc/wireguard/privatekey&lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CLIENT_WG_IP&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;      &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# 172.16.32.2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SERVER_PUBLIC_IP&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# 73.173.101.129&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SERVER_PUBLIC_KEY&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# YRrQ69zJk8jpez9X9DqFzq0i+4KGKCds3zdC5kJv4HM=&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;lt;&amp;lt; EOF &amp;gt; /etc/wireguard/wg0.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;[Interface]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;Address = ${CLIENT_WG_IP}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;PrivateKey = ${CLIENT_PRIVATE_KEY}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;[Peer]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;PublicKey = ${SERVER_PUBLIC_KEY}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;AllowedIPs = ${WG_SUBNET}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;PersistentKeepalive = 10
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;Endpoint = ${SERVER_PUBLIC_IP}:${SERVER_PORT}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw allow from &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;WG_SUBNET&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt; to &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;CLIENT_WG_IP&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt; port &lt;span style=&#34;color:#b48ead&#34;&gt;22&lt;/span&gt; proto tcp
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw reload
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw status verbose
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl &lt;span style=&#34;color:#81a1c1&#34;&gt;enable&lt;/span&gt; wg-quick@wg0.service
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;history&lt;/span&gt; -c &lt;span style=&#34;color:#81a1c1&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#81a1c1&#34;&gt;history&lt;/span&gt; -w
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id=&#34;server&#34;&gt;server&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;apt install -y wireguard
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;cd&lt;/span&gt; /etc/wireguard
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wg genkey &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; tee privatekey &lt;span style=&#34;color:#eceff4&#34;&gt;|&lt;/span&gt; wg pubkey &amp;gt; publickey
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;touch wg0.conf
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod -R &lt;span style=&#34;color:#b48ead&#34;&gt;600&lt;/span&gt; /etc/wireguard/*
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;WG_SUBNET&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;172.16.32.0/24&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SERVER_PORT&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;65001&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SERVER_WG_IP&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;172.16.32.1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SERVER_PRIVATE_KEY&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;$(&lt;/span&gt;cat /etc/wireguard/privatekey&lt;span style=&#34;color:#81a1c1;font-weight:bold&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SERVER_INTERFACE&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# ens3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;SERVER_PUBLIC_IP&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;  &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# 73.173.101.129&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CLIENT_WG_IP&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;      &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# 172.16.32.2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;CLIENT_PUBLIC_KEY&lt;span style=&#34;color:#81a1c1&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#616e87;font-style:italic&#34;&gt;# YRrQ69zJk8jpez9X9DqFzq0i+4KGKCds3zdC5kJv4HM=&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cat &lt;span style=&#34;color:#a3be8c&#34;&gt;&amp;lt;&amp;lt; EOF &amp;gt; /etc/wireguard/wg0.conf
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;[Interface]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;Address = ${SERVER_WG_IP}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;ListenPort = ${SERVER_PORT}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;PrivateKey = ${SERVER_PRIVATE_KEY}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;PostUp = echo 1 &amp;gt; /proc/sys/net/ipv4/ip_forward; iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o ${SERVER_INTERFACE} -j MASQUERADE
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;PostDown = echo 0 &amp;gt; /proc/sys/net/ipv4/ip_forward; iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o ${SERVER_INTERFACE} -j MASQUERADE
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;[Peer]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;PublicKey = ${CLIENT_PUBLIC_KEY}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;AllowedIPs = ${CLIENT_WG_IP}
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;PersistentKeepalive = 10
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a3be8c&#34;&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw allow from any to &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;SERVER_PUBLIC_IP&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt; port &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;SERVER_PORT&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt; proto udp
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw allow from &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;WG_SUBNET&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt; to &lt;span style=&#34;color:#a3be8c&#34;&gt;${&lt;/span&gt;SERVER_WG_IP&lt;span style=&#34;color:#a3be8c&#34;&gt;}&lt;/span&gt; port &lt;span style=&#34;color:#b48ead&#34;&gt;22&lt;/span&gt; proto tcp
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw reload
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw status verbose
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw status numbered
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw delete &lt;span style=&#34;color:#b48ead&#34;&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw reload
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ufw status verbose
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemctl &lt;span style=&#34;color:#81a1c1&#34;&gt;enable&lt;/span&gt; wg-quick@wg0.service
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#81a1c1&#34;&gt;history&lt;/span&gt; -c &lt;span style=&#34;color:#81a1c1&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#81a1c1&#34;&gt;history&lt;/span&gt; -w
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;</description>
+    </item>
+  </channel>
+</rss>

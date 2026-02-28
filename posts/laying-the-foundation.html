@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="light">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Laying the Foundation | Blog</title>
+<meta name="keywords" content="Homelab">
+<meta name="description" content="Since I started working with computers I always loved the idea of a homelab, a safe space to mess with stuff, break stuff and sometimes learn a few things along the way.
+Back when I was trying to land my first tech job my homelab was a bunch of noisy Cisco switches and routers. Along the way I discovered GNS3 and eventually those physical switches and routers were virtualized on my Sony Vaio VGN-N31Z with it&rsquo;s Core 2 Duo, 2GB of RAM and 120GB of spinning rust.">
+<meta name="author" content="user">
+<link rel="canonical" href="https://korliaftis.github.io/posts/laying-the-foundation.html">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.9a24e0a983acbd1d5709cdde8f60a89a08ff7fb64871fe6496c466c4d0350645.css" integrity="sha256-miTgqYOsvR1XCc3ej2Comgj/f7ZIcf5klsRmxNA1BkU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://korliaftis.github.io/assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://korliaftis.github.io/assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://korliaftis.github.io/assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://korliaftis.github.io/assets/favicon/apple-touch-icon.png">
+<link rel="mask-icon" href="https://korliaftis.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://korliaftis.github.io/posts/laying-the-foundation.html">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://korliaftis.github.io/">&gt; $ <span class="logoCursor">_</span>
+            </a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://korliaftis.github.io/search/" accesskey=/>
+                    <span>search</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://korliaftis.github.io/tags/">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Laying the Foundation
+    </h1>
+    <div class="post-meta"><span>January 19, 2025</span>
+
+</div>
+  </header> 
+  <div class="post-content"><p>Since I started working with computers I always loved the idea of a homelab, a safe space to mess with stuff, break stuff and sometimes learn a few things along the way.</p>
+<p>Back when I was trying to land my first tech job my homelab was a bunch of noisy Cisco switches and routers. Along the way I discovered GNS3 and eventually those physical switches and routers were virtualized on my Sony Vaio VGN-N31Z with it&rsquo;s Core 2 Duo, 2GB of RAM and 120GB of spinning rust.</p>
+<p>A few years later when I started working with Windows my homelab transitioned into a Windows Server 2012 R2 virtual machine running on VirtualBox. It didn’t take long to realize that if I wanted to run more than just a couple of VMs at the same time I would need some serious hardware. So I ended up breaking the bank on a desktop running the free version of VMware ESXi packed with an Intel i7, 64GB of RAM and a bunch of SSDs.</p>
+<p>Fast forward again and with everything moving to the public cloud my homelab shifted to an AWS account. What was once a capital expense with finite resources became an operational expense with &ldquo;limitless&rdquo; capabilities.</p>
+<p>These days my homelab is a vintage Dell Latitude with an Intel i3, 16GB of RAM and a 1TB SSD running Debian. Here is how I set it up..</p>
+<hr>
+<h3 id="foundation">Foundation</h3>
+<p>This guide begins after we have selected the hardware, downloaded a Debian 13 ISO, created a bootable USB and completed a minimal installation with only the &ldquo;standard system utilities&rdquo; and &ldquo;SSH server&rdquo; selected.</p>
+<p>By now we should know our machine’s IP address on the network and have successfully logged in via SSH.</p>
+<p>Let’s get started..</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>switch to the root user..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>su -
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>set the hostname..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>HOSTNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;server&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>hostnamectl set-hostname <span style="color:#a3be8c">${</span>HOSTNAME<span style="color:#a3be8c">}</span>
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>set the timezone..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>TIMEZONE_REGION<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Europe&#34;</span>
+</span></span><span style="display:flex;"><span>TIMEZONE_CITY<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;Athens&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>timedatectl set-timezone <span style="color:#a3be8c">${</span>TIMEZONE_REGION<span style="color:#a3be8c">}</span>/<span style="color:#a3be8c">${</span>TIMEZONE_CITY<span style="color:#a3be8c">}</span>
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>install packages..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>apt update <span style="color:#81a1c1">&amp;&amp;</span> apt upgrade -y
+</span></span><span style="display:flex;"><span>apt install -y bash-completion ca-certificates apt-transport-https vim git curl jq gnupg unzip htop tree tmux nmap tcpdump ethtool strace uuid-runtime yq
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>configure sudo..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>apt install -y sudo
+</span></span><span style="display:flex;"><span>usermod -a -G sudo <span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>enable sudo without password..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#34;</span><span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span><span style="color:#a3be8c"> ALL=(ALL) NOPASSWD:ALL&#34;</span> <span style="color:#eceff4">|</span> EDITOR<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#39;tee -a&#39;</span> visudo
+</span></span><span style="display:flex;"><span>visudo --check
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>configure ssh..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>install -d -m <span style="color:#b48ead">0700</span> -o <span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span> -g <span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span> /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.ssh
+</span></span><span style="display:flex;"><span>install -m <span style="color:#b48ead">0600</span> -o <span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span> -g <span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span> /dev/null /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.ssh/config
+</span></span><span style="display:flex;"><span>install -m <span style="color:#b48ead">0600</span> -o <span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span> -g <span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span> /dev/null /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.ssh/authorized_keys
+</span></span><span style="display:flex;"><span>su - <span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span> -c <span style="color:#a3be8c">&#34;ssh-keygen -t ed25519 -f /home/</span><span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span><span style="color:#a3be8c">/.ssh/id_ed25519 -N &#39;&#39;&#34;</span>
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#a3be8c">&#39;/^#/! {/AcceptEnv/ s/^/#/}&#39;</span> /etc/ssh/sshd_config
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>enable ssh without password (if the key we use is also configured on GitHub)..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>GITHUB_USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;torvalds&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl https://github.com/<span style="color:#a3be8c">${</span>GITHUB_USERNAME<span style="color:#a3be8c">}</span>.keys &gt;&gt; /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.ssh/authorized_keys
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>set the global git email address for our user account..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>GITHUB_EMAIL<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;torvalds@users.noreply.github.com&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>su - <span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span> -c <span style="color:#a3be8c">&#34;git config --global user.email </span><span style="color:#a3be8c">${</span>GITHUB_EMAIL<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span>
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>change the way the <a href="https://bash-prompt-generator.org">bash prompt</a> looks..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#39;export PS1=&#34;\[\e[37m\][\[\e[93m\]\w\[\e[37m\]] \[\e[0m\]&#34;&#39;</span> &gt;&gt; /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.bashrc
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#39;export PS1=&#34;\[\e[37m\][\[\e[91m\]\w\[\e[37m\]] \[\e[0m\]&#34;&#39;</span> &gt;&gt; /root/.bashrc
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>create a few files and directories to keep our stuff organized..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>install -d -m <span style="color:#b48ead">0775</span> -o <span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span> -g <span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span> /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.tls
+</span></span><span style="display:flex;"><span>install -d -m <span style="color:#b48ead">0775</span> -o <span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span> -g <span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span> /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts
+</span></span><span style="display:flex;"><span>install -m <span style="color:#b48ead">0644</span> -o <span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span> -g <span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span> /dev/null /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.bash_aliases
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>disable the laptop lid function (if we use a laptop)..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#39;HandleLidSwitch=ignore&#39;</span> &gt;&gt; /etc/systemd/logind.conf
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>suppress the output of kernel logs on the console..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#39;kernel.printk = 1 4 1 7&#39;</span> &gt;&gt; /etc/sysctl.conf
+</span></span><span style="display:flex;"><span>sysctl -p
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>increase the <code>/proc/sys/fs/inotify/max_user_instances</code> value..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#39;fs.inotify.max_user_instances = 16384&#39;</span> &gt;&gt; /etc/sysctl.conf
+</span></span><span style="display:flex;"><span>sysctl -p
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>update the password of our user account..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>passwd <span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<p>update the password of the root account..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>passwd root
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<hr>
+<h3 id="building-blocks">Building Blocks</h3>
+<p>Now that we have established the foundation, we can begin adding our building blocks.</p>
+<p>Since I work as a Site Reliability Engineer the tools I use include the following..</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<h4 id="docker">docker</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -L https://download.docker.com/linux/debian/gpg <span style="color:#eceff4">|</span> gpg --dearmor &gt; /etc/apt/keyrings/docker.gpg
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#34;deb [arch=</span><span style="color:#81a1c1;font-weight:bold">$(</span>dpkg --print-architecture<span style="color:#81a1c1;font-weight:bold">)</span><span style="color:#a3be8c"> signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian </span><span style="color:#81a1c1;font-weight:bold">$(</span>. /etc/os-release <span style="color:#81a1c1">&amp;&amp;</span> <span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#34;</span><span style="color:#a3be8c">${</span>VERSION_CODENAME<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span><span style="color:#81a1c1;font-weight:bold">)</span><span style="color:#a3be8c"> stable&#34;</span> &gt; /etc/apt/sources.list.d/docker.list
+</span></span><span style="display:flex;"><span>apt update <span style="color:#81a1c1">&amp;&amp;</span> apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+</span></span><span style="display:flex;"><span>usermod -aG docker <span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>
+</span></span><span style="display:flex;"><span>systemctl daemon-reload
+</span></span><span style="display:flex;"><span>systemctl <span style="color:#81a1c1">enable</span> docker.service
+</span></span><span style="display:flex;"><span>systemctl start docker.service
+</span></span></code></pre></div><p>By default Docker binds published ports to all interfaces (0.0.0.0) making containers accessible from anywhere. I prefer the opposite, containers should be private unless explicitly exposed.</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>systemctl stop docker.service
+</span></span><span style="display:flex;"><span>cat <span style="color:#a3be8c">&lt;&lt; &#39;EOF&#39; &gt; /etc/docker/daemon.json
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">{
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  &#34;ip&#34;: &#34;127.0.0.1&#34;,
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  &#34;metrics-addr&#34;: &#34;0.0.0.0:9323&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">}
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">EOF</span>
+</span></span><span style="display:flex;"><span>systemctl start docker.service
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<h4 id="kubectl">kubectl</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>TEMP_DIR<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;</span><span style="color:#81a1c1;font-weight:bold">$(</span>mktemp -d<span style="color:#81a1c1;font-weight:bold">)</span><span style="color:#a3be8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -Lo <span style="color:#a3be8c">${</span>TEMP_DIR<span style="color:#a3be8c">}</span>/kubectl <span style="color:#a3be8c">&#34;https://dl.k8s.io/release/</span><span style="color:#81a1c1;font-weight:bold">$(</span>curl -Ls https://dl.k8s.io/release/stable.txt<span style="color:#81a1c1;font-weight:bold">)</span><span style="color:#a3be8c">/bin/linux/amd64/kubectl&#34;</span>
+</span></span><span style="display:flex;"><span>install -m <span style="color:#b48ead">0755</span> -o root -g root <span style="color:#a3be8c">${</span>TEMP_DIR<span style="color:#a3be8c">}</span>/kubectl /usr/local/bin/kubectl
+</span></span><span style="display:flex;"><span>kubectl completion bash &gt; /etc/bash_completion.d/kubectl
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<h4 id="k9s">k9s</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>TEMP_DIR<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;</span><span style="color:#81a1c1;font-weight:bold">$(</span>mktemp -d<span style="color:#81a1c1;font-weight:bold">)</span><span style="color:#a3be8c">&#34;</span>
+</span></span><span style="display:flex;"><span>K9S_VERSION<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;</span><span style="color:#81a1c1;font-weight:bold">$(</span>curl -Ls https://api.github.com/repos/derailed/k9s/releases/latest <span style="color:#eceff4">|</span> jq -r .tag_name<span style="color:#81a1c1;font-weight:bold">)</span><span style="color:#a3be8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -Lo <span style="color:#a3be8c">${</span>TEMP_DIR<span style="color:#a3be8c">}</span>/k9s_Linux_amd64.tar.gz https://github.com/derailed/k9s/releases/download/<span style="color:#a3be8c">${</span>K9S_VERSION<span style="color:#a3be8c">}</span>/k9s_Linux_amd64.tar.gz
+</span></span><span style="display:flex;"><span>tar -xzf <span style="color:#a3be8c">${</span>TEMP_DIR<span style="color:#a3be8c">}</span>/k9s_Linux_amd64.tar.gz --directory <span style="color:#a3be8c">${</span>TEMP_DIR<span style="color:#a3be8c">}</span>
+</span></span><span style="display:flex;"><span>install -m <span style="color:#b48ead">0755</span> -o root -g root <span style="color:#a3be8c">${</span>TEMP_DIR<span style="color:#a3be8c">}</span>/k9s /usr/local/bin/k9s
+</span></span><span style="display:flex;"><span>k9s completion bash &gt; /etc/bash_completion.d/k9s
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<h4 id="minikube">minikube</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>TEMP_DIR<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;</span><span style="color:#81a1c1;font-weight:bold">$(</span>mktemp -d<span style="color:#81a1c1;font-weight:bold">)</span><span style="color:#a3be8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -Lo <span style="color:#a3be8c">${</span>TEMP_DIR<span style="color:#a3be8c">}</span>/minikube_latest_amd64.deb https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+</span></span><span style="display:flex;"><span>dpkg -i <span style="color:#a3be8c">${</span>TEMP_DIR<span style="color:#a3be8c">}</span>/minikube_latest_amd64.deb
+</span></span><span style="display:flex;"><span>minikube completion bash &gt; /etc/bash_completion.d/minikube
+</span></span></code></pre></div><p>When Minikube starts it checks for a Docker network with the same name and creates it automatically if it doesn&rsquo;t exist. By creating this network manually we can define a custom IP range and make the node IPs predictable.</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>docker network rm minikube &gt; /dev/null 2&gt;<span style="color:#eceff4">&amp;</span><span style="color:#b48ead">1</span>
+</span></span><span style="display:flex;"><span>docker network create <span style="color:#a3be8c">&#34;minikube&#34;</span> --driver<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;bridge&#34;</span> --subnet<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;10.20.30.0/24&#34;</span> --gateway<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;10.20.30.1&#34;</span>
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<h4 id="haproxy">haproxy</h4>
+<p>A simple reverse proxy to easily access HTTP workloads running on Minikube. It listens on ports 80 and 443 of the system and forwards connections to the Minikube network.</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>apt install -y haproxy
+</span></span><span style="display:flex;"><span>systemctl daemon-reload
+</span></span><span style="display:flex;"><span>systemctl <span style="color:#81a1c1">enable</span> haproxy.service
+</span></span><span style="display:flex;"><span>systemctl stop haproxy.service
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#39;EXTRAOPTS=&#34;-q&#34;&#39;</span> &gt;&gt; /etc/default/haproxy
+</span></span><span style="display:flex;"><span>cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
+</span></span><span style="display:flex;"><span>cat <span style="color:#a3be8c">&lt;&lt; &#39;EOF&#39; &gt; /etc/haproxy/haproxy.cfg
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">global
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  log /dev/log local0 info
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">defaults
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  log global
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  timeout client 30000
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  timeout connect 5000
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  timeout server 30000
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">frontend stats
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  mode http
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  bind *:8404
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  stats enable
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  stats uri /
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  stats refresh 30s
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  no log
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">frontend metrics
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  mode http
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  bind *:8405
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  http-request use-service prometheus-exporter
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  no log
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">frontend haproxy-http
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  mode tcp
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  bind *:80
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  default_backend minikube-http
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  option tcplog
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">frontend haproxy-https
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  mode tcp
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  bind *:443
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  default_backend minikube-https
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  option tcplog
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">backend minikube-http
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  mode tcp
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  server minikube 10.20.30.2:31080 check
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  server minikube-m02 10.20.30.3:31080 check
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  server minikube-m03 10.20.30.4:31080 check
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  server minikube-m04 10.20.30.5:31080 check
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  server minikube-m05 10.20.30.6:31080 check
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">backend minikube-https
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  mode tcp
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  server minikube 10.20.30.2:31443 check
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  server minikube-m02 10.20.30.3:31443 check
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  server minikube-m03 10.20.30.4:31443 check
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  server minikube-m04 10.20.30.5:31443 check
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  server minikube-m05 10.20.30.6:31443 check
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">EOF</span>
+</span></span><span style="display:flex;"><span>haproxy -c -f /etc/haproxy/haproxy.cfg
+</span></span><span style="display:flex;"><span>systemctl start haproxy.service
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<h4 id="helm">helm</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>curl -L https://packages.buildkite.com/helm-linux/helm-debian/gpgkey <span style="color:#eceff4">|</span> gpg --dearmor &gt; /etc/apt/keyrings/helm.gpg
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#34;deb [signed-by=/etc/apt/keyrings/helm.gpg] https://packages.buildkite.com/helm-linux/helm-debian/any any main&#34;</span> &gt; /etc/apt/sources.list.d/helm.list
+</span></span><span style="display:flex;"><span>apt update <span style="color:#81a1c1">&amp;&amp;</span> apt install -y helm
+</span></span><span style="display:flex;"><span>helm completion bash &gt; /etc/bash_completion.d/helm
+</span></span></code></pre></div></li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<h4 id="terraform">terraform</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -L https://apt.releases.hashicorp.com/gpg <span style="color:#eceff4">|</span> gpg --dearmor &gt; /etc/apt/keyrings/hashicorp.gpg
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#34;deb [signed-by=/etc/apt/keyrings/hashicorp.gpg] https://apt.releases.hashicorp.com </span><span style="color:#81a1c1;font-weight:bold">$(</span>. /etc/os-release <span style="color:#81a1c1">&amp;&amp;</span> <span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#34;</span><span style="color:#a3be8c">${</span>VERSION_CODENAME<span style="color:#a3be8c">}</span><span style="color:#a3be8c">&#34;</span><span style="color:#81a1c1;font-weight:bold">)</span><span style="color:#a3be8c"> main&#34;</span> &gt; /etc/apt/sources.list.d/hashicorp.list
+</span></span><span style="display:flex;"><span>apt update <span style="color:#81a1c1">&amp;&amp;</span> apt install -y terraform
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#39;complete -C /usr/bin/terraform terraform&#39;</span> &gt;&gt; /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.bashrc
+</span></span></code></pre></div><!-- raw HTML omitted -->
+</li>
+<li>
+<h4 id="grafana">grafana</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>curl -L https://apt.grafana.com/gpg.key <span style="color:#eceff4">|</span> gpg --dearmor &gt; /etc/apt/keyrings/grafana.gpg
+</span></span><span style="display:flex;"><span><span style="color:#81a1c1">echo</span> <span style="color:#a3be8c">&#34;deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://apt.grafana.com stable main&#34;</span> &gt; /etc/apt/sources.list.d/grafana.list
+</span></span><span style="display:flex;"><span>apt update <span style="color:#81a1c1">&amp;&amp;</span> apt install -y grafana
+</span></span><span style="display:flex;"><span>systemctl daemon-reload
+</span></span><span style="display:flex;"><span>systemctl <span style="color:#81a1c1">enable</span> grafana-server.service
+</span></span><span style="display:flex;"><span>systemctl stop grafana-server.service
+</span></span><span style="display:flex;"><span>cp /etc/grafana/grafana.ini /etc/grafana/grafana.ini.bak
+</span></span><span style="display:flex;"><span>chown :grafana /etc/grafana/grafana.ini.bak
+</span></span><span style="display:flex;"><span>sed -i <span style="color:#a3be8c">&#39;s/^;reporting_enabled = true$/reporting_enabled = false/&#39;</span> /etc/grafana/grafana.ini
+</span></span><span style="display:flex;"><span>systemctl start grafana-server.service
+</span></span></code></pre></div><p>The web interface is on port 3000, login with <code>admin</code> as the username and password.</p>
+<!-- raw HTML omitted -->
+</li>
+<li>
+<h4 id="act">act</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>TEMP_DIR<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;</span><span style="color:#81a1c1;font-weight:bold">$(</span>mktemp -d<span style="color:#81a1c1;font-weight:bold">)</span><span style="color:#a3be8c">&#34;</span>
+</span></span><span style="display:flex;"><span>ACT_VERSION<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;</span><span style="color:#81a1c1;font-weight:bold">$(</span>curl -Ls https://api.github.com/repos/nektos/act/releases/latest <span style="color:#eceff4">|</span> jq -r .tag_name<span style="color:#81a1c1;font-weight:bold">)</span><span style="color:#a3be8c">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -Lo <span style="color:#a3be8c">${</span>TEMP_DIR<span style="color:#a3be8c">}</span>/act_Linux_x86_64.tar.gz https://github.com/nektos/act/releases/download/<span style="color:#a3be8c">${</span>ACT_VERSION<span style="color:#a3be8c">}</span>/act_Linux_x86_64.tar.gz
+</span></span><span style="display:flex;"><span>tar -xzf <span style="color:#a3be8c">${</span>TEMP_DIR<span style="color:#a3be8c">}</span>/act_Linux_x86_64.tar.gz --directory <span style="color:#a3be8c">${</span>TEMP_DIR<span style="color:#a3be8c">}</span>
+</span></span><span style="display:flex;"><span>install -m <span style="color:#b48ead">0755</span> -o root -g root <span style="color:#a3be8c">${</span>TEMP_DIR<span style="color:#a3be8c">}</span>/act /usr/local/bin/act
+</span></span></code></pre></div></li>
+</ul>
+<hr>
+<h3 id="tactical-enhancements">Tactical Enhancements</h3>
+<p>This part of the guide covers things that are nice to have but not strictly necessary.</p>
+<p>A nice upgrade is to register a domain. With a domain we can set up DNS records that take advantage of the global DNS network and also issue valid TLS certificates.</p>
+<p>After registering a domain through a registrar, we create a Cloudflare account and transfer the domain&rsquo;s DNS management to it. On Cloudflare, we configure <code>A</code> records that point to the local IP of our system and set up an API token with &ldquo;Edit zone DNS&rdquo; permissions..</p>
+<pre tabindex="0"><code>domain.xyz     A   192.168.1.3
+*.domain.xyz   A   192.168.1.3
+</code></pre><p>With the API token we run a script that uses <a href="https://github.com/acmesh-official/acme.sh">acme.sh</a> to generate a wildcard TLS certificate and save it to the <code>~/.tls</code> directory of our system.</p>
+<p>To download the script run the following..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -Lo /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts/acme.sh https://blog.korliaftis.com/scripts/acme.sh
+</span></span><span style="display:flex;"><span>chmod +x /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts/acme.sh
+</span></span></code></pre></div><p>Before running the script, make sure to edit it and update the following variables..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>    <span style="color:#616e87;font-style:italic"># your debian username - &#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>DOMAIN_NAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span> <span style="color:#616e87;font-style:italic"># your domain name - &#34;domain.xyz&#34;</span>
+</span></span><span style="display:flex;"><span>API_TOKEN<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>   <span style="color:#616e87;font-style:italic"># your cloudflare api token - &#34;6_z3K2aFdSpIq6VBkaz3i4xHT_uYiBNmDftWNZ-K&#34;</span>
+</span></span></code></pre></div><p>Another useful upgrade to consider is setting up remote access. We could rent a VPS and set up WireGuard tunnels between our devices but this adds latency. A better option is to use something like <a href="https://nebula.defined.net/docs">Nebula</a> where the VPS can act as a broker and not as a relay. Another valid option would be to use Cloudflare tunnels. However, the simplest option is to use a managed service like Tailscale or ZeroTier which can handle everything for us.</p>
+<p>The last upgrade to consider is configuring wake-on-lan. Most systems support this feature but it must be enabled in both the BIOS and on the network interface. We use <code>ethtool</code> to check if wake-on-lan is enabled on our system&rsquo;s ethernet interface..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>INTERFACE<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span> <span style="color:#616e87;font-style:italic"># the name of the ethernet interface - enp2s0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ethtool <span style="color:#a3be8c">${</span>INTERFACE<span style="color:#a3be8c">}</span> <span style="color:#eceff4">|</span> grep <span style="color:#a3be8c">&#34;Wake-on:&#34;</span>
+</span></span></code></pre></div><p>If the output is <code>Wake-on: g</code> it means that wake-on-lan is already enabled, if not we do the following to enable it..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>INTERFACE<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span> <span style="color:#616e87;font-style:italic"># the name of the ethernet interface - enp2s0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#a3be8c">&lt;&lt; EOF &gt; /etc/network/interfaces.d/${INTERFACE}
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">auto ${INTERFACE}
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">iface ${INTERFACE} inet dhcp
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  ethernet-wol g
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">EOF</span>
+</span></span><span style="display:flex;"><span>systemctl restart networking.service
+</span></span><span style="display:flex;"><span>ethtool <span style="color:#a3be8c">${</span>INTERFACE<span style="color:#a3be8c">}</span> <span style="color:#eceff4">|</span> grep <span style="color:#a3be8c">&#34;Wake-on:&#34;</span>
+</span></span></code></pre></div><p>If we pair wake-on-lan with a Raspberry Pi on the same network and a remote access solution we will be able to power on our system and control it from anywhere.</p>
+<hr>
+<h3 id="ongoing-maintenance">Ongoing Maintenance</h3>
+<p>Setting things up once is fine but without updates we are stuck with a snapshot of the system from the day it was installed.</p>
+<p>Running <code>apt update &amp;&amp; apt upgrade -y</code> regularly will keep both the system and most of our tools up to date. To update <a href="#kubectl">kubectl</a>, <a href="#k9s">k9s</a>, <a href="#minikube">minikube</a> and <a href="#act">act</a> we can simply run their installation commands again.</p>
+<p>The TLS certificate is valid for 90 days and we can issue a fresh certificate by running the script again.</p>
+<hr>
+<h3 id="closing-thoughts">Closing Thoughts</h3>
+<p>Allright, we saw a bunch of things and touched many topics but one thing we did not cover is security.</p>
+<p>So is it secure? Well, we prioritized convenience over security in a few areas but at the end of the day this is a homelab not a production system, it will never store sensitive data and if someone breaks into my house to steal my stuff my crusty old hardware will be the least of my concerns.</p>
+<p>At the end of the day this is all about experimentation and learning so take what works for you and make it your own.</p>
+<hr>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://korliaftis.github.io/tags/homelab/">Homelab</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+
+    <span>
+        Powered by Hugo & PaperMod
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

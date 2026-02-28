@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="light">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Monitoring with Prometheus | Blog</title>
+<meta name="keywords" content="Homelab, Prometheus">
+<meta name="description" content="Sometimes everything looks fine on the surface but appearances can be deceiving. Here we will see how to set up the Prometheus monitoring stack to monitor our stuff and send alerts when needed.
+The core component of the Prometheus monitoring stack is the Prometheus server. We configure targets for the server (meaning endpoints that expose metrics) and the server connects to them at regular intervals to scrape their metrics and store them locally in a time series database (TSDB).">
+<meta name="author" content="user">
+<link rel="canonical" href="https://korliaftis.github.io/posts/monitoring-with-prometheus.html">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.9a24e0a983acbd1d5709cdde8f60a89a08ff7fb64871fe6496c466c4d0350645.css" integrity="sha256-miTgqYOsvR1XCc3ej2Comgj/f7ZIcf5klsRmxNA1BkU=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://korliaftis.github.io/assets/favicon/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://korliaftis.github.io/assets/favicon/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://korliaftis.github.io/assets/favicon/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://korliaftis.github.io/assets/favicon/apple-touch-icon.png">
+<link rel="mask-icon" href="https://korliaftis.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="https://korliaftis.github.io/posts/monitoring-with-prometheus.html">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://korliaftis.github.io/">&gt; $ <span class="logoCursor">_</span>
+            </a>
+            <div class="logo-switches">
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://korliaftis.github.io/search/" accesskey=/>
+                    <span>search</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://korliaftis.github.io/tags/">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Monitoring with Prometheus
+    </h1>
+    <div class="post-meta"><span>October 26, 2025</span>
+
+</div>
+  </header> 
+  <div class="post-content"><p>Sometimes everything looks fine on the surface but appearances can be deceiving. Here we will see how to set up the Prometheus monitoring stack to monitor our stuff and send alerts when needed.</p>
+<p>The core component of the Prometheus monitoring stack is the Prometheus server. We configure targets for the server (meaning endpoints that expose metrics) and the server connects to them at regular intervals to scrape their metrics and store them locally in a time series database (TSDB).</p>
+<p>We also configure rules for the server. Rules are PromQL expressions that run at regular intervals against the data stored in the TSDB and trigger alerts when certain conditions are met.</p>
+<p>When an alert is triggered the server forwards it to the Alertmanager which is another component of the Prometheus monitoring stack. The Alertmanager applies some routing and grouping logic before sending a notification out to its configured receivers.</p>
+<p>Some systems and services do not expose metrics by default. In these cases we use Prometheus exporters which are installed on systems or alongside services to collect metrics and expose them through endpoints. These endpoints can then be configured as targets for the Prometheus server.</p>
+<p>Let&rsquo;s see some more details about each component we will use..</p>
+<hr>
+<h3 id="prometheus-server">Prometheus Server</h3>
+<p>The script we will use to install the Prometheus server will place all the configuration files under the <code>/etc/prometheus/</code> directory..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">|</span>-- prometheus.yaml <span style="color:#616e87;font-style:italic"># configuration file</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">|</span>-- rules <span style="color:#616e87;font-style:italic"># rule files</span>
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">|</span>   <span style="color:#eceff4">|</span>-- alertmanager.yaml
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">|</span>   <span style="color:#eceff4">|</span>-- blackbox_exporter.yaml
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">|</span>   <span style="color:#eceff4">|</span>-- node_exporter.yaml
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">|</span>   <span style="color:#eceff4">|</span>-- prometheus.yaml
+</span></span><span style="display:flex;"><span><span style="color:#eceff4">|</span>   <span style="color:#a3be8c">`</span>-- watchdog.yaml
+</span></span><span style="display:flex;"><span><span style="color:#a3be8c">`</span>-- targets <span style="color:#616e87;font-style:italic"># target files</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">|</span>-- servers
+</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">|</span>   <span style="color:#a3be8c">`</span>-- server.yaml
+</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">|</span>-- services
+</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">|</span>   <span style="color:#eceff4">|</span>-- alertmanager.yaml
+</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">|</span>   <span style="color:#eceff4">|</span>-- blackbox_exporter.yaml
+</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">|</span>   <span style="color:#eceff4">|</span>-- cadvisor.yaml
+</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">|</span>   <span style="color:#eceff4">|</span>-- docker.yaml
+</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">|</span>   <span style="color:#eceff4">|</span>-- haproxy.yaml
+</span></span><span style="display:flex;"><span>    <span style="color:#eceff4">|</span>   <span style="color:#a3be8c">`</span>-- prometheus.yaml
+</span></span><span style="display:flex;"><span>    <span style="color:#a3be8c">`</span>-- sites
+</span></span><span style="display:flex;"><span>        <span style="color:#a3be8c">`</span>-- google.yaml
+</span></span></code></pre></div><p>The main configuration file for the server is the <code>/etc/prometheus/prometheus.yaml</code> where we configure things like..</p>
+<ul>
+<li>how often to scrape targets</li>
+<li>how often to evaluate rules</li>
+<li>where is the Alertmanager</li>
+<li>where are the rules</li>
+<li>where are the targets</li>
+</ul>
+<p>Note that any change we make to the <code>/etc/prometheus/prometheus.yaml</code> file will not take effect until we restart the Prometheus systemd service..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>systemctl restart prometheus.service
+</span></span></code></pre></div><p>On the <code>/etc/prometheus/prometheus.yaml</code> file we have configured three scrape jobs with the names &ldquo;servers&rdquo;, &ldquo;services&rdquo; and &ldquo;sites&rdquo;. These jobs are using the file based discovery mechanism which allows us to add, update and remove targets without having to restart the Prometheus systemd service each time.</p>
+<p>The target files are stored under <code>/etc/prometheus/targets/</code> and we categorize them with the following convention..</p>
+<ul>
+<li><code>/etc/prometheus/targets/servers/</code> node exporters for physical and virtual machines</li>
+<li><code>/etc/prometheus/targets/services/</code> software that exposes metrics</li>
+<li><code>/etc/prometheus/targets/sites/</code> targets for the blackbox exporter</li>
+</ul>
+<p>The script will create a few target files for us. These target files assume that everything is installed on the same machine so they are all pointing to localhost. If this is not the case or if you don&rsquo;t want to scrape metrics from a specific target simply edit or remove them.</p>
+<p>To add new targets we create files under the relevant directory..</p>
+<ul>
+<li>
+<p>to add a <strong>server</strong>..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>TARGET_IP<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>   <span style="color:#616e87;font-style:italic"># 10.0.0.3</span>
+</span></span><span style="display:flex;"><span>TARGET_PORT<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span> <span style="color:#616e87;font-style:italic"># 9100</span>
+</span></span><span style="display:flex;"><span>TARGET_NAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span> <span style="color:#616e87;font-style:italic"># server</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#a3be8c">&lt;&lt; EOF &gt; /etc/prometheus/targets/servers/${TARGET_NAME}.yaml
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">- targets:
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  - &#34;${TARGET_IP}:${TARGET_PORT}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  labels:
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">    instance: &#34;${TARGET_NAME}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">EOF</span>
+</span></span></code></pre></div></li>
+<li>
+<p>to add a <strong>service</strong>..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>TARGET_IP<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>   <span style="color:#616e87;font-style:italic"># 127.0.0.1</span>
+</span></span><span style="display:flex;"><span>TARGET_PORT<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span> <span style="color:#616e87;font-style:italic"># 9323</span>
+</span></span><span style="display:flex;"><span>TARGET_NAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span> <span style="color:#616e87;font-style:italic"># docker</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#a3be8c">&lt;&lt; EOF &gt; /etc/prometheus/targets/servers/${TARGET_NAME}.yaml
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">- targets:
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  - &#34;${TARGET_IP}:${TARGET_PORT}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  labels:
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">    instance: &#34;${TARGET_NAME}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">EOF</span>
+</span></span></code></pre></div></li>
+<li>
+<p>to add a <strong>site</strong>..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>TARGET_URL<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span>  <span style="color:#616e87;font-style:italic"># https://google.com</span>
+</span></span><span style="display:flex;"><span>TARGET_NAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;&#34;</span> <span style="color:#616e87;font-style:italic"># google</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cat <span style="color:#a3be8c">&lt;&lt; EOF &gt; /etc/prometheus/targets/sites/${TARGET_NAME}.yaml
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">- targets:
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">  - &#34;${TARGET_URL}&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#a3be8c">EOF</span>
+</span></span></code></pre></div></li>
+</ul>
+<p>The filenames don&rsquo;t matter and we can have files with multiple targets under them. The IP address we provide for <code>TARGET_IP</code> needs to be reachable by the Prometheus server. We give a value for the <code>instance</code> label so it doesn&rsquo;t automatically get the value from the <code>__address__</code> label (more info on that <a href="https://www.robustperception.io/controlling-the-instance-label">here</a>).</p>
+<p>If we want to add a new target that is not compatible with the existing scrape jobs we can add it as a new scrape job in the <code>prometheus.yaml</code> file.</p>
+<p>The script will also create rule files for us under the <code>/etc/prometheus/rules/</code> directory. We can find a collection of alert rules <a href="https://samber.github.io/awesome-prometheus-alerts">here</a>. Note that any change we make to the rule files will not take effect until we restart the Prometheus systemd service.</p>
+<hr>
+<h3 id="alertmanager">Alertmanager</h3>
+<p>The script we will use to install the Alertmanager will place all configuration files under the <code>/etc/alertmanager/</code> directory. On the <code>/etc/alertmanager/alertmanager.yaml</code> file we configure things like..</p>
+<ul>
+<li>where are the notification templates</li>
+<li>how to route alerts to receivers</li>
+<li>which are the receivers for the notifications</li>
+</ul>
+<p>Note that any change we make to the <code>/etc/alertmanager/alertmanager.yaml</code> file will not take effect until we restart the Alertmanager systemd service..</p>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>systemctl restart alertmanager.service
+</span></span></code></pre></div><p>The script will create a minimal configuration that works well for &ldquo;slow&rdquo; environments. We will use a single notification template and route all alerts (except the Watchdog alert) to a Discord webhook.</p>
+<p>The Watchdog alert is a <a href="https://en.wikipedia.org/wiki/Dead_man's_switch">dead man&rsquo;s switch</a> type of alert designed to always fire. When it stops firing it means that something is wrong with the monitoring system. We will route this alert to a <a href="https://healthchecks.io">healthchecks.io</a> webhook that will notify us only when it stops firing.</p>
+<hr>
+<h3 id="node-exporter">Node Exporter</h3>
+<p>This exporter exposes system metrics from a host like CPU, memory, disk and network usage. Using these metrics we can understand the overall health of the system and how its resources are being used.</p>
+<hr>
+<h3 id="blackbox-exporter">Blackbox Exporter</h3>
+<p>This exporter can be used to expose metrics for a wide range of targets but we mainly use it to monitor HTTP endpoints and collect information about availability, latency and TLS certificate expiration.</p>
+<p>Compared to other exporters the Blackbox Exporter works differently. It comes bundled with <a href="https://github.com/prometheus/blackbox_exporter/blob/master/blackbox.yml">modules</a> that define different types of checks. When the Prometheus server scrapes the Blackbox Exporter it provides the target and the module to use for the specific check.</p>
+<hr>
+<h3 id="cadvisor">cAdvisor</h3>
+<p>This exporter exposes metrics for all containers running on a system. We could already expose metrics for the Docker engine by adding the <code>metrics-addr</code> option in the <code>/etc/docker/daemon.json</code> configuration file but with cAdvisor we can expose metrics for the actual containers.</p>
+<hr>
+<h3 id="installation">Installation</h3>
+<p>The scripts below can be executed on both x86 and ARM systems so you can also run them on devices like the Raspberry Pi.</p>
+<p>The binaries are placed in <code>/usr/local/bin/</code>, systemd files in <code>/etc/systemd/system/</code>, configuration files in <code>/etc/</code> and storage files in <code>/var/lib/</code>.</p>
+<p>The systemd files use the <code>0.0.0.0</code> address, if you want to limit access to a specific interface either update them or use a firewall.</p>
+<p>All components create their own service accounts except cAdvisor that uses the root account.</p>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<h4 id="prometheus-server-1">prometheus server</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -Lo /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts/prometheus.sh https://blog.korliaftis.com/scripts/prometheus.sh
+</span></span><span style="display:flex;"><span>chmod +x /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts/prometheus.sh
+</span></span><span style="display:flex;"><span>sudo /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts/prometheus.sh
+</span></span></code></pre></div><p>The metrics and dashboard are accessible on port 9090.</p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<h4 id="alertmanager-1">alertmanager</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -Lo /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts/alertmanager.sh https://blog.korliaftis.com/scripts/alertmanager.sh
+</span></span><span style="display:flex;"><span>chmod +x /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts/alertmanager.sh
+</span></span><span style="display:flex;"><span>sudo /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts/alertmanager.sh
+</span></span></code></pre></div><p>The metrics and dashboard are accessible on port 9093. After the installation, update <code>/etc/alertmanager/alertmanager.yaml</code> with your webhooks if you want to receive notifications.</p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<h4 id="node-exporter-1">node exporter</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -Lo /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts/node-exporter.sh https://blog.korliaftis.com/scripts/node-exporter.sh
+</span></span><span style="display:flex;"><span>chmod +x /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts/node-exporter.sh
+</span></span><span style="display:flex;"><span>sudo /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts/node-exporter.sh
+</span></span></code></pre></div><p>The metrics and dashboard are accessible on port 9100.</p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<h4 id="blackbox-exporter-1">blackbox exporter</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -Lo /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts/blackbox-exporter.sh https://blog.korliaftis.com/scripts/blackbox-exporter.sh
+</span></span><span style="display:flex;"><span>chmod +x /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts/blackbox-exporter.sh
+</span></span><span style="display:flex;"><span>sudo /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts/blackbox-exporter.sh
+</span></span></code></pre></div><p>The metrics and dashboard are accessible on port 9115.</p>
+</li>
+</ul>
+<!-- raw HTML omitted -->
+<ul>
+<li>
+<h4 id="cadvisor-1">cadvisor</h4>
+<div class="highlight"><pre tabindex="0" style="color:#d8dee9;background-color:#2e3440;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>USERNAME<span style="color:#81a1c1">=</span><span style="color:#a3be8c">&#34;user&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>curl -Lo /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts/cadvisor.sh https://blog.korliaftis.com/scripts/cadvisor.sh
+</span></span><span style="display:flex;"><span>chmod +x /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts/cadvisor.sh
+</span></span><span style="display:flex;"><span>sudo /home/<span style="color:#a3be8c">${</span>USERNAME<span style="color:#a3be8c">}</span>/.scripts/cadvisor.sh
+</span></span></code></pre></div><p>The metrics and dashboard are accessible on port 9324.</p>
+</li>
+</ul>
+<hr>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<p>If you create a target and it does not appear on the Prometheus dashboard at the URL <code>http://${PROMETHEUS_SERVER_IP}:9090/targets</code> it means that there is an issue with the file you created in <code>/etc/prometheus/targets</code>.</p>
+<p>If you create a target and it appears on the Prometheus dashboard but its state is <code>DOWN</code> it means that either Prometheus can&rsquo;t reach the <code>${TARGET_IP}</code> or that the metrics are not exposed at the URL <code>http://${TARGET_IP}:${TARGET_PORT}/metrics</code>.</p>
+<p>If you create a rule file and it doesn&rsquo;t appear on the Prometheus dashboard at the URL <code>http://${PROMETHEUS_SERVER_IP}:9090/rules</code> restart the Prometheus systemd service.</p>
+<p>If you see alerts firing at the URL <code>http://${PROMETHEUS_SERVER_IP}:9090/alerts</code> but you are not receiving notifications on Discord, check that..</p>
+<ul>
+<li>there is no issue with the configuration file of the Alertmanager.. <code>amtool check-config /etc/alertmanager/alertmanager.yaml</code></li>
+<li>the Alertmanager service is running.. <code>systemctl status alertmanager</code></li>
+<li>in <code>/etc/prometheus/prometheus.yaml</code> under the <code>alerting:</code> section the IP of the Alertmanager is correct and reachable by the system hosting the Prometheus server</li>
+<li>in <code>/etc/alertmanager/alertmanager.yaml</code> you have configured your Discord webhook</li>
+</ul>
+<p>If cAdvisor is using too much CPU check <a href="https://github.com/google/cadvisor/issues/2523#issuecomment-785094428">this</a> GitHub issue.</p>
+<hr>
+<h3 id="ongoing-maintenance">Ongoing Maintenance</h3>
+<p>The scripts we used for the installation can also upgrade the components they install. On the first run they perform a full installation, subsequent runs upgrade the components to their latest versions without changing their configuration files.</p>
+<hr>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://korliaftis.github.io/tags/homelab/">Homelab</a></li>
+      <li><a href="https://korliaftis.github.io/tags/prometheus/">Prometheus</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+
+    <span>
+        Powered by Hugo & PaperMod
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
